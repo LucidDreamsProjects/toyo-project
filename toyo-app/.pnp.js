@@ -37,6 +37,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {
           "packageLocation": "./",
           "packageDependencies": [
+            ["@babel/core", "npm:7.14.8"],
             ["@preact/preset-vite", "virtual:d20f0d8644e11dd6377be18a99d72e35651f3c388ec7e611ec7bc6f006f1fb638d3c082ac1764ec7d40a52af75b05809b8831fb273768c4b4416c6635ee22014#npm:2.1.0"],
             ["preact", "npm:10.5.14"],
             ["typescript", "patch:typescript@npm%3A4.3.5#builtin<compat/typescript>::version=4.3.5&hash=ddfc1b"],
@@ -79,7 +80,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/traverse", "npm:7.14.8"],
             ["@babel/types", "npm:7.14.8"],
             ["convert-source-map", "npm:1.8.0"],
-            ["debug", "virtual:4d5b41b4c144bc0f7c0e4c4c2164d0bc5d527811557a2fd7f2ec3307b1cf1ca97f42a730a90b32caada41091b3e922a1e5a2d8c6ff2841b6857305532c68aca8#npm:4.3.2"],
+            ["debug", "virtual:e0eb37cc68ff5fab073c335a101ac5ab9393758da15e8ed608e9fb0d57c594c6e7a19e9de08d56ae2b2f9b02f977f4b0c587d52f55e96138a6991bcd11eb2015#npm:4.3.2"],
             ["gensync", "npm:1.0.0-beta.2"],
             ["json5", "npm:2.2.0"],
             ["semver", "npm:6.3.0"],
@@ -314,7 +315,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/helper-split-export-declaration", "npm:7.14.5"],
             ["@babel/parser", "npm:7.14.8"],
             ["@babel/types", "npm:7.14.8"],
-            ["debug", "virtual:4d5b41b4c144bc0f7c0e4c4c2164d0bc5d527811557a2fd7f2ec3307b1cf1ca97f42a730a90b32caada41091b3e922a1e5a2d8c6ff2841b6857305532c68aca8#npm:4.3.2"],
+            ["debug", "virtual:e0eb37cc68ff5fab073c335a101ac5ab9393758da15e8ed608e9fb0d57c594c6e7a19e9de08d56ae2b2f9b02f977f4b0c587d52f55e96138a6991bcd11eb2015#npm:4.3.2"],
             ["globals", "npm:11.12.0"]
           ],
           "linkType": "HARD",
@@ -354,12 +355,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/$$virtual/@preact-preset-vite-virtual-e9abbd273d/0/cache/@preact-preset-vite-npm-2.1.0-7a1f981d7a-7021fecba5.zip/node_modules/@preact/preset-vite/",
           "packageDependencies": [
             ["@preact/preset-vite", "virtual:d20f0d8644e11dd6377be18a99d72e35651f3c388ec7e611ec7bc6f006f1fb638d3c082ac1764ec7d40a52af75b05809b8831fb273768c4b4416c6635ee22014#npm:2.1.0"],
-            ["@babel/core", null],
+            ["@babel/core", "npm:7.14.8"],
             ["@prefresh/vite", "virtual:e9abbd273d9798b9154e2c21b767add7adf9c6e6e3358cd6ea33d86322aa216bcda6727c9e7d5287fd986c3a04dc4fcda7ab42be7732c03e78b8a8912542d245#npm:2.2.3"],
             ["@types/babel__core", null],
             ["@types/vite", null],
             ["babel-plugin-transform-hook-names", "virtual:e9abbd273d9798b9154e2c21b767add7adf9c6e6e3358cd6ea33d86322aa216bcda6727c9e7d5287fd986c3a04dc4fcda7ab42be7732c03e78b8a8912542d245#npm:1.0.2"],
-            ["debug", "virtual:4d5b41b4c144bc0f7c0e4c4c2164d0bc5d527811557a2fd7f2ec3307b1cf1ca97f42a730a90b32caada41091b3e922a1e5a2d8c6ff2841b6857305532c68aca8#npm:4.3.2"],
+            ["debug", "virtual:e0eb37cc68ff5fab073c335a101ac5ab9393758da15e8ed608e9fb0d57c594c6e7a19e9de08d56ae2b2f9b02f977f4b0c587d52f55e96138a6991bcd11eb2015#npm:4.3.2"],
             ["kolorist", "npm:1.5.0"],
             ["vite", "npm:2.4.3"]
           ],
@@ -477,7 +478,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/agent-base-npm-6.0.2-428f325a93-e77eff83e1.zip/node_modules/agent-base/",
           "packageDependencies": [
             ["agent-base", "npm:6.0.2"],
-            ["debug", "virtual:4d5b41b4c144bc0f7c0e4c4c2164d0bc5d527811557a2fd7f2ec3307b1cf1ca97f42a730a90b32caada41091b3e922a1e5a2d8c6ff2841b6857305532c68aca8#npm:4.3.2"]
+            ["debug", "virtual:e0eb37cc68ff5fab073c335a101ac5ab9393758da15e8ed608e9fb0d57c594c6e7a19e9de08d56ae2b2f9b02f977f4b0c587d52f55e96138a6991bcd11eb2015#npm:4.3.2"]
           ],
           "linkType": "HARD",
         }]
@@ -487,7 +488,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/agentkeepalive-npm-4.1.4-4d5b41b4c1-c58f69d05c.zip/node_modules/agentkeepalive/",
           "packageDependencies": [
             ["agentkeepalive", "npm:4.1.4"],
-            ["debug", "virtual:4d5b41b4c144bc0f7c0e4c4c2164d0bc5d527811557a2fd7f2ec3307b1cf1ca97f42a730a90b32caada41091b3e922a1e5a2d8c6ff2841b6857305532c68aca8#npm:4.3.2"],
+            ["debug", "virtual:e0eb37cc68ff5fab073c335a101ac5ab9393758da15e8ed608e9fb0d57c594c6e7a19e9de08d56ae2b2f9b02f977f4b0c587d52f55e96138a6991bcd11eb2015#npm:4.3.2"],
             ["depd", "npm:1.1.2"],
             ["humanize-ms", "npm:1.2.1"]
           ],
@@ -563,7 +564,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/$$virtual/babel-plugin-transform-hook-names-virtual-220fa33dba/0/cache/babel-plugin-transform-hook-names-npm-1.0.2-aa2dae497e-2e3e6954b0.zip/node_modules/babel-plugin-transform-hook-names/",
           "packageDependencies": [
             ["babel-plugin-transform-hook-names", "virtual:e9abbd273d9798b9154e2c21b767add7adf9c6e6e3358cd6ea33d86322aa216bcda6727c9e7d5287fd986c3a04dc4fcda7ab42be7732c03e78b8a8912542d245#npm:1.0.2"],
-            ["@babel/core", null],
+            ["@babel/core", "npm:7.14.8"],
             ["@types/babel__core", null]
           ],
           "packagePeers": [
@@ -754,10 +755,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:4d5b41b4c144bc0f7c0e4c4c2164d0bc5d527811557a2fd7f2ec3307b1cf1ca97f42a730a90b32caada41091b3e922a1e5a2d8c6ff2841b6857305532c68aca8#npm:4.3.2", {
-          "packageLocation": "./.yarn/$$virtual/debug-virtual-e152771b72/0/cache/debug-npm-4.3.2-f0148b6afe-5543570879.zip/node_modules/debug/",
+        ["virtual:e0eb37cc68ff5fab073c335a101ac5ab9393758da15e8ed608e9fb0d57c594c6e7a19e9de08d56ae2b2f9b02f977f4b0c587d52f55e96138a6991bcd11eb2015#npm:4.3.2", {
+          "packageLocation": "./.yarn/$$virtual/debug-virtual-bf0fe70a53/0/cache/debug-npm-4.3.2-f0148b6afe-5543570879.zip/node_modules/debug/",
           "packageDependencies": [
-            ["debug", "virtual:4d5b41b4c144bc0f7c0e4c4c2164d0bc5d527811557a2fd7f2ec3307b1cf1ca97f42a730a90b32caada41091b3e922a1e5a2d8c6ff2841b6857305532c68aca8#npm:4.3.2"],
+            ["debug", "virtual:e0eb37cc68ff5fab073c335a101ac5ab9393758da15e8ed608e9fb0d57c594c6e7a19e9de08d56ae2b2f9b02f977f4b0c587d52f55e96138a6991bcd11eb2015#npm:4.3.2"],
             ["ms", "npm:2.1.2"],
             ["supports-color", null]
           ],
@@ -999,7 +1000,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["http-proxy-agent", "npm:4.0.1"],
             ["@tootallnate/once", "npm:1.1.2"],
             ["agent-base", "npm:6.0.2"],
-            ["debug", "virtual:4d5b41b4c144bc0f7c0e4c4c2164d0bc5d527811557a2fd7f2ec3307b1cf1ca97f42a730a90b32caada41091b3e922a1e5a2d8c6ff2841b6857305532c68aca8#npm:4.3.2"]
+            ["debug", "virtual:e0eb37cc68ff5fab073c335a101ac5ab9393758da15e8ed608e9fb0d57c594c6e7a19e9de08d56ae2b2f9b02f977f4b0c587d52f55e96138a6991bcd11eb2015#npm:4.3.2"]
           ],
           "linkType": "HARD",
         }]
@@ -1010,7 +1011,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["https-proxy-agent", "npm:5.0.0"],
             ["agent-base", "npm:6.0.2"],
-            ["debug", "virtual:4d5b41b4c144bc0f7c0e4c4c2164d0bc5d527811557a2fd7f2ec3307b1cf1ca97f42a730a90b32caada41091b3e922a1e5a2d8c6ff2841b6857305532c68aca8#npm:4.3.2"]
+            ["debug", "virtual:e0eb37cc68ff5fab073c335a101ac5ab9393758da15e8ed608e9fb0d57c594c6e7a19e9de08d56ae2b2f9b02f977f4b0c587d52f55e96138a6991bcd11eb2015#npm:4.3.2"]
           ],
           "linkType": "HARD",
         }]
@@ -1655,7 +1656,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["socks-proxy-agent", "npm:5.0.1"],
             ["agent-base", "npm:6.0.2"],
-            ["debug", "virtual:4d5b41b4c144bc0f7c0e4c4c2164d0bc5d527811557a2fd7f2ec3307b1cf1ca97f42a730a90b32caada41091b3e922a1e5a2d8c6ff2841b6857305532c68aca8#npm:4.3.2"],
+            ["debug", "virtual:e0eb37cc68ff5fab073c335a101ac5ab9393758da15e8ed608e9fb0d57c594c6e7a19e9de08d56ae2b2f9b02f977f4b0c587d52f55e96138a6991bcd11eb2015#npm:4.3.2"],
             ["socks", "npm:2.6.1"]
           ],
           "linkType": "HARD",
@@ -1777,6 +1778,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",
           "packageDependencies": [
             ["toyo-app", "workspace:."],
+            ["@babel/core", "npm:7.14.8"],
             ["@preact/preset-vite", "virtual:d20f0d8644e11dd6377be18a99d72e35651f3c388ec7e611ec7bc6f006f1fb638d3c082ac1764ec7d40a52af75b05809b8831fb273768c4b4416c6635ee22014#npm:2.1.0"],
             ["preact", "npm:10.5.14"],
             ["typescript", "patch:typescript@npm%3A4.3.5#builtin<compat/typescript>::version=4.3.5&hash=ddfc1b"],
