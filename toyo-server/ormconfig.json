@@ -1,7 +1,7 @@
 {
   "type": "mysql",
   "host": "process.env.SERVER_HOST",
-  "port": "process.env.SERVER_PORT",
+  "port": "process.env.DATABASE_PORT",
   "username": "process.env.DATABASE_USER",
   "password": "process.env.DATABASE_SECRET",
   "database": "process.env.DATABASE_NAME",
