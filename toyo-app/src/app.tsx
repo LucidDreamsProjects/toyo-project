@@ -1,6 +1,9 @@
-import { Logo } from './logo'
+import { useState } from "preact/compat";
+import { Logo } from "./logo";
 
 export function App() {
+  const [hi, setHi] = useState();
+
   return (
     <>
       <Logo />
@@ -16,5 +19,5 @@ export function App() {
         </a>
       </p>
     </>
-  )
+  );
 }
