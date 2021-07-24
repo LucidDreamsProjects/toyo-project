@@ -1,32 +1,11 @@
-/* import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-
-@Entity()
 export class CreatePlayerUserInput {
-  @PrimaryGeneratedColumn()
   userId!: number;
-
-  @Column()
   wallet!: string;
-
-  @Column()
   username!: string;
-
-  @Column()
   tag!: number;
-
-  @Column()
-  name: string | undefined;
-
-  @Column()
+  name!: string;
   icon!: number;
-
-  @Column()
-  address: string | undefined;
-
-  @Column()
-  replays: string | undefined;
-
-  @Column()
+  address!: string;
+  replays!: string;
   role!: number;
 }
- */

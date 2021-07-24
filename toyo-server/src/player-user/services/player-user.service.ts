@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PlayerUser } from '../entities/player-user.entity';
-// import { CreatePlayerUserInput } from './dto/create-player-user.input';
+import { PlayerUserRepository } from '../entities/player-user.entity';
+import { CreatePlayerUserInput } from '../dto/create-player-user.input';
 // import { UpdatePlayerUserInput } from './dto/update-player-user.input';
 
 @Injectable()
 export class PlayerUserService {
   constructor(
-    @InjectRepository(PlayerUser)
-    private playerUserRepository: Repository<PlayerUser>,
+    @InjectRepository(PlayerUserRepository)
+    private playerUserRepository: Repository<PlayerUserRepository>,
   ) {}
 
-  /* create(createPlayerUserInput: CreatePlayerUserInput) {
+  create(createPlayerUserInput: CreatePlayerUserInput) {
     return 'This action adds a new playerUser';
-  } */
+  }
 
   findAll() {
     return `This action returns all playerUsers`;

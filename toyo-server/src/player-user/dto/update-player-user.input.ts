@@ -1,9 +1,13 @@
-/* import { CreatePlayerUserInput } from './create-player-user.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+// import { CreatePlayerUserInput } from './create-player-user.input';
 
-@InputType()
-export class UpdatePlayerUserInput extends PartialType(CreatePlayerUserInput) {
-  @Field(() => Int)
-  id!: number;
+export class UpdatePlayerUserInput {
+  userId!: number;
+  wallet!: string;
+  username!: string;
+  tag!: number;
+  name!: string;
+  icon!: number;
+  address!: string;
+  replays!: string;
+  role!: number;
 }
- */
