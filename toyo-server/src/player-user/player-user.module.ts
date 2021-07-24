@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PlayerUserService } from './services/player-user.service';
-import { PlayerUserResolver } from './resolver/player-user.resolver';
-import { PlayerUser } from './entities/player-user.entity';
+import { PlayerUserRepository } from './entities/player-user.entity';
+import { PlayerUserHttpModule } from './player-user-http.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PlayerUser])],
-  exports: [TypeOrmModule],
+  imports: [
+    PlayerUserHttpModule,
+    TypeOrmModule.forFeature([PlayerUserRepository]),
+  ],
 })
 export class PlayerUserModule {}
