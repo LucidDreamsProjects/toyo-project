@@ -7,21 +7,31 @@ import {
   Put,
   Param,
   Delete,
+  HttpCode,
 } from '@nestjs/common';
-import { CreatePlayerUserInput } from '../dto/create-player-user.input';
-import { UpdatePlayerUserInput } from '../dto/update-player-user.input';
+import { PlayerUserInput } from '../dto/player-user.input';
 import { PlayerUserService } from '../services/player-user.service';
 
 @Controller('playerUser')
 export class PlayerUserController {
   constructor(private readonly playerUserService: PlayerUserService) {}
 
+  @Get()
+  isAuth(playerUser: PlayerUserInput) {
+    return this.playerUserService.isAuth(playerUser);
+  }
+
   @Post()
-  create(@Body() createPlayerUser: CreatePlayerUserInput) {
+  auth(playerUser: PlayerUserInput) {
+    return this.playerUserService.auth(playerUser);
+  }
+
+  @Post()
+  create(@Body() createPlayerUser: PlayerUserInput) {
     return this.playerUserService.create(createPlayerUser);
   }
 
-  /*  @Get()
+  /* @Get()
   findAll(@Query() query: ListAllEntities) {
     return `This action returns all cats (limit: ${query.limit} items)`;
   } */
@@ -31,13 +41,13 @@ export class PlayerUserController {
     return `This action returns a #${id} cat`;
   }
 
-  /* @Put(':id')
+  @Put(':id')
   update(
     @Param('id') id: string,
-    @Body() updatePlayerUserInput: UpdatePlayerUserInput,
+    @Body() updatePlayerUserInput: PlayerUserInput,
   ) {
     return `This action updates a #${id} playerUser`;
-  } */
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
