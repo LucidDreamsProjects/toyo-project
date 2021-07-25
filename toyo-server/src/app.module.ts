@@ -4,6 +4,9 @@ import { getConnectionOptions } from 'typeorm';
 import { ConfigModule } from '@nestjs/config';
 import configuration from '../config/configuration';
 import { PlayerUserModule } from './player-user/player-user.module';
+import { AppService } from './app.service';
+import { AppController } from './app.controller';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
@@ -17,6 +20,9 @@ import { PlayerUserModule } from './player-user/player-user.module';
     ConfigModule.forRoot({
       load: [configuration],
     }),
+    HttpModule,
   ],
+  providers: [AppService],
+  controllers: [AppController],
 })
 export class AppModule {}

@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PlayerUserRepository } from '../entities/player-user.entity';
-import { CreatePlayerUserInput } from '../dto/create-player-user.input';
-// import { UpdatePlayerUserInput } from './dto/update-player-user.input';
+import { PlayerUserInput } from '../dto/player-user.input';
+import { ArkaneConnect, WindowMode } from '@arkane-network/arkane-connect';
 
 @Injectable()
 export class PlayerUserService {
@@ -12,7 +13,34 @@ export class PlayerUserService {
     private playerUserRepository: Repository<PlayerUserRepository>,
   ) {}
 
-  create(createPlayerUserInput: CreatePlayerUserInput) {
+  isAuth(playerUser: PlayerUserInput) {
+    const arkaneConnect = new ArkaneConnect('Testaccount-capsule', {
+      environment: 'staging',
+      windowMode: 'REDIRECT' as WindowMode,
+      bearerTokenProvider: () => process.env.ACCESS_TOKEN!,
+    });
+
+    if (!arkaneConnect.checkAuthenticated()) {
+      //TODO: encerra sessão => redireciona para outra página
+      return false;
+    }
+    return true;
+  }
+
+  auth(playerUser: PlayerUserInput) {
+    const arkaneConnect = new ArkaneConnect('Testaccount-capsule', {
+      environment: 'staging',
+      windowMode: 'REDIRECT' as WindowMode,
+      bearerTokenProvider: () => process.env.ACCESS_TOKEN!,
+    });
+
+    return arkaneConnect.flows.authenticate({
+      windowMode: 'REDIRECT' as WindowMode,
+      redirectUri: 'url_user_will_be_redirected',
+    });
+  }
+
+  create(playerUser: PlayerUserInput) {
     return 'This action adds a new playerUser';
   }
 
@@ -24,9 +52,9 @@ export class PlayerUserService {
     return `This action returns a #${id} playerUser`;
   }
 
-  /* update(id: number, updatePlayerUserInput: UpdatePlayerUserInput) {
+  update(id: number, playerUser: PlayerUserInput) {
     return `This action updates a #${id} playerUser`;
-  } */
+  }
 
   remove(id: number) {
     return `This action removes a #${id} playerUser`;
