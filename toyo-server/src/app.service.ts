@@ -8,6 +8,9 @@ export class AppService {
   constructor(private httpService: HttpService) {}
 
   getArkaneConnection(): void {
+    console.log('🔧 starting APP connection with Venly Widget API...');
+
+    // starts connection with Venly Widget API
     const arkaneConnect = new ArkaneConnect('Testaccount-capsule', {
       environment: 'staging',
       windowMode: 'REDIRECT'! as WindowMode,
@@ -18,6 +21,9 @@ export class AppService {
   }
 
   refreshAcessToken(): void {
+    console.log('🔧 Refreshing access token to maintain network...');
+
+    // starts connection with Venly Widget API
     const arkaneConnect = new ArkaneConnect('Testaccount-capsule', {
       environment: 'staging',
       windowMode: 'REDIRECT'! as WindowMode,
