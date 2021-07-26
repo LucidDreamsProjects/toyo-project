@@ -7,24 +7,13 @@ import {
   Put,
   Param,
   Delete,
-  HttpCode,
 } from '@nestjs/common';
 import { PlayerUserInput } from '../dto/player-user.input';
 import { PlayerUserService } from '../services/player-user.service';
 
-@Controller('playerUser')
+@Controller('/users')
 export class PlayerUserController {
   constructor(private readonly playerUserService: PlayerUserService) {}
-
-  @Get()
-  isAuth(playerUser: PlayerUserInput) {
-    return this.playerUserService.isAuth(playerUser);
-  }
-
-  @Post()
-  auth(playerUser: PlayerUserInput) {
-    return this.playerUserService.auth(playerUser);
-  }
 
   @Post()
   create(@Body() createPlayerUser: PlayerUserInput) {

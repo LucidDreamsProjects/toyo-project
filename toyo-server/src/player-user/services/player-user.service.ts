@@ -4,7 +4,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PlayerUserRepository } from '../entities/player-user.entity';
 import { PlayerUserInput } from '../dto/player-user.input';
-import { ArkaneConnect, WindowMode } from '@arkane-network/arkane-connect';
 
 @Injectable()
 export class PlayerUserService {
@@ -13,50 +12,28 @@ export class PlayerUserService {
     private playerUserRepository: Repository<PlayerUserRepository>,
   ) {}
 
-  isAuth(playerUser: PlayerUserInput) {
-    const arkaneConnect = new ArkaneConnect('Testaccount-capsule', {
-      environment: 'staging',
-      windowMode: 'REDIRECT' as WindowMode,
-      bearerTokenProvider: () => process.env.ACCESS_TOKEN!,
-    });
-
-    if (!arkaneConnect.checkAuthenticated()) {
-      //TODO: encerra sessão => redireciona para outra página
-      return false;
-    }
-    return true;
-  }
-
-  auth(playerUser: PlayerUserInput) {
-    const arkaneConnect = new ArkaneConnect('Testaccount-capsule', {
-      environment: 'staging',
-      windowMode: 'REDIRECT' as WindowMode,
-      bearerTokenProvider: () => process.env.ACCESS_TOKEN!,
-    });
-
-    return arkaneConnect.flows.authenticate({
-      windowMode: 'REDIRECT' as WindowMode,
-      redirectUri: 'url_user_will_be_redirected',
-    });
-  }
-
   create(playerUser: PlayerUserInput) {
+    console.log('🔧 Receiving data for new Player...');
     return 'This action adds a new playerUser';
   }
 
   findAll() {
+    console.log('🔧 Searching for all Players...');
     return `This action returns all playerUsers`;
   }
 
   findOne(id: number) {
+    console.log('🔧 Search for unique Player...');
     return `This action returns a #${id} playerUser`;
   }
 
   update(id: number, playerUser: PlayerUserInput) {
+    console.log('🔧 Updating Player #ID...');
     return `This action updates a #${id} playerUser`;
   }
 
   remove(id: number) {
+    console.log('🔧 Deleting Player #ID...');
     return `This action removes a #${id} playerUser`;
   }
 }
