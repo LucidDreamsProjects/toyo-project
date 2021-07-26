@@ -1,6 +1,4 @@
-// import { CreatePlayerUserInput } from './create-player-user.input';
-
-export class UpdatePlayerUserInput {
+export class PlayerUserInput {
   userId!: number;
   wallet!: string;
   username!: string;
