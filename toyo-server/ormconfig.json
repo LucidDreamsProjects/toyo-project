@@ -1,0 +1,10 @@
+{
+  "type": "mysql",
+  "host": "162.240.6.22",
+  "port": "3306",
+  "username": "wwtoyo_admin",
+  "password": "dd^8A!DPq#ZpjewF2",
+  "database": "wwtoyo_universe",
+  "entities": ["dist/**/*.entity{.ts,.js}"],
+  "synchronize": false
+}

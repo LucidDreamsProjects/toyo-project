@@ -6,7 +6,12 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+<<<<<<< Updated upstream
+  getArkaneConnection(): void {
+=======
+  private getArkaneConnection(): void {
+    console.log('✔️ yep, hit app controller (getArkaneConnection)...');
+>>>>>>> Stashed changes
+    return this.appService.getArkaneConnection();
   }
 }
