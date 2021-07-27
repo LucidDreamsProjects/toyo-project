@@ -8,16 +8,16 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { PlayerUserInput } from '../dto/player-user.input';
-import { PlayerUserService } from '../services/player-user.service';
+import { PlayerInput } from '../dto/player.input';
+import { PlayerService } from '../services/player.service';
 
 @Controller('/users')
-export class PlayerUserController {
-  constructor(private readonly playerUserService: PlayerUserService) {}
+export class PlayerController {
+  constructor(private readonly playerService: PlayerService) {}
 
   @Post()
-  create(@Body() createPlayerUser: PlayerUserInput) {
-    return this.playerUserService.create(createPlayerUser);
+  create(@Body() createPlayer: PlayerInput) {
+    return this.playerService.create(createPlayer);
   }
 
   /* @Get()
@@ -31,11 +31,8 @@ export class PlayerUserController {
   }
 
   @Put(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updatePlayerUserInput: PlayerUserInput,
-  ) {
-    return `This action updates a #${id} playerUser`;
+  update(@Param('id') id: string, @Body() updatePlayerInput: PlayerInput) {
+    return `This action updates a #${id} player`;
   }
 
   @Delete(':id')

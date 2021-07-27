@@ -1,4 +1,4 @@
-export class PlayerUserInput {
+export class PlayerInput {
   userId!: number;
   wallet!: string;
   username!: string;
