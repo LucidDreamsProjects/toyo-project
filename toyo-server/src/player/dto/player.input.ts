@@ -1,5 +1,5 @@
 export class PlayerInput {
-  userId!: number;
+  playerId!: number;
   wallet!: string;
   username!: string;
   tag!: number;

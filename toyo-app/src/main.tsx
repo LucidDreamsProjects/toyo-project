@@ -1,17 +1,18 @@
 import { render } from "preact";
-import { useContext, useRef } from "preact/hooks";
+import { useContext } from "preact/hooks";
 import { RouterContext, useRouter } from "./router";
-import "./index.css";
+import axios from "axios";
 
 import Home from "./views/home/home";
 import NotFoundPage from "./views/404/notFoundPage";
+import "./index.css";
 
 function Content() {
   const { location } = useContext(RouterContext);
 
   switch (location.name) {
     case "home":
-      return <Home name={""} age={0} timer={0} />;
+      return <Home />;
 
     /* case "example": {
       const { exampleId } = location.params;
