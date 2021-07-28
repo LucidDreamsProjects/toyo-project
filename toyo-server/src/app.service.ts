@@ -6,3 +6,11 @@ import { HttpService } from '@nestjs/axios';
 export class AppService {
   constructor(private httpService: HttpService) {}
 }
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Injectable } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
+
+@Injectable()
+export class AppService {
+  constructor(private httpService: HttpService) {}
+}
