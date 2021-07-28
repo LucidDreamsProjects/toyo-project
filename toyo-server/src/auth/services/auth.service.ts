@@ -3,13 +3,13 @@ import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ArkaneConnect, WindowMode } from '@arkane-network/arkane-connect';
-import { PlayerUserRepository } from 'src/player-user/entities/player-user.entity';
+import { PlayerRepository } from 'src/player/entities/player.entity';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(PlayerUserRepository)
-    private playerUserRepository: Repository<PlayerUserRepository>,
+    @InjectRepository(PlayerRepository)
+    private playerRepository: Repository<PlayerRepository>,
   ) {}
 
   isAuth() {
@@ -22,20 +22,13 @@ export class AuthService {
       bearerTokenProvider: () => process.env.ACCESS_TOKEN!,
     });
 
-    arkaneConnect.api
-      .getProfile()
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-    console.log(arkaneConnect.checkAuthenticated());
+    arkaneConnect.checkAuthenticated();
   }
 
   auth() {
     console.log('🔧 starting user authentication with Venly Widget API...');
+
+    // start authentication flow
 
     // start connection with Venly Widget API
     const arkaneConnect = new ArkaneConnect('Testaccount-capsule', {
