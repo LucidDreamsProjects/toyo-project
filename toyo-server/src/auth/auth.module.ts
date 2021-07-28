@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { PlayerRepository } from 'src/player/entities/player.entity';
+import { PassportModule } from '@nestjs/passport';
 import { AuthHttpModule } from './auth-http.module';
 
 @Module({
-  imports: [AuthHttpModule, TypeOrmModule.forFeature([PlayerRepository])],
+  imports: [AuthHttpModule, PassportModule],
 })
 export class AuthModule {}

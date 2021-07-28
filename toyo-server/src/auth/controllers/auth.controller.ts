@@ -2,8 +2,9 @@ import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from '../services/auth.service';
 import { Controller, Get, UseGuards, Req } from '@nestjs/common';
+import { Redirect } from '@nestjs/common';
 
-@Controller('/auth')
+@Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
