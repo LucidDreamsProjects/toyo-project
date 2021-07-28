@@ -1,42 +1,41 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ArkaneConnect, WindowMode } from '@arkane-network/arkane-connect';
-import { PlayerRepository } from 'src/player/entities/player.entity';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    @InjectRepository(PlayerRepository)
-    private playerRepository: Repository<PlayerRepository>,
-  ) {}
+  venlyLogin(req: any) {
+    if (!req.user) {
+      return 'No user from Venly';
+    }
 
-  isAuth() {
-    console.log('🔧 check if user is authenticated in Venly Widget API...');
+    const payload = {
+      message: 'User info from Google',
+      user: req.user,
+    };
 
-    // start connection with Venly Widget API
-    const arkaneConnect = new ArkaneConnect('Testaccount-capsule', {
-      environment: 'staging',
-      windowMode: 'REDIRECT' as WindowMode,
-      bearerTokenProvider: () => process.env.ACCESS_TOKEN!,
-    });
+    console.log(payload);
 
-    arkaneConnect.checkAuthenticated();
+    return {
+      message: 'User info from Venly',
+      user: req.user,
+    };
   }
 
-  auth() {
-    console.log('🔧 starting user authentication with Venly Widget API...');
+  googleLogin(req: any) {
+    if (!req.user) {
+      return 'No user from google';
+    }
 
-    // start authentication flow
+    const payload = {
+      message: 'User info from Google',
+      user: req.user,
+    };
 
-    // start connection with Venly Widget API
-    const arkaneConnect = new ArkaneConnect('Testaccount-capsule', {
-      environment: 'staging',
-      windowMode: 'REDIRECT' as WindowMode,
-      bearerTokenProvider: () => process.env.ACCESS_TOKEN!,
-    });
+    console.log(payload);
 
-    arkaneConnect.flows.authenticate({ windowMode: 'REDIRECT' as WindowMode });
+    return {
+      message: 'User info from Google',
+      user: req.user,
+    };
   }
 }
