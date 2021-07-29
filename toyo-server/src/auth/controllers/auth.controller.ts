@@ -1,26 +1,28 @@
 import { Request } from 'express';
-import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from '../services/auth.service';
-import { Controller, Get, UseGuards, Req } from '@nestjs/common';
-import { Redirect } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get('venly')
-  @UseGuards(AuthGuard('venly'))
-  venlyAuthRedirect(@Req() req: Request) {
+  @Get('login')
+  venlyAuthLogin(@Req() req: Request) {
     return this.authService.venlyLogin(req);
   }
 
-  @Get('google')
-  @UseGuards(AuthGuard('google'))
-  async googleAuth(@Req() req: Request) {}
+  @Get('logout')
+  venlyAuthLogout(@Req() req: Request) {
+    return this.authService.venlyLogout(req);
+  }
 
-  @Get('google/callback')
-  @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(@Req() req: Request) {
-    return this.authService.googleLogin(req);
+  @Get('validate')
+  venlyAuthValidate(@Req() req: Request) {
+    return this.authService.venlyValidate(req);
+  }
+
+  @Get('refresh')
+  venlyAuthRefresh(@Req() req: Request) {
+    return this.authService.venlyRefresh(req);
   }
 }
