@@ -1,42 +1,44 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { ArkaneConnect, WindowMode } from '@arkane-network/arkane-connect';
 import { Injectable } from '@nestjs/common';
+import { config } from 'dotenv';
+
+config();
 
 @Injectable()
 export class AuthService {
-  venlyLogin(req: any) {
-    if (!req.user) {
-      return 'No user from Venly';
-    }
+  arkaneConnect = new ArkaneConnect('Testaccount-capsule', {
+    environment: 'staging',
+    windowMode: 'POPUP' as WindowMode,
+    bearerTokenProvider: () => `${process.env.VENLY_ACCESS_TOKEN}`,
+  });
 
-    const payload = {
-      message: 'User info from Google',
-      user: req.user,
-    };
+  async venlyLogin(req: any) {
+    console.log(this.arkaneConnect);
 
-    console.log(payload);
-
-    return {
-      message: 'User info from Venly',
-      user: req.user,
-    };
+    this.arkaneConnect.flows.authenticate({
+      redirectUri: 'http://localhost:3000',
+      windowMode: 'POPUP' as WindowMode,
+    });
   }
 
-  googleLogin(req: any) {
-    if (!req.user) {
-      return 'No user from google';
-    }
+  async venlyLogout(req: any) {
+    this.arkaneConnect.logout({
+      windowMode: 'POPUP' as WindowMode,
+      redirectUri: 'http://localhost:3000',
+    });
+  }
 
-    const payload = {
-      message: 'User info from Google',
-      user: req.user,
-    };
+  async venlyValidate(req: any) {
+    console.log(this.arkaneConnect);
+    this.arkaneConnect.checkAuthenticated();
+  }
 
-    console.log(payload);
-
-    return {
-      message: 'User info from Google',
-      user: req.user,
-    };
+  async venlyRefresh(req: any) {
+    this.arkaneConnect.addOnTokenRefreshCallback((token) => {
+      console.log('Refreshed bearer token: ' + token);
+    });
   }
 }
