@@ -1,7 +1,6 @@
 import { render } from "preact";
 import { useContext } from "preact/hooks";
 import { RouterContext, useRouter } from "./router";
-import { Helmet } from "react-helmet";
 
 import Home from "./views/home/home";
 import NotFoundPage from "./views/404/notFoundPage";
@@ -27,9 +26,6 @@ export default function UI() {
 
   return (
     <RouterContext.Provider value={router}>
-      <Helmet>
-        <script src="/node_modules/@arkane-network/web3-arkane-provider/dist/web3-arkane-provider.js"></script>
-      </Helmet>
       <Content />
     </RouterContext.Provider>
   );

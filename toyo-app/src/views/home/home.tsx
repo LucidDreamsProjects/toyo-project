@@ -6,22 +6,6 @@ import {
 } from "@arkane-network/web3-arkane-provider";
 import { Component } from "preact";
 import styled from "styled-components";
-import { JsonRpcPayload, JsonRpcResponse } from "web3-core-helpers";
-import { RequestArguments } from "web3-core";
-import { Provider } from "ethereum-types";
-
-interface AbstractProvider extends Provider {
-  sendAsync(
-    payload: JsonRpcPayload,
-    callback: (error: Error | null, result?: JsonRpcResponse) => void
-  ): void;
-  send?(
-    payload: JsonRpcPayload,
-    callback: (error: Error | null, result?: JsonRpcResponse) => void
-  ): void;
-  request?(args: RequestArguments): Promise<any>;
-  connected?: boolean;
-}
 
 class Home extends Component {
   venlyInitialize() {
@@ -34,12 +18,30 @@ class Home extends Component {
       skipAuthentication: false,
     };
 
-    Arkane.createArkaneProviderEngine(options).then(
-      (provider: AbstractProvider) => {
-        const web3 = new Web3(provider);
-        console.log(web3);
-      }
-    );
+    Arkane.createArkaneProviderEngine(options).then((provider) => {
+      const web3 = new Web3(provider);
+    });
+
+    Arkane.checkAuthenticated().then((result) => {
+      console.log("result " + result);
+      result.authenticated((auth) => {
+        console.log("auth " + auth);
+        alert("logged in " + auth.subject);
+      });
+
+      result.notAuthenticated((auth) => {
+        console.log("auth " + auth);
+        alert("not logged in");
+        this.venlyLogin();
+      });
+    });
+  }
+
+  venlyLogin() {
+    Arkane.authenticate({
+      redirectUri: "http://localhost:3000",
+      windowMode: "POPUP" as WindowMode,
+    });
   }
 
   componentDidMount() {
