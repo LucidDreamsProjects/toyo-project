@@ -22,10 +22,9 @@ export class PlayerService {
     return `This action returns all player`;
   }
 
-  async findOne(playerId: string): Promise<PlayerRepository | undefined> {
+  async findOne(token: string) {
     console.log('🔧 Search for unique Player...');
-    return;
-    // return this.playerRepository.find((player) => player.playerId === playerId);
+    return this.playerRepository.findOne();
   }
 
   update(id: number, player: PlayerInput) {

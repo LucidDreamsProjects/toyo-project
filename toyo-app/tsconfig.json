@@ -17,5 +17,5 @@
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment"
   },
-  "include": ["src"]
+  "include": ["src", "node_modules/web3-eth-abi/typings"]
 }

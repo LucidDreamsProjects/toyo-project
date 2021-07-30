@@ -1,5 +1,6 @@
 export class PlayerInput {
   playerId!: number;
+  refreshToken!: string;
   wallet!: string;
   username!: string;
   tag!: number;

@@ -1,50 +1,49 @@
+import Web3 from "web3";
+import { SecretType, WindowMode } from "@arkane-network/arkane-connect";
+import {
+  Arkane,
+  ArkaneSubProviderOptions,
+} from "@arkane-network/web3-arkane-provider";
 import { Component } from "preact";
-import axios from "axios";
 import styled from "styled-components";
+import { JsonRpcPayload, JsonRpcResponse } from "web3-core-helpers";
+import { RequestArguments } from "web3-core";
+import { Provider } from "ethereum-types";
+
+interface AbstractProvider extends Provider {
+  sendAsync(
+    payload: JsonRpcPayload,
+    callback: (error: Error | null, result?: JsonRpcResponse) => void
+  ): void;
+  send?(
+    payload: JsonRpcPayload,
+    callback: (error: Error | null, result?: JsonRpcResponse) => void
+  ): void;
+  request?(args: RequestArguments): Promise<any>;
+  connected?: boolean;
+}
 
 class Home extends Component {
-  venlyLogin = async () => {
-    axios({
-      method: "GET",
-      url: "http://localhost:8080/auth/login",
-      responseType: "json",
-    })
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
-  };
+  venlyInitialize() {
+    const options: ArkaneSubProviderOptions = {
+      clientId: "Arketype",
+      environment: "staging",
+      signMethod: "POPUP" as WindowMode,
+      bearerTokenProvider: () => "",
+      secretType: "MATIC" as SecretType,
+      skipAuthentication: false,
+    };
 
-  venlyLogout = async () => {
-    axios({
-      method: "GET",
-      url: "https://localhost:8080/auth/logou",
-      responseType: "json",
-    })
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
-  };
-
-  venlyValidate = async () => {
-    axios({
-      method: "GET",
-      url: "http://localhost:8080/auth/validate",
-      responseType: "json",
-    })
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
-  };
-
-  venlyRefresh = async () => {
-    axios({
-      method: "GET",
-      url: "http://localhost:8080/auth/refresh",
-      responseType: "json",
-    })
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
-  };
+    Arkane.createArkaneProviderEngine(options).then(
+      (provider: AbstractProvider) => {
+        const web3 = new Web3(provider);
+        console.log(web3);
+      }
+    );
+  }
 
   componentDidMount() {
-    this.venlyValidate();
+    this.venlyInitialize();
   }
 
   componentWillUnMount() {}
@@ -53,6 +52,7 @@ class Home extends Component {
     return (
       <html>
         <head>
+          <script src="/node_modules/@arkane-network/web3-arkane-provider/dist/web3-arkane-provider.js" />
           <meta charSet="utf-8" />
           <title>Toyo | Home</title>
         </head>
