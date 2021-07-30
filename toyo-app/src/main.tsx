@@ -21,7 +21,7 @@ function Content() {
 }
 
 export default function UI() {
-  console.log(process.env.PORT);
+  console.log("process.env.PORT (test): " + process.env.PORT);
   const router = useRouter(location.href);
 
   return (
