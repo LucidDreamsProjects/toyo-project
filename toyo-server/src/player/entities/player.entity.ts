@@ -6,6 +6,9 @@ export class PlayerRepository {
   playerId!: number;
 
   @Column()
+  token!: string;
+
+  @Column()
   wallet!: string;
 
   @Column()

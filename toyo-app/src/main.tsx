@@ -1,10 +1,10 @@
 import { render } from "preact";
 import { useContext } from "preact/hooks";
 import { RouterContext, useRouter } from "./router";
-import axios from "axios";
 
 import Home from "./views/home/home";
 import NotFoundPage from "./views/404/notFoundPage";
+
 import "./index.css";
 
 function Content() {
@@ -14,11 +14,6 @@ function Content() {
     case "home":
       return <Home />;
 
-    /* case "example": {
-      const { exampleId } = location.params;
-      return <ExamplePage postId={exampleId} />;
-    } */
-
     case "404":
     default:
       return <NotFoundPage />;
@@ -26,6 +21,7 @@ function Content() {
 }
 
 export default function UI() {
+  console.log("process.env.PORT (test): " + process.env.PORT);
   const router = useRouter(location.href);
 
   return (
