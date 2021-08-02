@@ -1,30 +1,36 @@
-import configuration from '../config/configuration';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { getConnectionOptions } from 'typeorm';
-import { ConfigModule } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios';
-import { PlayerModule } from './player/player.module';
-import { AuthModule } from './auth/auth.module';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
+import { join } from 'path';
+import { PlayerModule } from './player/player.module';
+import { Connection } from 'typeorm';
+import { Player } from './player/entities/player.entity';
+
+const TYPEORM_PORT = Number(process.env.TYPEORM_PORT);
+const TYPEORM_LOGGING = Boolean(process.env.TYPEORM_LOGGING);
+const TYPEORM_SYNCHRONIZE = Boolean(process.env.TYPEORM_SYNCHRONIZE);
 
 @Module({
   imports: [
     HttpModule,
-    AuthModule,
-    TypeOrmModule.forRootAsync({
-      useFactory: async () =>
-        Object.assign(await getConnectionOptions(), {
-          PlayerModule,
-          autoLoadEntities: true,
-        }),
-    }),
-    ConfigModule.forRoot({
-      load: [configuration],
+    PlayerModule,
+    TypeOrmModule.forRoot({
+      type: 'mysql' as any,
+      host: '162.240.6.22',
+      port: 3306,
+      username: 'wwtoyo_admin',
+      password: 'dd^8A!DPq#ZpjewF2',
+      database: 'wwtoyo_universe',
+      entities: [Player],
+      logging: true,
+      synchronize: false,
     }),
   ],
   providers: [AppService],
   controllers: [AppController],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private connection: Connection) {}
+}
