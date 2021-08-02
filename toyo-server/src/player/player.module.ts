@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { PlayerRepository } from './entities/player.entity';
-import { PlayerHttpModule } from './player-http.module';
+import { PlayerController } from './controllers/player.controller';
 import { PlayerService } from './services/player.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { PlayerRepository } from './repositories/player.repository';
 
 @Module({
-  imports: [PlayerHttpModule, TypeOrmModule.forFeature([PlayerRepository])],
-  exports: [PlayerService],
+  imports: [TypeOrmModule.forFeature([PlayerRepository])],
+  controllers: [PlayerController],
+  providers: [PlayerService],
 })
 export class PlayerModule {}

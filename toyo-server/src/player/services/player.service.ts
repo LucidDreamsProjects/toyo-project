@@ -1,39 +1,51 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { PlayerRepository } from '../entities/player.entity';
-import { PlayerInput } from '../dto/player.input';
+import { PlayerRepository } from '../repositories/player.repository';
+import { Player } from '../entities/player.entity';
+import { CreatePlayerDTO } from '../dto/create-player.dto';
+import { EditPlayerDTO } from '../dto/edit-player.dto';
 
 @Injectable()
 export class PlayerService {
   constructor(
     @InjectRepository(PlayerRepository)
-    private playerRepository: Repository<PlayerRepository>,
+    private playerRepository: PlayerRepository,
   ) {}
 
-  create(player: PlayerInput) {
-    console.log('🔧 Receiving data for new Player...');
-    return 'This action adds a new player';
+  public async createPlayer(createPlayerDto: CreatePlayerDTO): Promise<Player> {
+    console.log("🔧 Creating a new Player on Toyo's universe...");
+    return await this.playerRepository.createPlayer(createPlayerDto);
   }
 
-  findAll() {
-    console.log('🔧 Searching for all Players...');
-    return `This action returns all player`;
+  public async getPlayers(): Promise<Player[]> {
+    console.log("🔧 Returning all Players from Toyo's universe...");
+    return await this.playerRepository.find();
   }
 
-  async findOne(token: string) {
-    console.log('🔧 Search for unique Player...');
-    return this.playerRepository.findOne();
+  public async getPlayerById(playerId: number): Promise<Player> {
+    console.log("🔧 Searching for Player (by Id) in Toyo's universe...");
+    const foundPlayer = await this.playerRepository.findOne(playerId);
+    if (!foundPlayer) {
+      throw new NotFoundException(`🔧 Player not found in Toyo's universe.`);
+    }
+    return foundPlayer;
   }
 
-  update(id: number, player: PlayerInput) {
-    console.log('🔧 Updating Player #ID...');
-    return `This action updates a #${id} player`;
+  public async editPlayer(
+    playerId: number,
+    editPlayerDto: EditPlayerDTO,
+  ): Promise<Player> {
+    console.log("🔧 Updating Player (by Id) from Toyo's universe...");
+    const editedPlayer = await this.playerRepository.findOne(playerId);
+    if (!editedPlayer) {
+      throw new NotFoundException(`🔧 Player not found in Toyo's universe.`);
+    }
+    return this.playerRepository.editPlayer(editPlayerDto, editedPlayer);
   }
 
-  remove(id: number) {
-    console.log('🔧 Deleting Player #ID...');
-    return `This action removes a #${id} player`;
+  public async deletePlayer(playerId: number): Promise<void> {
+    console.log("🔧 Deleting Player (by Id) from Toyo's universe...");
+    await this.playerRepository.delete(playerId);
   }
 }

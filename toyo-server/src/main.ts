@@ -16,7 +16,7 @@ async function bootstrap() {
 
   app.use(
     session({
-      secret: `${process.env.SESSION_SECRET}`,
+      secret: `${SESSION_SECRET}`,
       resave: true,
       saveUninitialized: false,
       cookie: { maxAge: 3600000, httpOnly: true },
@@ -27,4 +27,5 @@ async function bootstrap() {
     console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
   });
 }
+
 bootstrap();
