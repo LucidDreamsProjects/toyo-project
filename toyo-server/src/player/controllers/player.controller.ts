@@ -1,42 +1,56 @@
 import {
   Controller,
   Get,
-  Query,
   Post,
   Body,
   Put,
+  Patch,
   Param,
   Delete,
 } from '@nestjs/common';
-import { PlayerInput } from '../dto/player.input';
+import { CreatePlayerDTO } from '../dto/create-player.dto';
+import { EditPlayerDTO } from '../dto/edit-player.dto';
+import { Player } from '../entities/player.entity';
 import { PlayerService } from '../services/player.service';
 
-@Controller('/users')
+@Controller('player')
 export class PlayerController {
   constructor(private readonly playerService: PlayerService) {}
 
-  @Post()
-  create(@Body() createPlayer: PlayerInput) {
-    return this.playerService.create(createPlayer);
+  @Post('create')
+  public async createPlayer(
+    @Body() createPlayerDto: CreatePlayerDTO,
+  ): Promise<Player> {
+    const player = await this.playerService.createPlayer(createPlayerDto);
+    return player;
   }
 
-  /* @Get()
-  findAll(@Query() query: ListAllEntities) {
-    return `This action returns all cats (limit: ${query.limit} items)`;
-  } */
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return `This action returns a #${id} cat`;
+  @Get('all')
+  public async getPlayers(): Promise<Player[]> {
+    const players = await this.playerService.getPlayers();
+    return players;
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updatePlayerInput: PlayerInput) {
-    return `This action updates a #${id} player`;
+  @Get('/:playerId')
+  public async getPlayerById(
+    @Param('playerId') playerId: number,
+  ): Promise<Player> {
+    const player = await this.playerService.getPlayerById(playerId);
+    return player;
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return `This action removes a #${id} cat`;
+  @Patch('/edit/:playerId')
+  public async editPlayer(
+    @Body() editPlayerDto: EditPlayerDTO,
+    @Param('playerId') playerId: number,
+  ): Promise<Player> {
+    const player = this.playerService.editPlayer(playerId, editPlayerDto);
+    return player;
+  }
+
+  @Delete('/delete/:playerId')
+  public async deletePlayer(@Param('playerId') playerId: number) {
+    const deletedPlayer = await this.playerService.deletePlayer(playerId);
+    return deletedPlayer;
   }
 }
