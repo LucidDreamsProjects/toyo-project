@@ -1,31 +1,37 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('PlayerRepository')
-export class PlayerRepository {
+@Entity({ name: 'player_User' })
+export class Player extends BaseEntity {
   @PrimaryGeneratedColumn()
-  playerId!: number;
+  id?: number;
 
-  @Column()
-  wallet!: string;
+  @Column({ type: 'varchar', unique: true, length: 12288 })
+  refreshToken?: string;
 
-  @Column()
-  username!: string;
+  @Column({ type: 'varchar', unique: true, length: 256 })
+  walletAddress?: string;
 
-  @Column()
-  tag!: number;
+  @Column({ type: 'varchar', length: 64 })
+  username?: string;
 
-  @Column()
-  name!: string;
+  @Column({ type: 'varchar', length: 128 })
+  email?: string;
 
-  @Column()
-  icon!: number;
+  @Column({ type: 'varchar', length: 64 })
+  firstName?: string;
 
-  @Column()
-  address!: string;
+  @Column({ type: 'varchar', length: 128 })
+  lastName?: string;
 
-  @Column()
-  replays!: string;
+  @Column({ type: 'int' })
+  icon?: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 128 })
+  address?: string;
+
+  @Column({ type: 'varchar', length: 512 })
+  replays?: string;
+
+  @Column({ type: 'int', default: 3 })
   role!: number;
 }
