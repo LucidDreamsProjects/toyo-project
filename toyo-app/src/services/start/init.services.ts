@@ -6,7 +6,7 @@ import {
 } from "@arkane-network/web3-arkane-provider";
 import venlyLogin from "../auth/auth.services";
 
-export default function venlyInitialize() {
+export default async function venlyInitialize(): Promise<void> {
   const options: ArkaneSubProviderOptions = {
     clientId: "Arketype",
     environment: "staging",
@@ -16,11 +16,11 @@ export default function venlyInitialize() {
     skipAuthentication: false,
   };
 
-  Arkane.createArkaneProviderEngine(options).then((provider) => {
+  await Arkane.createArkaneProviderEngine(options).then((provider) => {
     const web3 = new Web3(provider);
   });
 
-  Arkane.checkAuthenticated().then((result) => {
+  await Arkane.checkAuthenticated().then((result) => {
     console.log("result " + result);
     result.authenticated((auth) => {
       console.log("auth " + auth);
