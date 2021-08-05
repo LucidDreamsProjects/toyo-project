@@ -39,8 +39,8 @@ const TYPEORM_SYNCHRONIZE = Boolean(process.env.TYPEORM_SYNCHRONIZE);
 export class AppModule implements OnModuleInit {
   constructor(private connection: Connection, private appService: AppService) {}
 
-  onModuleInit() {
-    console.log('Initialization...');
-    this.appService.venlyAuth();
+  async onModuleInit() {
+    console.log('calling onModuleInit...');
+    await this.appService.venlyAuth();
   }
 }
