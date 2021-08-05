@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <script src="/node_modules/@arkane-network/web3-arkane-provider/dist/web3-arkane-provider.js"></script>
     <script>
       window.global = window;
@@ -17,9 +21,18 @@
       window.EventEmitter = EventEmitter;
     </script>
     <title>Toyo Demo</title>
+    <meta
+      name="description"
+      content="Toyo.demo : Next generation blockchain fighting game"
+    />
+    <meta
+      name="keywords"
+      content="toyo, fight, game, blockchain, cryptocurrency"
+    />
   </head>
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script src="/node_modules/web3/dist/web3.min.js"></script>
   </body>
 </html>

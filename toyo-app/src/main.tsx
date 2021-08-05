@@ -1,5 +1,5 @@
 import { render } from "preact";
-import { useContext } from "preact/hooks";
+import { useContext, useState } from "preact/hooks";
 import { RouterContext, useRouter } from "./router";
 
 import Home from "./views/home/home";
@@ -21,7 +21,6 @@ function Content() {
 }
 
 export default function UI() {
-  console.log("process.env.PORT (test): " + process.env.PORT);
   const router = useRouter(location.href);
 
   return (
