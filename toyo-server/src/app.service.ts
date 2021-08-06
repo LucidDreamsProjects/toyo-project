@@ -1,55 +1,42 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Injectable, OnModuleInit } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
-import axios from 'axios';
 import qs from 'qs';
-import { ConstructorOptions } from '@arkane-network/arkane-connect/dist/src/connect/connect';
+import { Observable } from 'rxjs';
+import { Injectable } from '@nestjs/common';
+import axios, { AxiosResponse } from 'axios';
 import { ArkaneConnect, WindowMode } from '@arkane-network/arkane-connect';
+import { ConstructorOptions } from '@arkane-network/arkane-connect/dist/src/connect/connect';
 
 @Injectable()
-export class AppService implements OnModuleInit {
-  constructor(private httpService: HttpService) {}
-
-  async onModuleInit(): Promise<void> {
-    await this.venlyAuth();
-  }
-
-  //* Using Venly's Widget API
-  //* (Elliot's snippet example)
-  public async venlyAuth(): Promise<void> {
-    console.log('callind venlyAuth...');
+export class AppService {
+  public async authWidget(): Promise<
+    Observable<AxiosResponse<void>> | undefined
+  > {
+    console.log('👷 Initializing (NestJS) Widget API service...');
     const options: ConstructorOptions = {
       environment: 'staging',
-      windowMode: WindowMode.POPUP,
+      windowMode: 'POPUP' as WindowMode,
       bearerTokenProvider: () => '',
       useOverlayWithPopup: true,
     };
 
-    const arkaneConnect = new ArkaneConnect('Testaccount', options);
+    const arkaneConnect = new ArkaneConnect('Toyo-capsule', options);
 
-    arkaneConnect
-      .authenticate()
-      .then((res) => {
-        if (res.isAuthenticated) {
-          arkaneConnect.api
-            .getWallets()
-            .then((wallets) => {
-              console.log(
-                `The address of the first wallet is: ${wallets[0].address}`,
-              );
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        }
-      })
-      .finally(() => {
-        arkaneConnect.createSigner(WindowMode.REDIRECT);
-      });
+    await arkaneConnect.authenticate().then((res) => {
+      if (res.isAuthenticated) {
+        arkaneConnect.api
+          .getWallets()
+          .then((wallets) => {
+            console.log(
+              `The address of the first wallet is: ${wallets[0].address}`,
+            );
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    });
 
-    console.log(arkaneConnect.createSigner());
-
-    arkaneConnect.api
+    await arkaneConnect.api
       .getProfile()
       .then((profile: { email: any }) => {
         console.log(
@@ -60,22 +47,13 @@ export class AppService implements OnModuleInit {
         console.log(e);
       });
 
-    arkaneConnect.api
-      .getWallets()
-      .then((wallets) => {
-        console.log(
-          `The address of the first wallet is: ${wallets[0].address}`,
-        );
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    return;
   }
 
   //* Using Venly's Postman directly route
-  /* public async venlyAuth(): Promise<any> {
-    console.log('callind venlyAuth...');
-    return await axios
+  public async authPostman(): Promise<void> {
+    console.log('👷 initializing (NestJS) Postman service...');
+    await axios
       .post(
         'https://login-staging.arkane.network/auth/realms/Arkane/protocol/openid-connect/token',
         qs.stringify({
@@ -91,6 +69,9 @@ export class AppService implements OnModuleInit {
       )
       .then(function (response) {
         console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-  } */
+  }
 }

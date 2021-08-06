@@ -6,12 +6,16 @@ const Background = styled.section`
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: hsl(261, 52%, 47%);
   color: #fff;
   font-size: 1.953rem;
+  background-color: hsl(261, 52%, 47%);
 `;
 
 const Section = styled.section`
+  @media screen and (min-width: 320px) and (max-width: 420px) {
+    min-height: "200%";
+  }
+
   display: flex;
   flex-direction: column;
   flex-shrink: 1;
@@ -38,12 +42,43 @@ const Section = styled.section`
     text-shadow: 2px 2px 1px #000;
   }
 
-  #btn--home {
+  .btn {
     @media screen and (min-width: 320px) and (max-width: 420px) {
-      right: 10%;
+      margin: 0 auto;
+      max-width: 75%;
+      max-height: 15%;
     }
 
     display: inline-flex;
+    position: relative;
+    align-items: center;
+    vertical-align: center;
+    padding: 1rem;
+    margin: 2.25rem;
+    width: auto;
+    max-width: 16%;
+    max-height: 8%;
+    box-shadow: 2px 6px;
+    font-weight: 700;
+    border: 2px solid hsl(261, 52%, 56%);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .btn:focus,
+  .btn:hover {
+    background-color: hsl(261, 52%, 48%);
+    border: 2px solid hsl(261, 52%, 52%);
+    box-shadow: none;
+  }
+
+  .btn--home {
+    @media screen and (min-width: 320px) and (max-width: 420px) {
+      left: 8%;
+    }
+
+    display: inline-flex;
+    box-sizing: border-box;
     vertical-align: middle;
     align-items: center;
     position: relative;
@@ -53,7 +88,10 @@ const Section = styled.section`
     text-shadow: 2px 2px 1px #000;
     background: none;
     border: none;
-    cursor: pointer;
+  }
+
+  .btn--api:hover {
+    color: #fff;
   }
 
   #title {
@@ -117,4 +155,9 @@ const Form = styled.form`
   }
 `;
 
-export { Background, Section, Row, Form };
+const ApiButtons = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export { Background, Section, Row, Form, ApiButtons };

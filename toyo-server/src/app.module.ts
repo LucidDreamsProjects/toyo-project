@@ -1,16 +1,14 @@
-import { Module, CacheModule, OnModuleInit } from '@nestjs/common';
+import { Module, CacheModule } from '@nestjs/common';
 import redisStore from 'cache-manager-redis-store';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HttpModule } from '@nestjs/axios';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { PlayerModule } from './player/player.module';
-import { Connection } from 'typeorm';
 import { Player } from './player/entities/player.entity';
+import { config } from 'dotenv';
 
-const TYPEORM_PORT = Number(process.env.TYPEORM_PORT);
-const TYPEORM_LOGGING = Boolean(process.env.TYPEORM_LOGGING);
-const TYPEORM_SYNCHRONIZE = Boolean(process.env.TYPEORM_SYNCHRONIZE);
+config();
 
 @Module({
   imports: [
@@ -36,11 +34,16 @@ const TYPEORM_SYNCHRONIZE = Boolean(process.env.TYPEORM_SYNCHRONIZE);
   providers: [AppService],
   controllers: [AppController],
 })
-export class AppModule implements OnModuleInit {
-  constructor(private connection: Connection, private appService: AppService) {}
+export class AppModule {
+  constructor(private appService: AppService) {}
 
-  async onModuleInit() {
-    console.log('calling onModuleInit...');
-    await this.appService.venlyAuth();
-  }
+  TYPEORM_PORT = Number(process.env.TYPEORM_PORT);
+  TYPEORM_LOGGING = Boolean(process.env.TYPEORM_LOGGING);
+  TYPEORM_SYNCHRONIZE = Boolean(process.env.TYPEORM_SYNCHRONIZE);
+
+  foo = () => {
+    console.log(this.TYPEORM_PORT);
+    console.log(this.TYPEORM_LOGGING);
+    console.log(this.TYPEORM_SYNCHRONIZE);
+  };
 }
