@@ -34,16 +34,4 @@ config();
   providers: [AppService],
   controllers: [AppController],
 })
-export class AppModule {
-  constructor(private appService: AppService) {}
-
-  TYPEORM_PORT = Number(process.env.TYPEORM_PORT);
-  TYPEORM_LOGGING = Boolean(process.env.TYPEORM_LOGGING);
-  TYPEORM_SYNCHRONIZE = Boolean(process.env.TYPEORM_SYNCHRONIZE);
-
-  foo = () => {
-    console.log(this.TYPEORM_PORT);
-    console.log(this.TYPEORM_LOGGING);
-    console.log(this.TYPEORM_SYNCHRONIZE);
-  };
-}
+export class AppModule {}

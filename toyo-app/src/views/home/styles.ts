@@ -90,10 +90,6 @@ const Section = styled.section`
     border: none;
   }
 
-  .btn--api:hover {
-    color: #fff;
-  }
-
   #title {
     display: inline-flex;
     vertical-align: middle;
@@ -155,9 +151,4 @@ const Form = styled.form`
   }
 `;
 
-const ApiButtons = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export { Background, Section, Row, Form, ApiButtons };
+export { Background, Section, Row, Form };
