@@ -42,54 +42,6 @@ const Section = styled.section`
     text-shadow: 2px 2px 1px #000;
   }
 
-  .btn {
-    @media screen and (min-width: 320px) and (max-width: 420px) {
-      margin: 0 auto;
-      max-width: 75%;
-      max-height: 15%;
-    }
-
-    display: inline-flex;
-    position: relative;
-    align-items: center;
-    vertical-align: center;
-    padding: 1rem;
-    margin: 2.25rem;
-    width: auto;
-    max-width: 16%;
-    max-height: 8%;
-    box-shadow: 2px 6px;
-    font-weight: 700;
-    border: 2px solid hsl(261, 52%, 56%);
-    border-radius: 8px;
-    cursor: pointer;
-  }
-
-  .btn:focus,
-  .btn:hover {
-    background-color: hsl(261, 52%, 48%);
-    border: 2px solid hsl(261, 52%, 52%);
-    box-shadow: none;
-  }
-
-  .btn--home {
-    @media screen and (min-width: 320px) and (max-width: 420px) {
-      left: 8%;
-    }
-
-    display: inline-flex;
-    box-sizing: border-box;
-    vertical-align: middle;
-    align-items: center;
-    position: relative;
-    right: 2.5%;
-    color: #fff;
-    font-size: 0.8rem;
-    text-shadow: 2px 2px 1px #000;
-    background: none;
-    border: none;
-  }
-
   #title {
     display: inline-flex;
     vertical-align: middle;
@@ -111,11 +63,27 @@ const Row = styled.div`
   justify-content: space-between;
 `;
 
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+  width: ${({ width }) => (width ? width : "100%")};
+  height: ${({ height }) => (height ? height : "100%")};
+  justify-content: space-between;
+`;
+
 const Form = styled.form`
-  @media screen and (min-width: 320px) and (max-width: 420px) {
+  @media screen and (min-width: 765px) and (max-width: 1280px) {
+    min-width: 20%;
+    max-width: 30%;
+  }
+
+  @media screen and (min-width: 320px) and (max-width: 764px) {
     padding: 0;
     margin: 6rem 0 0 1.7rem;
-    width: 80%;
+    width: auto;
+    min-width: 80%;
+    max-width: 86%;
   }
 
   display: flex;
@@ -124,7 +92,9 @@ const Form = styled.form`
   padding: 1rem;
   margin-left: 2.25%;
   margin-top: 7.5%;
-  width: 20%;
+  width: auto;
+  max-width: 50%;
+  min-width: 28%;
   border: 2px solid #fff;
   border-radius: 8px;
 
@@ -151,4 +121,37 @@ const Form = styled.form`
   }
 `;
 
-export { Background, Section, Row, Form };
+const Button = styled.button`
+  @media screen and (min-width: 320px) and (max-width: 420px) {
+    margin: 0 auto;
+    min-width: 62%;
+    max-width: 75%;
+    max-height: 15%;
+  }
+
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  vertical-align: center;
+  padding: 1rem;
+  margin: 2.25rem;
+  width: auto;
+  max-width: 16%;
+  max-height: 8%;
+  box-shadow: 2px 6px;
+  font-weight: 700;
+  border: 2px solid hsl(261, 52%, 56%);
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+
+  &:focus,
+  &:hover {
+    background-color: hsl(261, 52%, 48%);
+    border: 2px solid hsl(261, 52%, 52%);
+    box-shadow: none;
+    color: #fff;
+  }
+`;
+
+export { Background, Section, Column, Row, Form, Button };
