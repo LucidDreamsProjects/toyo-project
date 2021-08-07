@@ -7,13 +7,12 @@ const Background = styled.section`
   width: 100%;
   height: 100%;
   color: #fff;
-  font-size: 1.953rem;
-  background-color: hsl(261, 52%, 47%);
+  font-size: 0.125em;
 `;
 
 const Section = styled.section`
-  @media screen and (min-width: 320px) and (max-width: 420px) {
-    min-height: "200%";
+  @media screen and (min-width: 1px) and (max-width: 420px) {
+    min-height: 200%;
   }
 
   display: flex;
@@ -21,7 +20,7 @@ const Section = styled.section`
   flex-shrink: 1;
   width: ${({ width }) => (width ? width : "100%")};
   height: ${({ height }) => (height ? height : "100%")};
-  background-color: hsl(261, 52%, 47%);
+  background-color: hsl(323 21% 16%);
 
   a {
     color: #fff;
@@ -46,9 +45,11 @@ const Section = styled.section`
     display: inline-flex;
     vertical-align: middle;
     align-items: center;
-    align-self: center;
+    align-self: left;
     position: relative;
     top: 5%;
+    margin-left: 2rem;
+    margin-bottom: 6rem;
     font-size: 2.441rem;
     text-shadow: 6px 6px 12px #000;
   }
@@ -78,7 +79,7 @@ const Form = styled.form`
     max-width: 30%;
   }
 
-  @media screen and (min-width: 320px) and (max-width: 764px) {
+  @media screen and (min-width: 1px) and (max-width: 764px) {
     padding: 0;
     margin: 6rem 0 0 1.7rem;
     width: auto;
@@ -94,7 +95,7 @@ const Form = styled.form`
   margin-top: 7.5%;
   width: auto;
   max-width: 50%;
-  min-width: 28%;
+  min-width: 40%;
   border: 2px solid #fff;
   border-radius: 8px;
 
@@ -121,37 +122,31 @@ const Form = styled.form`
   }
 `;
 
-const Button = styled.button`
-  @media screen and (min-width: 320px) and (max-width: 420px) {
+const NeonButton = styled.button`
+  @media screen and (min-width: 1px) and (max-width: 420px) {
     margin: 0 auto;
     min-width: 62%;
     max-width: 75%;
     max-height: 15%;
   }
 
-  display: inline-flex;
-  position: relative;
-  align-items: center;
-  vertical-align: center;
-  padding: 1rem;
-  margin: 2.25rem;
+  display: inline-block;
+  padding: 1.5em;
+  margin: 1.6em;
   width: auto;
-  max-width: 16%;
-  max-height: 8%;
-  box-shadow: 2px 6px;
-  font-weight: 700;
-  border: 2px solid hsl(261, 52%, 56%);
-  border-radius: 8px;
+  max-width: 20%;
+  max-height: 10%;
+  font-size: 1rem;
+  font-weight: 800;
+  color: hsl(317 100% 54%);
+  border: 0.25em solid currentColor;
+  border-radius: 0.6em;
   background: none;
   cursor: pointer;
 
-  &:focus,
-  &:hover {
-    background-color: hsl(261, 52%, 48%);
-    border: 2px solid hsl(261, 52%, 52%);
-    box-shadow: none;
-    color: #fff;
-  }
+  text-shadow: 0 0 0.25em hsl(0 0% 100% / 0.5), 0 0 0.45em currentColor;
+
+  box-shadow: 0 0 1em 0 hsl(317 100% 54%);
 `;
 
-export { Background, Section, Column, Row, Form, Button };
+export { Background, Section, Column, Row, Form, NeonButton };
