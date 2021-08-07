@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Injectable } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
 
 @Injectable()
-export class AppService {
-  constructor(private httpService: HttpService) {}
-}
+export class AppService {}

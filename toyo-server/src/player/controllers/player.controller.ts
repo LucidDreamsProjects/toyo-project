@@ -3,11 +3,13 @@ import {
   Get,
   Post,
   Body,
-  Put,
   Patch,
   Param,
   Delete,
+  Inject,
+  CACHE_MANAGER,
 } from '@nestjs/common';
+import { Cache } from 'cache-manager';
 import { CreatePlayerDTO } from '../dto/create-player.dto';
 import { EditPlayerDTO } from '../dto/edit-player.dto';
 import { Player } from '../entities/player.entity';
@@ -15,7 +17,11 @@ import { PlayerService } from '../services/player.service';
 
 @Controller('player')
 export class PlayerController {
-  constructor(private readonly playerService: PlayerService) {}
+  constructor(
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
+    private readonly playerService: PlayerService,
+  ) {}
 
   @Post('create')
   public async createPlayer(

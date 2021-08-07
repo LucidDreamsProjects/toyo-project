@@ -20,3 +20,8 @@ body {
 root {
   --primary-color-400: hsl(261, 52%, 47%);
 }
+
+/* margin-related classes */
+.mt-2-25 {
+  margin-top: 2.25rem;
+}
