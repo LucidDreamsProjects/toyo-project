@@ -1,24 +1,69 @@
-import { useState } from "preact/hooks";
-import { BrowserView, MobileView } from "react-device-detect";
+import { useEffect, useState } from "preact/hooks";
+import { ArkaneConnect, WindowMode } from "@arkane-network/arkane-connect";
 
 import useWindowSize from "../../hooks/useWindowSize";
-import ConnectWidgetAPI from "../../services/init/init.services";
 
-import { Background, Section, Row, Column, Form, Button } from "./styles";
+import { FunctionalComponent } from "preact";
+import { KeycloakInstance } from "keycloak-js";
+import { Background, Section, Form, NeonButton } from "./styles";
+import { AuthenticationResult } from "@arkane-network/arkane-connect/dist/src/connect/connect";
 
-export default function Home() {
+interface HomeProps {
+  arkaneConnect: ArkaneConnect;
+}
+
+export const Home: FunctionalComponent<HomeProps> = (props): JSX.Element => {
   let [width, height] = useWindowSize();
-  let [isLogged, Login] = useState(false);
+  let [isLogged, setIsLogged] = useState(false);
   let [playerUI, setPlayerUI] = useState(1);
   let userId;
+  let profile;
 
-  console.log(`👷 Welcome to Toyo's official webpage!`);
+  async function handleInit() {
+    console.log(`👷 Welcome to Toyo's official webpage!`);
+    console.log(`👷 User is logged? ${isLogged}`);
 
-  const handleInit = () => {
-    userId = ConnectWidgetAPI();
-    console.log(`👷 User Successfully Logged In!`);
-    Login(true);
-  };
+    if (props.arkaneConnect !== undefined) {
+      console.log(`👷 Device online and ready to go!`);
+    }
+
+    handleAuthCheck();
+  }
+
+  async function handleAuthCheck() {
+    if (isLogged) {
+      let result = await props.arkaneConnect
+        .checkAuthenticated()
+        .catch((error) => console.log(error));
+
+      if (result) {
+        setIsLogged(result.isAuthenticated);
+      }
+    }
+
+    if (isLogged === false) {
+      console.log(`👷 Checking user credentials...`);
+
+      let result: void | AuthenticationResult = await props.arkaneConnect.flows
+        .authenticate({ windowMode: "POPUP" as WindowMode })
+        .then((result: AuthenticationResult) => {
+          result.authenticated((auth: KeycloakInstance) => {
+            console.log("👷 User logged in: " + auth.subject);
+          });
+          result.notAuthenticated((auth: undefined | KeycloakInstance) => {
+            console.log("👷 User not logged in");
+          });
+        });
+
+      if (result) {
+        setIsLogged(result.isAuthenticated);
+      }
+    }
+  }
+
+  useEffect(() => {
+    handleInit();
+  }, []);
 
   return (
     <html>
@@ -26,10 +71,10 @@ export default function Home() {
         <Background>
           <Section height={height}>
             <div id="logo">DROPDOWN MENU</div>
-            <Button class="btn--login" onClick={handleInit}>
-              LOGIN
-            </Button>
             <h1 id="title">Homepage 👽</h1>
+            <NeonButton class="btn--login" onClick={handleInit}>
+              LOGIN
+            </NeonButton>
             <Form action="" method="post">
               <div>
                 <label htmlFor="username">Username</label>
@@ -61,4 +106,4 @@ export default function Home() {
       </body>
     </html>
   );
-}
+};

@@ -1,10 +1,12 @@
 import { ArkaneConnect, Wallet } from "@arkane-network/arkane-connect";
 
-const getUserWallets = async (arkaneConnect: ArkaneConnect): Promise<void | Wallet[]> => {
+async function getWallets(
+  arkaneConnect: ArkaneConnect
+): Promise<void | Wallet[]> {
   const wallets = await arkaneConnect.api
     .getWallets()
     .then((wallets) => {
-      console.log(wallets);
+      console.log(`👷 User wallets: ${wallets}`);
       return wallets;
     })
     .catch((error) => {
@@ -12,4 +14,6 @@ const getUserWallets = async (arkaneConnect: ArkaneConnect): Promise<void | Wall
     });
 
   return wallets;
-};
+}
+
+export default getWallets;
