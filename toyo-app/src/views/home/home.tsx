@@ -1,43 +1,67 @@
-import { useLayoutEffect, useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
+import { ArkaneConnect, WindowMode } from "@arkane-network/arkane-connect";
 
 import useWindowSize from "../../hooks/useWindowSize";
-import ConnectWidgetAPI from "../../services/init/init.services";
-import getAuth from "../../services/users/getAuth";
-import getProfile from "../../services/users/getProfile";
-import checkAuthenticated from "../../services/users/checkAuthenticated";
 
-import { Background, Section, Row, Column, Form, NeonButton } from "./styles";
+import { FunctionalComponent } from "preact";
+import { KeycloakInstance } from "keycloak-js";
+import { Background, Section, Form, NeonButton } from "./styles";
+import { AuthenticationResult } from "@arkane-network/arkane-connect/dist/src/connect/connect";
 
-export default function Home() {
+interface HomeProps {
+  arkaneConnect: ArkaneConnect;
+}
+
+export const Home: FunctionalComponent<HomeProps> = (props): JSX.Element => {
   let [width, height] = useWindowSize();
-  let [isLogged, setLogin] = useState(false);
+  let [isLogged, setIsLogged] = useState(false);
   let [playerUI, setPlayerUI] = useState(1);
-  let arkaneConnect;
   let userId;
   let profile;
 
   async function handleInit() {
     console.log(`👷 Welcome to Toyo's official webpage!`);
+    console.log(`👷 User is logged? ${isLogged}`);
 
-    arkaneConnect = await ConnectWidgetAPI();
-    if (arkaneConnect !== undefined) {
+    if (props.arkaneConnect !== undefined) {
       console.log(`👷 Device online and ready to go!`);
     }
 
-    if (isLogged === false) {
-      let result;
-      console.log(`👷 Checking user credentials...`);
-      result = await checkAuthenticated(arkaneConnect);
-      setLogin(result.isAuthenticated);
-    }
-
-    console.log(`👷 User Successfully Logged In!`);
-
-    userId = await getAuth(arkaneConnect);
-    profile = await getProfile(arkaneConnect);
+    handleAuthCheck();
   }
 
-  useLayoutEffect(() => {
+  async function handleAuthCheck() {
+    if (isLogged) {
+      let result = await props.arkaneConnect
+        .checkAuthenticated()
+        .catch((error) => console.log(error));
+
+      if (result) {
+        setIsLogged(result.isAuthenticated);
+      }
+    }
+
+    if (isLogged === false) {
+      console.log(`👷 Checking user credentials...`);
+
+      let result: void | AuthenticationResult = await props.arkaneConnect.flows
+        .authenticate({ windowMode: "POPUP" as WindowMode })
+        .then((result: AuthenticationResult) => {
+          result.authenticated((auth: KeycloakInstance) => {
+            console.log("👷 User logged in: " + auth.subject);
+          });
+          result.notAuthenticated((auth: undefined | KeycloakInstance) => {
+            console.log("👷 User not logged in");
+          });
+        });
+
+      if (result) {
+        setIsLogged(result.isAuthenticated);
+      }
+    }
+  }
+
+  useEffect(() => {
     handleInit();
   }, []);
 
@@ -82,4 +106,4 @@ export default function Home() {
       </body>
     </html>
   );
-}
+};
