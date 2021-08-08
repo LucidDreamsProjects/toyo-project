@@ -144,7 +144,7 @@ const NeonButton = styled.button`
   background: none;
   cursor: pointer;
 
-  text-shadow: 0 0 0.25em hsl(0 0% 100% / 0.5), 0 0 0.45em currentColor;
+  text-shadow: 0 0 0.25em hsl(0 0% 100% / 0.25), 0 0 0.45em currentColor;
 
   box-shadow: 0 0 1em 0 hsl(317 100% 54%);
 `;
