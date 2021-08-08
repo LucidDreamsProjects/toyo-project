@@ -3,7 +3,7 @@ import { BaseEntity, Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 @Entity({ name: 'player_User' })
 export class Player extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id?: number;
+  userId?: number;
 
   @Column({ type: 'varchar', unique: true, length: 12288 })
   refreshToken?: string;
@@ -28,6 +28,9 @@ export class Player extends BaseEntity {
 
   @Column({ type: 'varchar', length: 128 })
   address?: string;
+
+  @Column({ type: 'uuid' })
+  inventory?: string;
 
   @Column({ type: 'varchar', length: 512 })
   replays?: string;
