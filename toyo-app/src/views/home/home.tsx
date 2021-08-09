@@ -48,7 +48,11 @@ export const Home: FunctionalComponent<HomeProps> = (props): JSX.Element => {
         .authenticate({ windowMode: "POPUP" as WindowMode })
         .then((result: AuthenticationResult) => {
           result.authenticated((auth: KeycloakInstance) => {
-            console.log("👷 User logged in: " + auth.subject);
+            console.log("👷 User ID: " + auth.subject);
+            console.log(
+              "👷 User Session ID: " + auth.tokenParsed?.session_state
+            );
+            console.log("👷 User Email: " + auth.tokenParsed?.email);
           });
           result.notAuthenticated((auth: undefined | KeycloakInstance) => {
             console.log("👷 User not logged in");

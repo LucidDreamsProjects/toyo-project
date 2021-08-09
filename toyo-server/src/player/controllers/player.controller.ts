@@ -6,27 +6,20 @@ import {
   Patch,
   Param,
   Delete,
-  Inject,
-  CACHE_MANAGER,
 } from '@nestjs/common';
-import { Cache } from 'cache-manager';
-import { CreatePlayerDTO } from '../dto/create-player.dto';
-import { EditPlayerDTO } from '../dto/edit-player.dto';
+import { CreatePlayerDto } from '../dto/create-player.dto';
+import { EditPlayerDto } from '../dto/edit-player.dto';
 import { Player } from '../entities/player.entity';
 import { PlayerService } from '../services/player.service';
 
 @Controller('player')
 export class PlayerController {
-  constructor(
-    @Inject(CACHE_MANAGER)
-    private readonly cacheManager: Cache,
-    private readonly playerService: PlayerService,
-  ) {}
+  constructor(private readonly playerService: PlayerService) {}
 
   @Post('create')
   public async createPlayer(
-    @Body() createPlayerDto: CreatePlayerDTO,
-  ): Promise<Player> {
+    @Body() createPlayerDto: CreatePlayerDto,
+  ): Promise<Player | void> {
     const player = await this.playerService.createPlayer(createPlayerDto);
     return player;
   }
@@ -40,17 +33,17 @@ export class PlayerController {
   @Get('/:playerId')
   public async getPlayerById(
     @Param('playerId') playerId: number,
-  ): Promise<Player> {
+  ): Promise<Player | void> {
     const player = await this.playerService.getPlayerById(playerId);
     return player;
   }
 
   @Patch('/edit/:playerId')
   public async editPlayer(
-    @Body() editPlayerDto: EditPlayerDTO,
     @Param('playerId') playerId: number,
-  ): Promise<Player> {
-    const player = this.playerService.editPlayer(playerId, editPlayerDto);
+    @Body() editPlayerDto: EditPlayerDto,
+  ): Promise<Player | void> {
+    const player = await this.playerService.editPlayer(playerId, editPlayerDto);
     return player;
   }
 

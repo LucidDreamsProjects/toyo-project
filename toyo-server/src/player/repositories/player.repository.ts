@@ -1,29 +1,29 @@
 import { Repository, EntityRepository } from 'typeorm';
 import { Player } from '../entities/player.entity';
-import { CreatePlayerDTO } from '../dto/create-player.dto';
-import { EditPlayerDTO } from '../dto/edit-player.dto';
+import { CreatePlayerDto } from '../dto/create-player.dto';
+import { EditPlayerDto } from '../dto/edit-player.dto';
 
 @EntityRepository(Player)
 export class PlayerRepository extends Repository<Player> {
-  public async createPlayer(createPlayerDto: CreatePlayerDTO): Promise<Player> {
-    const { refreshToken, walletAddress, username } = createPlayerDto;
+  public async createPlayer(createPlayerDto: CreatePlayerDto): Promise<Player> {
+    const { playerID, username, email, walletAddress } = createPlayerDto;
 
     const player = new Player();
-    player.refreshToken = refreshToken;
-    player.walletAddress = walletAddress;
+    player.playerID = playerID;
     player.username = username;
+    player.email = email;
+    player.walletAddress = walletAddress;
 
     await player.save();
     return player;
   }
 
   public async editPlayer(
-    editPlayerDto: EditPlayerDTO,
+    editPlayerDto: EditPlayerDto,
     editedPlayer: Player,
   ): Promise<Player> {
-    const { email, firstName, lastName, address } = editPlayerDto;
+    const { firstName, lastName, address } = editPlayerDto;
 
-    editedPlayer.email = email;
     editedPlayer.firstName = firstName;
     editedPlayer.lastName = lastName;
     editedPlayer.address = address;

@@ -1,9 +1,6 @@
 import { IsString } from 'class-validator';
 
-export class EditPlayerDTO {
-  @IsString()
-  email!: string;
-
+export class EditPlayerDto {
   @IsString()
   firstName!: string;
 

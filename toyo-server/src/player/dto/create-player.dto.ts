@@ -1,12 +1,15 @@
 import { IsString } from 'class-validator';
 
-export class CreatePlayerDTO {
+export class CreatePlayerDto {
   @IsString()
-  refreshToken!: string;
-
-  @IsString()
-  walletAddress!: string;
+  playerID!: string;
 
   @IsString()
   username!: string;
+
+  @IsString()
+  email!: string;
+
+  @IsString()
+  walletAddress!: string;
 }
