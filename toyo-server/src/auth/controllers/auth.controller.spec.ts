@@ -35,19 +35,24 @@ describe('AuthController', () => {
   });
 
   it('should get a bearer and refresh token', () => {
-    const client_id = `${process.env.VENLY_ID}`;
-    const client_secret = `${process.env.VENLY_SECRET}`;
+    const grantType = process.env.GRANT_TYPE;
+    const clientID = process.env.VENLY_ID;
+    const clientSecret = process.env.VENLY_SECRET;
+
+    const dto = {
+      grant_type: grantType,
+      client_id: clientID,
+      client_secret: clientSecret,
+    };
 
     expect.assertions(2);
-    return authController
-      .getBearerToken(client_id, client_secret)
-      .then((data) => {
-        expect(data).toBe({
-          access_token: expect.any(String),
-          refresh_token: expect.any(String),
-          session_state: expect.any(String),
-        });
-        expect(mockAuthService.getBearerToken).toBeCalled();
+    return authController.getBearerToken(dto).then((data) => {
+      expect(data).toBe({
+        access_token: expect.any(String),
+        refresh_token: expect.any(String),
+        session_state: expect.any(String),
       });
+      expect(mockAuthService.getBearerToken).toBeCalled();
+    });
   });
 });

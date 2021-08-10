@@ -11,12 +11,13 @@ import { SavePlayerDto } from '../dto/save-player.dto';
 import { EditPlayerDto } from '../dto/edit-player.dto';
 import { Player } from '../entities/player.entity';
 import { PlayerService } from '../services/player.service';
+import { ParseUUIDPipe } from '@nestjs/common';
 
 @Controller('player')
 export class PlayerController {
   constructor(private readonly playerService: PlayerService) {}
 
-  @Post('create')
+  @Post('save')
   public async save(
     @Body() savePlayerDto: SavePlayerDto,
   ): Promise<Player | void> {
@@ -32,7 +33,8 @@ export class PlayerController {
 
   @Get(':playerID')
   public async getById(
-    @Param('playerId') playerID: string,
+    @Param('playerID', new ParseUUIDPipe())
+    playerID: string,
   ): Promise<Player | undefined | null | void> {
     const player = await this.playerService.getById(playerID);
     return player;
@@ -40,7 +42,8 @@ export class PlayerController {
 
   @Patch('edit/:playerID')
   public async editById(
-    @Param('playerID') playerID: string,
+    @Param('playerID', new ParseUUIDPipe())
+    playerID: string,
     @Body() editPlayerDto: EditPlayerDto,
   ): Promise<Player> {
     const player = await this.playerService.editById(playerID, editPlayerDto);
@@ -48,7 +51,10 @@ export class PlayerController {
   }
 
   @Delete('delete/:playerID')
-  public async deleteById(@Param('playerId') playerID: string) {
+  public async deleteById(
+    @Param('playerID', new ParseUUIDPipe())
+    playerID: string,
+  ) {
     const deletedPlayer = await this.playerService.deleteById(playerID);
     return deletedPlayer;
   }

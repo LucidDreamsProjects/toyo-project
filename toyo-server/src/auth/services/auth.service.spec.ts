@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthService } from './auth.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Player } from '../../player/entities/player.entity';
+import { AuthService } from './auth.service';
+import { HttpService } from '@nestjs/axios';
 
 describe('AuthService', () => {
   let authService: AuthService;
@@ -14,6 +15,7 @@ describe('AuthService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
+        HttpService,
         {
           provide: getRepositoryToken(Player),
           useValue: mockPlayerRepository,
@@ -36,7 +38,7 @@ describe('AuthService', () => {
     };
 
     expect.assertions(1);
-    return authService.getBearerToken(dto).then((data) => {
+    return authService.getBearerToken().then((data) => {
       expect(data).toBe({
         access_token: expect.any(String),
         refresh_token: expect.any(String),
