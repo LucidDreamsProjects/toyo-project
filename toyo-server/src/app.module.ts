@@ -1,19 +1,19 @@
 import { Module, CacheModule } from '@nestjs/common';
 import redisStore from 'cache-manager-redis-store';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { HttpModule } from '@nestjs/axios';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { PlayerModule } from './player/player.module';
 import { Player } from './player/entities/player.entity';
+import { AuthModule } from './auth/auth.module';
 import { config } from 'dotenv';
 
 config();
 
 @Module({
   imports: [
-    // HttpModule,
     PlayerModule,
+    AuthModule,
     TypeOrmModule.forRoot({
       type: 'mysql' as any,
       host: '162.240.6.22',

@@ -16,11 +16,8 @@ export class AuthService {
   ) {}
 
   public async getBearerToken(): Promise<Observable<AxiosResponse<any>>> {
-    const applicationID = process.env.APPLICATION_ID;
-    const contractID = 203;
-
     const payload = await this.httpService.post(
-      `https://api-business.arkane.network/api/apps/${applicationID}/contracts/${contractID}/token-types`,
+      `https://login.arkane.network/auth/realms/Arkane/protocol/openid-connect/token`,
       {
         grant_type: `${process.env.GRANT_TYPE}`,
         client_id: `${process.env.VENLY_ID}`,
