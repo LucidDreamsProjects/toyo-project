@@ -12,7 +12,7 @@ config();
 
 @Module({
   imports: [
-    HttpModule,
+    // HttpModule,
     PlayerModule,
     TypeOrmModule.forRoot({
       type: 'mysql' as any,

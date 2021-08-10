@@ -1,24 +1,28 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PlayerController } from './player.controller';
 import { PlayerService } from '../services/player.service';
-import { CreatePlayerDto } from '../dto/create-player.dto';
-import { EditPlayerDto } from '../dto/edit-player.dto';
+import { EthereumAddress } from 'wallet.ts';
+import { v4 as uuidv4 } from 'uuid';
+import { haiku } from '../../utils/haiku';
 
-// jest.mock('../services/player.service');
+const testKey = Buffer.from(
+  '028a8c59fa27d1e0f1643081ff80c3cf0392902acbf76ab0dc9c414b8d115b0ab3',
+  'hex',
+);
 
 describe('PlayerController', () => {
   let playerController: PlayerController;
-  let playerService: PlayerService;
 
-  const mockUsersService = {
-    createPlayer: jest.fn((dto) => {
+  const mockPlayerService = {
+    save: jest.fn((dto) => {
       return {
-        id: Date.now(),
+        index: Date.now(),
         ...dto,
       };
     }),
-    editPlayer: jest.fn().mockImplementation((id, dto) => {
+    editById: jest.fn().mockImplementation((playerID, dto) => {
       return {
+        playerID,
         ...dto,
       };
     }),
@@ -30,51 +34,52 @@ describe('PlayerController', () => {
       providers: [PlayerService],
     })
       .overrideProvider(PlayerService)
-      .useValue(mockUsersService)
+      .useValue(mockPlayerService)
       .compile();
 
     playerController = module.get<PlayerController>(PlayerController);
-    playerService = module.get<PlayerService>(PlayerService);
   });
 
   it('should be defined', () => {
     expect(playerController).toBeDefined();
-    // console.log('🔧 All Controllers ready to go.');
   });
 
   it('should create a Player', () => {
     const dto = {
-      playerID: 'JwTyIAO-Hyo6ad-a2I1E-P1b2EJ',
-      index: 1,
-      username: 'Username',
-      email: 'email@email.com',
-      walletAddress: '0xA8yasidjshoauASPLksjmaOIY7DdmnasidgAQSJpadOa',
-    } as CreatePlayerDto;
+      playerID: uuidv4(),
+      username: haiku(1),
+      email: haiku(2),
+      walletAddress: EthereumAddress.from(testKey).address,
+    };
 
-    expect(playerController.createPlayer(dto)).not.toBe({
-      playerID: dto.playerID,
-      index: expect.any(Number),
-      username: dto.username,
-      email: dto.email,
-      walletAddress: dto.walletAddress,
+    expect.assertions(2);
+    return playerController.save(dto).then((data) => {
+      expect(data).toEqual({
+        playerID: dto.playerID,
+        index: expect.any(Number),
+        username: dto.username,
+        email: dto.email,
+        walletAddress: dto.walletAddress,
+      });
+      expect(mockPlayerService.save).toBeCalledWith(dto);
     });
-
-    expect(playerService.createPlayer(dto)).toHaveBeenCalled();
-    // console.log('🔧 [createPlayer] PLAYER CREATED');
   });
 
   it('should update a Player', () => {
+    const uuid = uuidv4();
     const dto = {
       firstName: 'Lucas',
       lastName: 'Cyrne',
       address: 'p.sherman calle wallaby 42 sidney',
-    } as EditPlayerDto;
+    };
 
-    expect(playerController.editPlayer(1, dto)).toEqual({
-      ...dto,
+    expect.assertions(2);
+    return playerController.editById(uuid, dto).then((data) => {
+      expect(data).toEqual({
+        playerID: uuid,
+        ...dto,
+      });
+      expect(mockPlayerService.editById).toBeCalled();
     });
-
-    expect(playerService.editPlayer(1, dto)).toHaveBeenCalled();
-    // console.log('🔧 [editPlayer] PLAYER UPDATED');
   });
 });

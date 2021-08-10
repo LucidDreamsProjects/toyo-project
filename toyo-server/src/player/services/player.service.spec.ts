@@ -1,124 +1,100 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PlayerService } from './player.service';
-import { PlayerRepository } from '../repositories/player.repository';
-import { NotFoundException } from '@nestjs/common';
-import { CreatePlayerDto } from '../dto/create-player.dto';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Player } from '../entities/player.entity';
+import { EthereumAddress } from 'wallet.ts';
+import { v4 as uuidv4 } from 'uuid';
+import { haiku } from '../../utils/haiku';
+
+const testKey = Buffer.from(
+  '028a8c59fa27d1e0f1643081ff80c3cf0392902acbf76ab0dc9c414b8d115b0ab3',
+  'hex',
+);
 
 describe('PlayerService', () => {
   let playerService: PlayerService;
-  let playerRepository: PlayerRepository;
 
-  const mockPlayerRepository = () => ({
-    createPlayer: jest.fn((dto) => {
-      return {
-        id: Date.now(),
-        ...dto,
-      };
-    }),
-    editPlayer: jest.fn().mockImplementation((id, dto) => {
-      return {
-        id,
-        ...dto,
-      };
-    }),
-  });
+  const mockPlayerRepository = {
+    savePlayer: jest.fn().mockImplementation((dto) => dto),
+    editPlayer: jest.fn().mockImplementation((player) =>
+      Promise.resolve({
+        playerID: uuidv4(),
+        index: Date.now(),
+        username: haiku(1),
+        email: haiku(2),
+        walletAddress: '0xA8yasidjshoauASPLksjmaOIY7DdmnasidgAQSJpadOa',
+        ...player,
+      }),
+    ),
+    findOneOrFail: jest.fn().mockImplementation((playerID: string) =>
+      Promise.resolve({
+        playerID: playerID,
+        index: Date.now(),
+        username: haiku(1),
+        email: haiku(2),
+        walletAddress: EthereumAddress.from(testKey).address,
+      }),
+    ),
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PlayerService,
         {
-          provide: PlayerRepository,
-          useFactory: mockPlayerRepository,
+          provide: getRepositoryToken(Player),
+          useValue: mockPlayerRepository,
         },
       ],
-    })
-      .overrideProvider(PlayerRepository)
-      .useValue(mockPlayerRepository)
-      .compile();
+    }).compile();
 
     playerService = await module.get<PlayerService>(PlayerService);
-    playerRepository = await module.get<PlayerRepository>(PlayerRepository);
   });
 
   it('should be defined', () => {
     expect(playerService).toBeDefined();
   });
 
-  describe('createPlayer', () => {
-    it('should create a player', async () => {
-      const player = {} as CreatePlayerDto;
-      const mockPlayer = {} as jest.Mock<CreatePlayerDto>;
+  it('should create a player record and return that', async () => {
+    const dto = {
+      playerID: uuidv4(),
+      index: Date.now(),
+      username: haiku(1),
+      email: haiku(2),
+      walletAddress: EthereumAddress.from(testKey).address,
+    };
 
-      playerRepository.createPlayer.mockResolvedValue(mockPlayer);
-      expect(playerRepository.createPlayer).not.toHaveBeenCalled();
-
-      const createPlayerDto = {
-        userID: 'userID',
-        sessionID: 'sessionID',
-        username: 'ToyoMaster069',
-        email: 'emailtesting@demo.com',
-        walletAddress: '0xL31e6VNi7VzH1P12asdDAKdaFAHDAS7FjGou6h12u3hASKD58C9e',
-      };
-
-      const result = await playerService
-        .createPlayer(player)
-        .catch((error) => console.log(error));
-
-      expect(playerRepository.createPlayer).toHaveBeenCalledWith(
-        createPlayerDto,
-      );
-
-      expect(result).toEqual(mockPlayer);
+    expect.assertions(1);
+    return playerService.save(dto).then((data) => {
+      expect(data).toEqual({
+        playerID: dto.playerID,
+        index: dto.index,
+        username: dto.username,
+        email: dto.email,
+        walletAddress: dto.walletAddress,
+      });
     });
   });
 
-  describe('getPlayers', () => {
-    it('should return all players', async () => {
-      playerRepository.find.mockResolvedValue('somePlayers');
-      expect(playerRepository.find).not.toHaveBeenCalled();
-      const result = await playerService
-        .getPlayers()
-        .catch((error) => console.log(error));
-      expect(playerRepository.find).toHaveBeenCalled();
-      expect(result).toEqual('somePlayers');
-    });
-  });
+  it('should edit a player record and return that', async () => {
+    const uuid = uuidv4();
+    const dto = {
+      firstName: 'Lucas',
+      lastName: 'Cyrne',
+      address: 'p.sherman calle wallaby 42 sidney',
+    };
 
-  describe('getPlayer', () => {
-    it('should retrieve a player with an ID', async () => {
-      const mockPlayer = {
-        id: '1',
-        username: 'mockedPlayer',
-        email: 'mocked_email@gmail.com',
-        firstName: 'Mocked',
-        lastName: 'User',
-        icon: 1,
-        address: 'Mocked Street, 231, 1st Avenue JP. Sherpard',
-        replays: null,
-        walletAddress: '0xL31e6VNi7VzH1P12asdDAKdaFAHDAS7FjGou6h12u3hASKD58C9e',
-        role: 3,
-      };
-      playerRepository.findOne.mockResolvedValue(mockPlayer);
-      const result = await playerService
-        .getPlayerById(1)
-        .catch((error) => console.log(error));
-      expect(result).toEqual(mockPlayer);
-      expect(playerRepository.findOne).toHaveBeenCalledWith(1);
-    });
-
-    it('throws an error as a player is not found', () => {
-      playerRepository.findOne.mockResolvedValue(null);
-      expect(playerService.getPlayerById(1)).rejects.toThrow(NotFoundException);
-    });
-  });
-
-  describe('deletePlayer', () => {
-    it('should delete player', async () => {
-      playerRepository.delete.mockResolvedValue(1);
-      expect(playerRepository.delete).not.toHaveBeenCalled();
-      await playerService.deletePlayer(1).catch((error) => console.log(error));
-      expect(playerRepository.delete).toHaveBeenCalledWith(1);
+    return playerService.editById(uuid, dto).then((data) => {
+      expect(data).toEqual({
+        playerID: expect.any(String),
+        index: expect.any(Number),
+        username: expect.any(String),
+        email: expect.any(String),
+        firstName: dto.firstName,
+        lastName: dto.lastName,
+        address: dto.address,
+        walletAddress: expect.any(String),
+      });
     });
   });
 });
