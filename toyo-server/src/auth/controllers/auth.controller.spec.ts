@@ -5,11 +5,11 @@ import { config } from 'dotenv';
 
 config();
 
-describe('AuthController', () => {
+describe('AuthController', async () => {
   let authController: AuthController;
 
   const mockAuthService = {
-    getBearerToken: jest.fn((dto) => {
+    getBearerToken: jest.fn(() => {
       return {
         access_token: expect.any(String),
         refresh_token: expect.any(String),
@@ -34,7 +34,7 @@ describe('AuthController', () => {
     expect(authController).toBeDefined();
   });
 
-  it('should get a bearer and refresh token', () => {
+  it('should get a bearer and refresh token', async () => {
     const grantType = process.env.GRANT_TYPE;
     const clientID = process.env.VENLY_ID;
     const clientSecret = process.env.VENLY_SECRET;

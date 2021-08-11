@@ -6,7 +6,7 @@ describe('WalletController', () => {
   let walletController: WalletController;
 
   const mockWalletService = {
-    createWallet: jest.fn(() => {
+    createWallet: jest.fn((dto) => {
       return {
         success: expect.any(Boolean),
         result: {
@@ -36,7 +36,7 @@ describe('WalletController', () => {
 
   it('should create a wallet', () => {
     const secretType = process.env.SECRET_TYPE;
-    const walletType = 'WHITE_LABEL';
+    const walletType = process.env.WALLET_TYPE;
     const pinCode = 1234;
 
     const dto = {
@@ -46,7 +46,7 @@ describe('WalletController', () => {
     };
 
     expect.assertions(2);
-    return walletController.createWallet().then((data) => {
+    return walletController.createWallet(dto).then((data) => {
       expect(data).toEqual({
         success: expect.any(Boolean),
         result: {
@@ -55,7 +55,7 @@ describe('WalletController', () => {
           secretType: expect.stringMatching('MATIC'),
         },
       });
-      expect(mockWalletService).toBeCalled();
+      expect(mockWalletService.createWallet).toBeCalled();
     });
   });
 });

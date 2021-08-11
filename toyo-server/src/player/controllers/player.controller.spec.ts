@@ -67,6 +67,7 @@ describe('PlayerController', () => {
 
   it('should update a Player', () => {
     const uuid = uuidv4();
+
     const dto = {
       firstName: 'Lucas',
       lastName: 'Cyrne',

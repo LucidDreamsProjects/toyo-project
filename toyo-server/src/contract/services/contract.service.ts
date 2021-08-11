@@ -1,4 +1,4 @@
-import { CreateWalletDto } from '../dto/create-wallet';
+import { CreateContractDto } from '../dto/create-contract.dto';
 import { Body, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { map, Observable } from 'rxjs';
@@ -8,22 +8,17 @@ import { config } from 'dotenv';
 config();
 
 @Injectable()
-export class WalletService {
+export class ContractService {
   constructor(private readonly httpService: HttpService) {}
 
-  public async createWallet(
-    @Body() request: CreateWalletDto,
+  public async createContract(
+    @Body() request: CreateContractDto,
   ): Promise<Observable<AxiosResponse<any>>> {
-    const walletType = process.env.WALLET_TYPE;
-    const secretType = process.env.SECRET_TYPE;
+    const applicationID = process.env.APPLICATION_ID;
 
     const payload = await this.httpService.post(
-      `https://api.arkane.network/api/wallets`,
-      {
-        walletType: walletType,
-        secretType: secretType,
-        pincode: request,
-      },
+      `https://api-business.arkane.network/api/apps/${applicationID}/contracts`,
+      request,
     );
 
     const json = payload.pipe(map((response) => response.data));
