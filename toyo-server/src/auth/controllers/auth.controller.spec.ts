@@ -13,7 +13,7 @@ describe('AuthController', () => {
       return {
         access_token: expect.any(String),
         refresh_token: expect.any(String),
-        session_state: expect.any(Number),
+        session_state: expect.any(String),
       };
     }),
   };
@@ -46,8 +46,8 @@ describe('AuthController', () => {
     };
 
     expect.assertions(2);
-    return authController.getBearerToken(dto).then((data) => {
-      expect(data).toBe({
+    return authController.getBearerToken().then((data) => {
+      expect(data).toEqual({
         access_token: expect.any(String),
         refresh_token: expect.any(String),
         session_state: expect.any(String),
