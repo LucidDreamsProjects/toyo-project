@@ -27,8 +27,6 @@ export class WalletService {
     );
 
     const json = payload.pipe(map((response) => response.data));
-    console.log(json);
-
     return json;
   }
 }

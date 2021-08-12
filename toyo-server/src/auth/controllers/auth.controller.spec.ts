@@ -5,7 +5,7 @@ import { config } from 'dotenv';
 
 config();
 
-describe('AuthController', async () => {
+describe('AuthController', () => {
   let authController: AuthController;
 
   const mockAuthService = {
@@ -47,6 +47,8 @@ describe('AuthController', async () => {
 
     expect.assertions(2);
     return authController.getBearerToken().then((data) => {
+      console.log(data);
+
       expect(data).toEqual({
         access_token: expect.any(String),
         refresh_token: expect.any(String),

@@ -1,4 +1,4 @@
-import { Module, CacheModule } from '@nestjs/common';
+import { Module, CacheModule, OnModuleInit } from '@nestjs/common';
 import redisStore from 'cache-manager-redis-store';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppService } from './app.service';
@@ -22,7 +22,8 @@ config();
       password: 'dd^8A!DPq#ZpjewF2',
       database: 'wwtoyo_universe',
       entities: [Player],
-      logging: true,
+      logging: ['error'],
+      maxQueryExecutionTime: 1000,
       synchronize: false,
     }),
     CacheModule.register({
@@ -34,4 +35,8 @@ config();
   providers: [AppService],
   controllers: [AppController],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  onModuleInit() {
+    console.log('The module has been initialized.');
+  }
+}

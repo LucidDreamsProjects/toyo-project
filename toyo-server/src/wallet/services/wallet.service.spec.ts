@@ -1,6 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { Player } from '../../player/entities/player.entity';
 import { WalletService } from './wallet.service';
 import { HttpModule, HttpService } from '@nestjs/axios';
 import { map } from 'rxjs';
@@ -8,10 +6,6 @@ import { AxiosResponse } from 'axios';
 
 describe('WalletService', () => {
   let walletService: WalletService;
-
-  /* const mockPlayerRepository = {
-    savePlayer: jest.fn().mockImplementation((dto) => dto),
-  }; */
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -21,13 +15,7 @@ describe('WalletService', () => {
           maxRedirects: 5,
         }),
       ],
-      providers: [
-        WalletService,
-        /*         {
-          provide: getRepositoryToken(Player),
-          useValue: mockPlayerRepository,
-        }, */
-      ],
+      providers: [WalletService],
     }).compile();
 
     walletService = await module.get<WalletService>(WalletService);
@@ -48,7 +36,7 @@ describe('WalletService', () => {
       pincode: pincode,
     };
 
-    return (await walletService.createWallet()).pipe(
+    return (await walletService.createWallet(dto)).pipe(
       map((axiosResponse: AxiosResponse) => {
         expect(axiosResponse).toBe({
           success: expect(true),

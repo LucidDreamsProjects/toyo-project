@@ -38,13 +38,18 @@ describe('AuthService', () => {
   });
 
   it('should request a bearer and refresh token and return that', async () => {
+    const clientID = process.env.VENLY_ID;
+    const clientSecret = process.env.CLIENT_SECRET;
+
     const dto = {
       grant_type: 'client_credentials',
-      client_id: `${process.env.VENLY_ID}`,
-      client_secret: `${process.env.VENLY_SECRET}`,
+      client_id: clientID,
+      client_secret: clientSecret,
     };
+
     return (await authService.getBearerToken()).pipe(
       map((axiosResponse: AxiosResponse) => {
+        console.log(axiosResponse);
         expect(axiosResponse).toBe({
           access_token: expect.any(String),
           refresh_token: expect.any(String),

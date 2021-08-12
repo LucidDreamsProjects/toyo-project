@@ -52,7 +52,6 @@ describe('ContractService', () => {
       media: media,
     };
 
-    expect.assertion(1);
     return (await contractService.createContract(dto)).pipe(
       map((axiosResponse: AxiosResponse) => {
         expect(axiosResponse).toBe({

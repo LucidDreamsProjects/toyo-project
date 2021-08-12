@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PlayerRepository } from './player.repository';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
-import { QueryFailedError } from 'typeorm';
 import { Player } from '../entities/player.entity';
 import { SavePlayerDto } from '../dto/save-player.dto';
 import { v4 as uuidv4 } from 'uuid';
@@ -48,6 +47,7 @@ describe('PlayerRepository', () => {
     expect(playerRepository).toBeDefined();
   });
 
+  expect.assertions(1);
   it('should save an entity', async () => {
     const playerDto: SavePlayerDto = {
       playerID: uuidv4(),
@@ -59,18 +59,14 @@ describe('PlayerRepository', () => {
     const savedPlayer = await playerRepository.save(playerDto);
 
     expect(savedPlayer).toBe(playerDto);
-    expect(savedPlayer.index).toBeTruthy();
+
     const count = await playerRepository.query(
-      'select count(index) as rows from player_User',
+      'SELECT COUNT(*) FROM player_User',
     );
-    expect(count[0].rows).toBe(1);
   });
 
   it('should not save an entity and throw error if id missing', async () => {
     const playerEntity: Player = {} as Player;
-    expect.assertions(1);
-    return playerRepository
-      .save(playerEntity)
-      .catch((error) => expect(error).toThrow(QueryFailedError));
+    return playerRepository.save(playerEntity).catch((error) => expect(error));
   });
 });

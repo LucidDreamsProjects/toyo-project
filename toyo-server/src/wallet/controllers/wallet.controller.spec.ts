@@ -37,12 +37,12 @@ describe('WalletController', () => {
   it('should create a wallet', () => {
     const secretType = process.env.SECRET_TYPE;
     const walletType = process.env.WALLET_TYPE;
-    const pinCode = 1234;
+    const pincode = 1234;
 
     const dto = {
       secretType: secretType,
       walletType: walletType,
-      pinCode: pinCode,
+      pincode: pincode,
     };
 
     expect.assertions(2);
