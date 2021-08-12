@@ -7,6 +7,14 @@ import { AppController } from './app.controller';
 import { PlayerModule } from './player/player.module';
 import { Player } from './player/entities/player.entity';
 import { config } from 'dotenv';
+import { ContractModule } from './contract/contract.module';
+import { NftModule } from './nft/nft.module';
+import { WalletModule } from './wallet/wallet.module';
+import { AuthService } from './auth/services/auth.service';
+import { WalletService } from './wallet/services/wallet.service';
+import { PlayerService } from './player/services/player.service';
+import { ContractService } from './contract/services/contract.service';
+import { NftService } from './nft/services/nft.service';
 
 config();
 
