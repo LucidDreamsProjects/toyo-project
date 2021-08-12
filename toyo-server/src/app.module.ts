@@ -1,11 +1,11 @@
-import { Module, CacheModule } from '@nestjs/common';
+import { Module, CacheModule, OnModuleInit } from '@nestjs/common';
 import redisStore from 'cache-manager-redis-store';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { HttpModule } from '@nestjs/axios';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { PlayerModule } from './player/player.module';
 import { Player } from './player/entities/player.entity';
+import { AuthModule } from './auth/auth.module';
 import { config } from 'dotenv';
 import { ContractModule } from './contract/contract.module';
 import { NftModule } from './nft/nft.module';
@@ -20,7 +20,10 @@ config();
 
 @Module({
   imports: [
-    HttpModule,
+    AuthModule,
+    ContractModule,
+    NftModule,
+    WalletModule,
     PlayerModule,
     TypeOrmModule.forRoot({
       type: 'mysql' as any,
@@ -30,7 +33,8 @@ config();
       password: 'dd^8A!DPq#ZpjewF2',
       database: 'wwtoyo_universe',
       entities: [Player],
-      logging: true,
+      logging: ['error'],
+      maxQueryExecutionTime: 1000,
       synchronize: false,
     }),
     CacheModule.register({
@@ -42,4 +46,16 @@ config();
   providers: [AppService],
   controllers: [AppController],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(
+    private readonly authService: AuthService,
+    private readonly walletService: WalletService,
+    private readonly playerService: PlayerService,
+    private readonly contractService: ContractService,
+    private readonly nftService: NftService,
+  ) {}
+
+  onModuleInit() {
+    console.log('The module has been initialized.');
+  }
+}

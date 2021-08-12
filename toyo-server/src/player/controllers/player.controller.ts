@@ -6,57 +6,56 @@ import {
   Patch,
   Param,
   Delete,
-  Inject,
-  CACHE_MANAGER,
 } from '@nestjs/common';
-import { Cache } from 'cache-manager';
-import { CreatePlayerDTO } from '../dto/create-player.dto';
-import { EditPlayerDTO } from '../dto/edit-player.dto';
+import { SavePlayerDto } from '../dto/save-player.dto';
+import { EditPlayerDto } from '../dto/edit-player.dto';
 import { Player } from '../entities/player.entity';
 import { PlayerService } from '../services/player.service';
+import { ParseUUIDPipe } from '@nestjs/common';
 
 @Controller('player')
 export class PlayerController {
-  constructor(
-    @Inject(CACHE_MANAGER)
-    private readonly cacheManager: Cache,
-    private readonly playerService: PlayerService,
-  ) {}
+  constructor(private readonly playerService: PlayerService) {}
 
-  @Post('create')
-  public async createPlayer(
-    @Body() createPlayerDto: CreatePlayerDTO,
-  ): Promise<Player> {
-    const player = await this.playerService.createPlayer(createPlayerDto);
+  @Post('save')
+  public async save(
+    @Body() savePlayerDto: SavePlayerDto,
+  ): Promise<Player | void> {
+    const player = await this.playerService.save(savePlayerDto);
     return player;
   }
 
   @Get('all')
-  public async getPlayers(): Promise<Player[]> {
-    const players = await this.playerService.getPlayers();
+  public async getAll(): Promise<Player[]> {
+    const players = await this.playerService.getAll();
     return players;
   }
 
-  @Get('/:playerId')
-  public async getPlayerById(
-    @Param('playerId') playerId: number,
-  ): Promise<Player> {
-    const player = await this.playerService.getPlayerById(playerId);
+  @Get(':playerID')
+  public async getById(
+    @Param('playerID', new ParseUUIDPipe())
+    playerID: string,
+  ): Promise<Player | undefined | null | void> {
+    const player = await this.playerService.getById(playerID);
     return player;
   }
 
-  @Patch('/edit/:playerId')
-  public async editPlayer(
-    @Body() editPlayerDto: EditPlayerDTO,
-    @Param('playerId') playerId: number,
+  @Patch('edit/:playerID')
+  public async editById(
+    @Param('playerID', new ParseUUIDPipe())
+    playerID: string,
+    @Body() editPlayerDto: EditPlayerDto,
   ): Promise<Player> {
-    const player = this.playerService.editPlayer(playerId, editPlayerDto);
+    const player = await this.playerService.editById(playerID, editPlayerDto);
     return player;
   }
 
-  @Delete('/delete/:playerId')
-  public async deletePlayer(@Param('playerId') playerId: number) {
-    const deletedPlayer = await this.playerService.deletePlayer(playerId);
+  @Delete('delete/:playerID')
+  public async deleteById(
+    @Param('playerID', new ParseUUIDPipe())
+    playerID: string,
+  ) {
+    const deletedPlayer = await this.playerService.deleteById(playerID);
     return deletedPlayer;
   }
 }

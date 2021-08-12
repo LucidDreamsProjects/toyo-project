@@ -30,8 +30,8 @@ describe('AuthService', () => {
       ],
     }).compile();
 
-    authService = await module.resolve<AuthService>(AuthService);
-    // authService = await module.get<AuthService>(AuthService);
+    // authService = await module.resolve<AuthService>(AuthService);
+    authService = await module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {

@@ -3,13 +3,10 @@ import { BaseEntity, Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 @Entity({ name: 'player_User' })
 export class Player extends BaseEntity {
   @PrimaryGeneratedColumn()
-  userId?: number;
+  playerID!: string;
 
-  @Column({ type: 'varchar', unique: true, length: 12288 })
-  refreshToken?: string;
-
-  @Column({ type: 'varchar', unique: true, length: 256 })
-  walletAddress?: string;
+  @Column({ type: 'int' })
+  index?: number;
 
   @Column({ type: 'varchar', length: 64 })
   username?: string;
@@ -34,6 +31,9 @@ export class Player extends BaseEntity {
 
   @Column({ type: 'varchar', length: 512 })
   replays?: string;
+
+  @Column({ type: 'varchar', unique: true, length: 256 })
+  walletAddress!: string;
 
   @Column({ type: 'int', default: 3 })
   role!: number;
