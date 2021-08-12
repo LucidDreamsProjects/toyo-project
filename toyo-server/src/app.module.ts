@@ -7,13 +7,22 @@ import { PlayerModule } from './player/player.module';
 import { Player } from './player/entities/player.entity';
 import { AuthModule } from './auth/auth.module';
 import { config } from 'dotenv';
+import { ContractModule } from './contract/contract.module';
+import { NftModule } from './nft/nft.module';
+import { WalletModule } from './wallet/wallet.module';
+import { AuthService } from './auth/services/auth.service';
+import { WalletService } from './wallet/services/wallet.service';
+import { PlayerService } from './player/services/player.service';
 
 config();
 
 @Module({
   imports: [
-    PlayerModule,
     AuthModule,
+    ContractModule,
+    NftModule,
+    WalletModule,
+    PlayerModule,
     TypeOrmModule.forRoot({
       type: 'mysql' as any,
       host: '162.240.6.22',
@@ -36,6 +45,14 @@ config();
   controllers: [AppController],
 })
 export class AppModule implements OnModuleInit {
+  constructor(
+    private readonly authService: AuthService,
+    private readonly walletService: WalletService,
+    private readonly playerService: PlayerService,
+    private readonly contractService: ContractService,
+    private readonly nftService: NftService,
+  ) {}
+
   onModuleInit() {
     console.log('The module has been initialized.');
   }
