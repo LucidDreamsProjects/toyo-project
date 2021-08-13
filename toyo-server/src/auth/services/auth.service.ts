@@ -1,8 +1,6 @@
-import { SavePlayerDto } from '../../player/dto/save-player.dto';
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { catchError, map, Observable } from 'rxjs';
-import { AxiosError, AxiosResponse } from 'axios';
+import { map, Observable } from 'rxjs';
 import { config } from 'dotenv';
 
 config();
@@ -39,21 +37,26 @@ export class AuthService {
   } */
 
   //* Returning Observable object containing 'operator' and 'source'
-  /* public async getBearerToken(): Promise<Observable<AxiosResponse<any>>> {
-    const payload = await this.http.post(
-      `https://login.arkane.network/auth/realms/Arkane/protocol/openid-connect/token`,
-      {
-        grant_type: `${process.env.GRANT_TYPE}`,
-        client_id: `${process.env.VENLY_ID}`,
-        client_secret: `${process.env.VENLY_SECRET}`,
-      },
-    );
+  public async getBearerToken(): Promise<Observable<any>> {
+    const dto = {
+      grant_type: this.GRANT_TYPE,
+      client_id: this.CLIENT_ID,
+      client_secret: this.CLIENT_SECRET,
+    };
 
-    return payload.pipe(
-      map((response) => {
-        console.log(response.data);
-        return response.data;
-      }),
-    );
-  } */
+    const params = JSON.stringify(dto);
+
+    return await this.http
+      .post(this.DATA_URL, params, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .pipe(
+        map((res) => {
+          console.log(res.data);
+          return res.data;
+        }),
+      );
+  }
 }

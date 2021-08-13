@@ -39,14 +39,14 @@ describe('AuthService', () => {
   });
 
   it('should request a bearer and refresh token and return that', () => {
-    const clientID = process.env.VENLY_ID;
+    /* const clientID = process.env.VENLY_ID;
     const clientSecret = process.env.CLIENT_SECRET;
 
     const dto = {
       grant_type: 'client_credentials',
       client_id: clientID,
       client_secret: clientSecret,
-    };
+    }; */
 
     return authService.getBearerToken().then((data) => {
       console.log(data);

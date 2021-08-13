@@ -35,7 +35,7 @@ describe('AuthController', () => {
   });
 
   it('should get a bearer and refresh token', async () => {
-    const grantType = process.env.GRANT_TYPE;
+    /* const grantType = process.env.GRANT_TYPE;
     const clientID = process.env.VENLY_ID;
     const clientSecret = process.env.VENLY_SECRET;
 
@@ -43,7 +43,7 @@ describe('AuthController', () => {
       grant_type: grantType,
       client_id: clientID,
       client_secret: clientSecret,
-    };
+    }; */
 
     expect.assertions(2);
     return authController.getBearerToken().then((data) => {
