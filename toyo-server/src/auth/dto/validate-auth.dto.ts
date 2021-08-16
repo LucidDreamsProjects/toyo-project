@@ -2,11 +2,11 @@ import { IsString, IsNumber } from 'class-validator';
 
 export class ValidateAuthDto {
   @IsNumber()
-  grant_type!: string | undefined;
+  grant_type!: string;
 
   @IsString()
-  client_id!: string | undefined;
+  client_id!: string;
 
   @IsString()
-  client_secret!: string | undefined;
+  client_secret!: string;
 }

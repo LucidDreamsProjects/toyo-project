@@ -62,6 +62,7 @@ describe('PlayerService', () => {
       username: haiku(1),
       email: haiku(2),
       walletAddress: EthereumAddress.from(testKey).address,
+      refreshToken: 'refreshToken',
     };
 
     expect.assertions(1);
@@ -72,6 +73,7 @@ describe('PlayerService', () => {
         username: dto.username,
         email: dto.email,
         walletAddress: dto.walletAddress,
+        refreshToken: dto.refreshToken,
       });
     });
   });
