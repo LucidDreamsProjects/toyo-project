@@ -34,7 +34,7 @@ describe('WalletController', () => {
     expect(walletController).toBeDefined();
   });
 
-  it('should create a wallet', () => {
+  it('should create a wallet', async () => {
     const secretType = process.env.SECRET_TYPE;
     const walletType = process.env.WALLET_TYPE;
     const pincode = 1234;
@@ -45,8 +45,8 @@ describe('WalletController', () => {
       pincode: pincode,
     };
 
-    expect.assertions(2);
-    return walletController.createWallet(dto).then((data) => {
+    expect.assertions(1);
+    return await walletController.createWallet(dto).then((data) => {
       expect(data).toEqual({
         success: expect.any(Boolean),
         result: {
@@ -55,7 +55,6 @@ describe('WalletController', () => {
           secretType: expect.stringMatching('MATIC'),
         },
       });
-      expect(mockWalletService.createWallet).toBeCalled();
     });
   });
 });

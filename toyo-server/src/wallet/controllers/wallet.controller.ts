@@ -7,8 +7,7 @@ export class WalletController {
   constructor(private readonly walletService: WalletService) {}
 
   @Post('create')
-  public async createWallet(@Req() request: CreateWalletDto): Promise<any> {
-    const wallet = await this.walletService.createWallet(request);
-    return wallet;
+  public async createWallet(@Req() dto: CreateWalletDto): Promise<any> {
+    return await this.walletService.createWallet(dto);
   }
 }
