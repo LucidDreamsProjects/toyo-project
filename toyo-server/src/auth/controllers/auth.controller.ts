@@ -1,14 +1,4 @@
-import {
-  Controller,
-  Get,
-  HttpCode,
-  Res,
-  Req,
-  Request,
-  Response,
-} from '@nestjs/common';
-import { AxiosResponse } from 'axios';
-import { Observable } from 'rxjs';
+import { Controller, Get, HttpCode } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 
 @Controller('auth')
@@ -17,7 +7,7 @@ export class AuthController {
 
   @HttpCode(200)
   @Get('validate')
-  public async getBearerToken(): Promise<Observable<AxiosResponse<any>>> {
+  public async getBearerToken(): Promise<any> {
     return await this.authService.getBearerToken();
   }
 }

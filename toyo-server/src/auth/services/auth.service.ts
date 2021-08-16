@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { map, Observable } from 'rxjs';
-import { AxiosResponse } from 'axios';
-import { config } from 'dotenv';
 import axios from 'axios';
+import { config } from 'dotenv';
 
 config();
 
@@ -15,15 +13,23 @@ export class AuthService {
   private readonly CLIENT_SECRET = `${process.env.VENLY_SECRET}`;
 
   public async getBearerToken(): Promise<any> {
-    const dto = {
-      grant_type: this.GRANT_TYPE,
-      client_id: this.CLIENT_ID,
-      client_secret: this.CLIENT_SECRET,
-    };
+    const grant_type = this.GRANT_TYPE;
+    const client_id = this.CLIENT_ID;
+    const client_secret = this.CLIENT_SECRET;
+
+    const params = new URLSearchParams();
+    params.append('grant_type', `${grant_type}`);
+    params.append('client_id', `${client_id}`);
+    params.append('client_secret', `${client_secret}`);
+
+    console.log(params.toString());
 
     await axios
-      .post(this.DATA_URL, new URLSearchParams(dto))
-      .then((response) => console.log(response.data))
+      .post(this.DATA_URL, params.toString())
+      .then((response) => {
+        console.log(response.data);
+        return response.data;
+      })
       .catch((error) => console.log(error));
   }
 }
