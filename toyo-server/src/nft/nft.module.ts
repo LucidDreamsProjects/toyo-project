@@ -12,5 +12,6 @@ import { NftService } from './services/nft.service';
   ],
   controllers: [NftController],
   providers: [NftService],
+  exports: [NftService],
 })
 export class NftModule {}
