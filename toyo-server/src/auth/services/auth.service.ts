@@ -6,8 +6,7 @@ config();
 
 @Injectable()
 export class AuthService {
-  private readonly DATA_URL =
-    'https://login.arkane.network/auth/realms/Arkane/protocol/openid-connect/token';
+  private readonly DATA_URL = `${process.env.AUTHENTICATION_ENDPOINT}/auth/realms/Arkane/protocol/openid-connect/token`;
   private readonly GRANT_TYPE = `${process.env.GRANT_TYPE}`;
   private readonly CLIENT_ID = `${process.env.VENLY_ID}`;
   private readonly CLIENT_SECRET = `${process.env.VENLY_SECRET}`;
@@ -23,7 +22,7 @@ export class AuthService {
     params.append('client_id', `${client_id}`);
     params.append('client_secret', `${client_secret}`);
 
-    console.log(params.toString());
+    // console.log(params.toString());
 
     await axios
       .post(url, params.toString())
