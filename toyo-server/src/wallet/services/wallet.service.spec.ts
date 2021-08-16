@@ -1,20 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { WalletService } from './wallet.service';
-import { HttpModule, HttpService } from '@nestjs/axios';
-import { map } from 'rxjs';
-import { AxiosResponse } from 'axios';
 
 describe('WalletService', () => {
   let walletService: WalletService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        HttpModule.register({
-          timeout: 5000,
-          maxRedirects: 5,
-        }),
-      ],
       providers: [WalletService],
     }).compile();
 
@@ -26,7 +17,7 @@ describe('WalletService', () => {
   });
 
   it('should create a wallet and return that', async () => {
-    const walletType = 'WHITE_LABEL';
+    const walletType = process.env.WALLET_TYPE;
     const secretType = process.env.SECRET_TYPE;
     const pincode = 1234;
 
@@ -36,17 +27,34 @@ describe('WalletService', () => {
       pincode: pincode,
     };
 
-    return (await walletService.createWallet(dto)).pipe(
-      map((axiosResponse: AxiosResponse) => {
-        expect(axiosResponse).toBe({
-          success: expect(true),
-          result: {
-            id: expect.any(String),
-            address: expect.any(String),
-            secretType: expect.stringMatching('MATIC'),
+    return await walletService.createWallet(dto).then((response) => {
+      expect(response).toEqual({
+        success: expect.any(Boolean),
+        result: {
+          address: expect.any(String),
+          alias: expect.any(String),
+          archived: expect.any(Boolean),
+          secretType: expect.stringMatching('MATIC'),
+          balance: {
+            available: expect.any(Boolean),
+            balance: expect.any(Number),
+            decimals: expect.any(Number),
+            gasBalance: expect.any(Number),
+            gasSymbol: expect.any(String),
+            rawBalance: expect.any(String),
+            rawGasBalance: expect.any(String),
+            secretType: expect.any(String),
+            symbol: expect.any(String),
           },
-        });
-      }),
-    );
+          createdAt: expect.any(String),
+          description: expect.any(String),
+          hasCustomPin: expect.any(Boolean),
+          id: expect.any(String),
+          identifier: null,
+          primary: expect.any(Boolean),
+          walletType: expect.any(String),
+        },
+      });
+    });
   });
 });
