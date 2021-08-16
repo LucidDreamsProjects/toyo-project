@@ -22,8 +22,6 @@ export class AuthService {
     params.append('client_id', `${client_id}`);
     params.append('client_secret', `${client_secret}`);
 
-    // console.log(params.toString());
-
     return await axios
       .post(url, params.toString())
       .then((response) => {

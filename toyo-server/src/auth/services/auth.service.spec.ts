@@ -17,9 +17,8 @@ describe('AuthService', () => {
   });
 
   it('should request a bearer and refresh token and return that', async () => {
-    return await authService.getBearerToken().then((data) => {
-      // console.log(data);
-      expect(data).toEqual({
+    return await authService.getBearerToken().then((response) => {
+      expect(response).toEqual({
         access_token: expect.any(String),
         expires_in: expect.any(Number),
         'not-before-policy': expect.any(Number),

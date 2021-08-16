@@ -2,13 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from '../services/auth.service';
 import { config } from 'dotenv';
-import { HttpModule } from '@nestjs/axios';
 
 config();
 
 describe('AuthController', () => {
   let authController: AuthController;
-  // let authService: AuthService;
 
   const mockAuthService = {
     getBearerToken: jest.fn(() => {
@@ -22,12 +20,6 @@ describe('AuthController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      /* imports: [
-        HttpModule.register({
-          timeout: 5000,
-          maxRedirects: 5,
-        }),
-      ], */
       controllers: [AuthController],
       providers: [AuthService],
     })
@@ -42,11 +34,10 @@ describe('AuthController', () => {
     expect(authController).toBeDefined();
   });
 
+  expect.assertions(1);
   it('should get a bearer and refresh token', async () => {
-    expect.assertions(1);
-    return authController.getBearerToken().then((data) => {
-      // console.log(data);
-      expect(data).toEqual({
+    return authController.getBearerToken().then((response) => {
+      expect(response).toEqual({
         access_token: expect.any(String),
         refresh_token: expect.any(String),
         session_state: expect.any(String),

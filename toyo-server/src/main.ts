@@ -3,10 +3,8 @@ import { config } from 'dotenv';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { AppService } from './app.service';
 import * as session from 'express-session';
 import axios from 'axios';
-import qs from 'qs';
 
 config();
 
