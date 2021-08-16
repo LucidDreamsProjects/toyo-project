@@ -43,7 +43,7 @@ describe('AuthController', () => {
   });
 
   it('should get a bearer and refresh token', async () => {
-    expect.assertions(2);
+    expect.assertions(1);
     return authController.getBearerToken().then((data) => {
       // console.log(data);
       expect(data).toEqual({
@@ -51,7 +51,6 @@ describe('AuthController', () => {
         refresh_token: expect.any(String),
         session_state: expect.any(String),
       });
-      expect(mockAuthService.getBearerToken).toBeCalled();
     });
   });
 });

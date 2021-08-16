@@ -24,7 +24,7 @@ export class AuthService {
 
     // console.log(params.toString());
 
-    await axios
+    return await axios
       .post(url, params.toString())
       .then((response) => {
         console.log(response.data);
