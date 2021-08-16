@@ -78,9 +78,9 @@ describe('ContractController', () => {
       media: media,
     };
 
-    expect.assertions(2);
-    return contractController.createContract(dto).then((data) => {
-      expect(data).toEqual({
+    expect.assertions(1);
+    return await contractController.createContract(dto).then((response) => {
+      expect(response).toEqual({
         name: expect.stringMatching('Toyo'),
         description: expect.any(String),
         confirmed: expect.any(Boolean),
@@ -97,7 +97,6 @@ describe('ContractController', () => {
         ]),
         transactionHash: expect.any(String),
       });
-      expect(mockContractService.createContract).toBeCalled();
     });
   });
 });

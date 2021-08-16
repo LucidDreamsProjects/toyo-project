@@ -1,27 +1,30 @@
 import { CreateContractDto } from '../dto/create-contract.dto';
 import { Body, Injectable } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
-import { map, Observable } from 'rxjs';
-import { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { config } from 'dotenv';
 
 config();
 
 @Injectable()
 export class ContractService {
-  constructor(private readonly httpService: HttpService) {}
+  // private readonly ACCESS_TOKEN = process.env.VENLY_ACCESS_TOKEN;
+  private readonly APPLICATION_ID = process.env.APPLICATION_ID;
 
-  public async createContract(
-    @Body() request: CreateContractDto,
-  ): Promise<Observable<AxiosResponse<any>>> {
-    const applicationID = process.env.APPLICATION_ID;
+  public async createContract(@Body() req: CreateContractDto): Promise<any> {
+    // const accessToken = this.ACCESS_TOKEN;
+    const applicationID = this.APPLICATION_ID;
+    const url = `https://api-business.arkane.network/api/apps/${applicationID}/contracts`;
 
-    const payload = await this.httpService.post(
-      `https://api-business.arkane.network/api/apps/${applicationID}/contracts`,
-      request,
-    );
-
-    const json = payload.pipe(map((response) => response.data));
-    return json;
+    await axios
+      .post(url, req, {
+        /*  headers: {
+          Authorization: `${accessToken}`,
+        }, */
+      })
+      .then((response) => {
+        console.log(response);
+        return response.data;
+      })
+      .catch((error) => console.log(error));
   }
 }

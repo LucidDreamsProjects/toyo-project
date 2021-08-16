@@ -1,4 +1,5 @@
-import { Controller, Get, HttpCode } from '@nestjs/common';
+import { Post } from '@nestjs/common';
+import { Controller, HttpCode } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 
 @Controller('auth')
@@ -6,7 +7,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @HttpCode(200)
-  @Get('validate')
+  @Post('validate')
   public async getBearerToken(): Promise<any> {
     return await this.authService.getBearerToken();
   }

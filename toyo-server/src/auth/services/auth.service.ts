@@ -13,6 +13,7 @@ export class AuthService {
   private readonly CLIENT_SECRET = `${process.env.VENLY_SECRET}`;
 
   public async getBearerToken(): Promise<any> {
+    const url = this.DATA_URL;
     const grant_type = this.GRANT_TYPE;
     const client_id = this.CLIENT_ID;
     const client_secret = this.CLIENT_SECRET;
@@ -25,7 +26,7 @@ export class AuthService {
     console.log(params.toString());
 
     await axios
-      .post(this.DATA_URL, params.toString())
+      .post(url, params.toString())
       .then((response) => {
         console.log(response.data);
         return response.data;
