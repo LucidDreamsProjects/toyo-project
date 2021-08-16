@@ -99,15 +99,15 @@ describe('NtfController', () => {
   });
 
   it('should create a nft', async () => {
-    const name = 'Chuck The Rooster';
+    const name = 'Toyo';
     const description = 'Toyo is a awesome fighting blockchain empowered 😎';
     const image =
       'https://static.wikia.nocookie.net/parody/images/4/42/74915084_10162764640400387_6139958579186106368_o.jpg';
     const externalUrl = 'https://en.wikipedia.org/wiki/Space_Chickens_in_Space';
     const backgroundColor = '#FFFFFF';
     const fungible = false;
-    const maxSupply = '100';
-    const burnable = false;
+    const maxSupply = '25';
+    const burnable = true;
     const animationUrls = [
       {
         type: 'video',
@@ -175,8 +175,8 @@ describe('NtfController', () => {
       attributes: attributes,
     };
 
-    expect.assertions(2);
-    return nftController.createNft(dto).then((data) => {
+    expect.assertions(1);
+    return await nftController.createNft(dto).then((data) => {
       expect(data).toEqual({
         id: expect.any(Number),
         confirmed: expect.any(Boolean),
@@ -205,7 +205,6 @@ describe('NtfController', () => {
         ]),
         transactionHash: expect.any(String),
       });
-      expect(mockNftService.createNft).toBeCalled();
     });
   });
 });

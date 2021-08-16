@@ -1,20 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { NftService } from './nft.service';
-import { HttpModule, HttpService } from '@nestjs/axios';
-import { map } from 'rxjs';
-import { AxiosResponse } from 'axios';
 
 describe('NftService', () => {
   let nftService: NftService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        HttpModule.register({
-          timeout: 5000,
-          maxRedirects: 5,
-        }),
-      ],
       providers: [NftService],
     }).compile();
 
@@ -26,7 +17,7 @@ describe('NftService', () => {
   });
 
   it('should create a nft and return that', async () => {
-    const name = 'Chuck The Rooster';
+    const name = 'Toyo';
     const description = 'Toyo is a awesome fighting blockchain empowered 😎';
     const image =
       'https://static.wikia.nocookie.net/parody/images/4/42/74915084_10162764640400387_6139958579186106368_o.jpg';
@@ -34,7 +25,7 @@ describe('NftService', () => {
     const backgroundColor = '#FFFFFF';
     const fungible = false;
     const maxSupply = '25';
-    const burnable = false;
+    const burnable = true;
     const animationUrls = [
       {
         type: 'video',
@@ -102,37 +93,35 @@ describe('NftService', () => {
       attributes: attributes,
     };
 
-    return (await nftService.createNft(dto)).pipe(
-      map((axiosResponse: AxiosResponse) => {
-        expect(axiosResponse).toEqual({
-          id: expect.any(Number),
-          confirmed: expect.any(Boolean),
-          name: expect.any(String),
-          description: expect.any(String),
-          fungible: expect.any(Boolean),
-          burnable: expect.any(Boolean),
-          externalUrl: expect.any(Boolean),
-          backgroundColor: expect.any(String),
-          image: expect.any(String),
-          imageThumbnail: expect.any(String),
-          imagePreview: expect.any(String),
-          maxSupply: expect.any(Number),
-          currentSupply: expect.any(Number),
-          animationUrls: expect.arrayContaining([
-            expect.objectContaining({
-              type: expect.any(String),
-              value: expect.any(String),
-            }),
-          ]),
-          attributes: expect.arrayContaining([
-            expect.objectContaining({
-              type: expect.any(String),
-              value: expect.any(String),
-            }),
-          ]),
-          transactionHash: expect.any(String),
-        });
-      }),
-    );
+    return await nftService.createNft(dto).then((response) => {
+      expect(response).toEqual({
+        id: expect.any(Number),
+        confirmed: expect.any(Boolean),
+        name: expect.any(String),
+        description: expect.any(String),
+        fungible: expect.any(Boolean),
+        burnable: expect.any(Boolean),
+        externalUrl: expect.any(String),
+        backgroundColor: expect.any(String),
+        image: expect.any(String),
+        imageThumbnail: expect.any(String),
+        imagePreview: expect.any(String),
+        maxSupply: expect.any(Number),
+        currentSupply: expect.any(Number),
+        animationUrls: expect.arrayContaining([
+          expect.objectContaining({
+            type: expect.any(String),
+            value: expect.any(String),
+          }),
+        ]),
+        attributes: expect.arrayContaining([
+          expect.objectContaining({
+            type: expect.any(String),
+            value: expect.any(String),
+          }),
+        ]),
+        transactionHash: expect.any(String),
+      });
+    });
   });
 });
