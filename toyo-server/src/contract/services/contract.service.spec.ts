@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ContractService } from './contract.service';
 
 describe('ContractService', () => {
-  //TODO: Create Entity on Database
   let contractService: ContractService;
 
   beforeEach(async () => {
@@ -42,7 +41,7 @@ describe('ContractService', () => {
       media: media,
     };
 
-    return await contractService.createContract(dto).then((response) => {
+    await contractService.createContract(dto).then((response) => {
       expect(response).toEqual({
         name: expect.stringMatching('Toyo'),
         description: expect.any(String),

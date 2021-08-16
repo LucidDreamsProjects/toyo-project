@@ -79,7 +79,7 @@ describe('ContractController', () => {
     };
 
     expect.assertions(1);
-    return await contractController.createContract(dto).then((response) => {
+    return contractController.createContract(dto).then((response) => {
       expect(response).toEqual({
         name: expect.stringMatching('Toyo'),
         description: expect.any(String),

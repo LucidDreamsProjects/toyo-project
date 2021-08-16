@@ -7,22 +7,21 @@ config();
 
 @Injectable()
 export class ContractService {
-  // private readonly ACCESS_TOKEN = process.env.VENLY_ACCESS_TOKEN;
-  private readonly APPLICATION_ID = process.env.APPLICATION_ID;
+  private readonly ACCESS_TOKEN = process.env.VENLY_ACCESS_TOKEN;
+  private readonly DATA_URL = `${process.env.NFT_API_ENDPOINT}/api/apps/${process.env.APPLICATION_ID}/contracts`;
 
-  public async createContract(@Body() req: CreateContractDto): Promise<any> {
-    // const accessToken = this.ACCESS_TOKEN;
-    const applicationID = this.APPLICATION_ID;
-    const url = `https://api-business.arkane.network/api/apps/${applicationID}/contracts`;
+  public async createContract(@Body() dto: CreateContractDto): Promise<any> {
+    const accessToken = this.ACCESS_TOKEN;
+    const url = this.DATA_URL;
 
-    await axios
-      .post(url, req, {
-        /*  headers: {
-          Authorization: `${accessToken}`,
-        }, */
+    return await axios
+      .post(url, dto, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       })
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
         return response.data;
       })
       .catch((error) => console.log(error));
