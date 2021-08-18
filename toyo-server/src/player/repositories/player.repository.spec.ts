@@ -54,6 +54,7 @@ describe('PlayerRepository', () => {
       username: haiku(1),
       email: haiku(2),
       walletAddress: EthereumAddress.from(testKey).address,
+      refreshToken: 'refreshToken',
     };
 
     const savedPlayer = await playerRepository.save(playerDto);
