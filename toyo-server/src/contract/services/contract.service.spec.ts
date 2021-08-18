@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { RedisCacheModule } from '../../cache/redisCache.module';
 import { ContractService } from './contract.service';
 
 describe('ContractService', () => {
@@ -6,6 +7,7 @@ describe('ContractService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [RedisCacheModule],
       providers: [ContractService],
     }).compile();
 
@@ -49,7 +51,7 @@ describe('ContractService', () => {
         id: expect.any(Number),
         secretType: expect.any(String),
         symbol: expect.stringMatching('TOYO'),
-        externalUrl: expect.any(String),
+        external_link: expect.any(String),
         image: expect.any(String),
         media: expect.arrayContaining([
           expect.objectContaining({
