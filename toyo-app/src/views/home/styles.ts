@@ -53,6 +53,52 @@ const Section = styled.section`
     font-size: 2.441rem;
     text-shadow: 6px 6px 12px #000;
   }
+
+  #btn--login {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    width: 14rem;
+    height: auto;
+    padding: 1rem;
+    margin: 0 auto;
+    left: -10rem;
+  }
+
+  #btn--transfer {
+    position: relative;
+    width: 50%;
+    left: 8.6rem;
+  }
+
+  .btn--simple {
+    position: relative;
+    padding: 0.5em;
+    width: 75%;
+    top: 0rem;
+    left: 2rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 2px 2px 16px rgba(0, 0, 0, 0.8);
+  }
+
+  .text--simple {
+    font-size: 0.8rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+  }
+
+  .img--simple {
+    width: 75%;
+    height: auto;
+    cursor: pointer;
+  }
+
+  #boxes {
+    position: relative;
+    top: -2rem;
+    left: 4rem;
+  }
 `;
 
 const Row = styled.div`
@@ -130,12 +176,15 @@ const NeonButton = styled.button`
     max-height: 15%;
   }
 
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
   padding: 1.5em;
-  margin: 1.6em;
+  margin: 0 auto;
   width: auto;
-  max-width: 20%;
-  max-height: 10%;
+  max-width: 100%;
+  max-height: 80%;
   font-size: 1rem;
   font-weight: 800;
   color: hsl(317 100% 54%);
@@ -143,9 +192,7 @@ const NeonButton = styled.button`
   border-radius: 0.6em;
   background: none;
   cursor: pointer;
-
   text-shadow: 0 0 0.25em hsl(0 0% 100% / 0.25), 0 0 0.45em currentColor;
-
   box-shadow: 0 0 1em 0 hsl(317 100% 54%);
 `;
 
