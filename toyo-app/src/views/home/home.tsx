@@ -52,6 +52,7 @@ export const Home: FunctionalComponent<HomeProps> = (props): JSX.Element => {
             email: auth.tokenParsed!.email,
             sessionState: auth.tokenParsed!.session_state,
           };
+          console.log(auth);
           return player;
         });
         result.notAuthenticated((auth: undefined | KeycloakInstance) => {
