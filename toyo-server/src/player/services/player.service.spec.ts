@@ -5,6 +5,7 @@ import { Player } from '../entities/player.entity';
 import { EthereumAddress } from 'wallet.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { haiku } from '../../utils/haiku';
+import { RedisCacheModule } from '../../cache/redisCache.module';
 
 const testKey = Buffer.from(
   '028a8c59fa27d1e0f1643081ff80c3cf0392902acbf76ab0dc9c414b8d115b0ab3',
@@ -39,6 +40,7 @@ describe('PlayerService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [RedisCacheModule],
       providers: [
         PlayerService,
         {

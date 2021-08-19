@@ -11,6 +11,7 @@ import { ConstructorOptions } from "@arkane-network/arkane-connect/dist/src/conn
 
 function Content() {
   const { location } = useContext(RouterContext);
+
   const options: ConstructorOptions = {
     environment: "staging",
     windowMode: "POPUP" as WindowMode,

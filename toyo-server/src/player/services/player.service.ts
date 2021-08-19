@@ -24,13 +24,18 @@ export class PlayerService {
   }
 
   public async getById(playerID: string): Promise<Player> {
-    // console.log("🔧 Searching for Player (by Id) in Toyo's universe...");
-    const foundPlayer = await this.playerRepository.findOneOrFail(playerID);
+    // console.log('🔧 Searching for Player...');
+    const player = await this.playerRepository
+      .findOneOrFail(playerID)
+      .then((player) => {
+        console.log('🔧  Player found...');
+        return player;
+      })
+      .catch((error) => {
+        console.log(`🔧 Player not found...`, error);
+      });
 
-    if (!foundPlayer) {
-      throw new NotFoundException(`🔧 Player not found in Toyo's universe.`);
-    }
-    return foundPlayer;
+    return player! as Player;
   }
 
   public async editById(

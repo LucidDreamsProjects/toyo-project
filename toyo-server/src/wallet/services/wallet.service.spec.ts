@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { RedisCacheModule } from '../../cache/redisCache.module';
 import { WalletService } from './wallet.service';
 
 describe('WalletService', () => {
@@ -6,6 +7,7 @@ describe('WalletService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [RedisCacheModule],
       providers: [WalletService],
     }).compile();
 
