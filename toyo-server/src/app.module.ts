@@ -33,7 +33,7 @@ config();
       password: 'dd^8A!DPq#ZpjewF2',
       database: 'wwtoyo_universe',
       entities: [Player],
-      logging: ['error'],
+      logging: false,
       maxQueryExecutionTime: 1000,
       synchronize: false,
     }),

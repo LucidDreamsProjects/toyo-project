@@ -1,0 +1,32 @@
+{
+    "name": "Epic Chest",
+    "description": "A chest made for the epic competitors of the Toyo universe.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/6/60/Solex_99_30_padlock_with_keys_%28DSCF2659%29.jpg",
+    "backgroundColor": "#FFFFFF",
+    "externalUrl": "https://en.wikipedia.org/wiki/Space_Chickens_in_Space",
+    "animationUrls": [
+        {
+            "type": "video",
+            "value": "https://img.arkane.network/marketing/SpaceChickens/space_chickens_trailer.mp4"
+        },
+        {
+            "type": "audio",
+            "value": "https://file-examples-com.github.io/uploads/2017/11/file_example_WAV_10MG.wav"
+        }
+    ],
+    "maxSupply": "2",
+    "fungible": false,
+    "burnable": true,
+    "attributes": [
+        {
+            "type": "box",
+            "name": "pre-sales",
+            "value": "warrior"
+        },
+        {
+            "type": "property",
+            "name": "open",
+            "value": "false"
+        }
+    ]
+}

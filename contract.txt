@@ -1,0 +1,136 @@
+CONTRACT:
+{
+    "name": "Toyo Demo 001",
+    "description": "Toyo is a awesome fighting blockchain empowered 😎",
+    "confirmed": true,
+    "address": "0x8a380eea07ca3f901ca5c6f777ba6e9165d01ab2",
+    "id": 807,
+    "secretType": "MATIC",
+    "symbol": "TOY",
+    "externalUrl": "https://en.wikipedia.org/wiki/Space_Chickens_in_Space",
+    "external_link": "https://en.wikipedia.org/wiki/Space_Chickens_in_Space",
+    "image": "https://averylongurl.com/image/contract/2917",
+    "media": [
+        {
+            "type": "image",
+            "value": "https://dg31sz3gwrwan.cloudfront.net/fanart/355763/1357791-0-q80.jpg"
+        }
+    ],
+    "transactionHash": "0x8ab7fcee26fd9dd0e66c36c64e5b97515a965c8c89392d392981145a40f3641a"
+}
+
+NFT TEMPLATE:
+{
+    "id": 1,
+    "confirmed": false,
+    "name": "Epic Chest",
+    "description": "A chest made for the epic competitors of the Toyo universe.",
+    "fungible": false,
+    "burnable": true,
+    "externalUrl": "https://en.wikipedia.org/wiki/Space_Chickens_in_Space",
+    "backgroundColor": "#FFFFFF",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/6/60/Solex_99_30_padlock_with_keys_%28DSCF2659%29.jpg",
+    "imageThumbnail": "https://upload.wikimedia.org/wikipedia/commons/6/60/Solex_99_30_padlock_with_keys_%28DSCF2659%29.jpg",
+    "imagePreview": "https://upload.wikimedia.org/wikipedia/commons/6/60/Solex_99_30_padlock_with_keys_%28DSCF2659%29.jpg",
+    "maxSupply": 2,
+    "currentSupply": 0,
+    "animationUrls": [
+        {
+            "type": "video",
+            "value": "https://img.arkane.network/marketing/SpaceChickens/space_chickens_trailer.mp4"
+        },
+        {
+            "type": "audio",
+            "value": "https://file-examples-com.github.io/uploads/2017/11/file_example_WAV_10MG.wav"
+        }
+    ],
+    "attributes": [
+        {
+            "type": "property",
+            "name": "pre-sales",
+            "value": "warrior"
+        },
+        {
+            "type": "stat",
+            "name": "open",
+            "value": "false"
+        }
+    ],
+    "transactionHash": "0x23f24f2abc311298e5e5081d0180271e1c1138ae5f867b2c7747e196336a7871"
+},
+{
+    "id": 51,
+    "confirmed": false,
+    "name": "Hero Chest",
+    "description": "A chest made for the hero competitors of the Toyo universe.",
+    "fungible": false,
+    "burnable": true,
+    "externalUrl": "https://en.wikipedia.org/wiki/Space_Chickens_in_Space",
+    "backgroundColor": "#FFFFFF",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/6/60/Solex_99_30_padlock_with_keys_%28DSCF2659%29.jpg",
+    "imageThumbnail": "https://upload.wikimedia.org/wikipedia/commons/6/60/Solex_99_30_padlock_with_keys_%28DSCF2659%29.jpg",
+    "imagePreview": "https://upload.wikimedia.org/wikipedia/commons/6/60/Solex_99_30_padlock_with_keys_%28DSCF2659%29.jpg",
+    "maxSupply": 10,
+    "currentSupply": 0,
+    "animationUrls": [
+        {
+            "type": "video",
+            "value": "https://img.arkane.network/marketing/SpaceChickens/space_chickens_trailer.mp4"
+        },
+        {
+            "type": "audio",
+            "value": "https://file-examples-com.github.io/uploads/2017/11/file_example_WAV_10MG.wav"
+        }
+    ],
+    "attributes": [
+        {
+            "type": "property",
+            "name": "pre-sales",
+            "value": "warrior"
+        },
+        {
+            "type": "stat",
+            "name": "open",
+            "value": "false"
+        }
+    ],
+    "transactionHash": "0x7ae69c51259b810d2728bd52405983b06d9db854c3933d811e6fda2a30fbc12c"
+},
+{
+    "id": 101,
+    "confirmed": false,
+    "name": "Warrior Chest",
+    "description": "A chest made for the warrior competitors of the Toyo universe.",
+    "fungible": false,
+    "burnable": true,
+    "externalUrl": "https://en.wikipedia.org/wiki/Space_Chickens_in_Space",
+    "backgroundColor": "#FFFFFF",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/6/60/Solex_99_30_padlock_with_keys_%28DSCF2659%29.jpg",
+    "imageThumbnail": "https://upload.wikimedia.org/wikipedia/commons/6/60/Solex_99_30_padlock_with_keys_%28DSCF2659%29.jpg",
+    "imagePreview": "https://upload.wikimedia.org/wikipedia/commons/6/60/Solex_99_30_padlock_with_keys_%28DSCF2659%29.jpg",
+    "maxSupply": 20,
+    "currentSupply": 0,
+    "animationUrls": [
+        {
+            "type": "video",
+            "value": "https://img.arkane.network/marketing/SpaceChickens/space_chickens_trailer.mp4"
+        },
+        {
+            "type": "audio",
+            "value": "https://file-examples-com.github.io/uploads/2017/11/file_example_WAV_10MG.wav"
+        }
+    ],
+    "attributes": [
+        {
+            "type": "property",
+            "name": "pre-sales",
+            "value": "warrior"
+        },
+        {
+            "type": "stat",
+            "name": "open",
+            "value": "false"
+        }
+    ],
+    "transactionHash": "0x970bb68ad833fb713ba5f8c255cd20fcb172ed4ec576326790ab1e76a0019ca3"
+}
