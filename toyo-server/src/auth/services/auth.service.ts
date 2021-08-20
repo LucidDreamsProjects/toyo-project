@@ -13,14 +13,14 @@ export class AuthService {
 
   public async getBearerToken(): Promise<any> {
     const url = this.DATA_URL;
-    const grant_type = this.GRANT_TYPE;
-    const client_id = this.CLIENT_ID;
-    const client_secret = this.CLIENT_SECRET;
+    const grantType = this.GRANT_TYPE;
+    const clientId = this.CLIENT_ID;
+    const clientSecret = this.CLIENT_SECRET;
 
     const params = new URLSearchParams();
-    params.append('grant_type', `${grant_type}`);
-    params.append('client_id', `${client_id}`);
-    params.append('client_secret', `${client_secret}`);
+    params.append('grant_type', `${grantType}`);
+    params.append('client_id', `${clientId}`);
+    params.append('client_secret', `${clientSecret}`);
 
     return await axios
       .post(url, params.toString())

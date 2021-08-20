@@ -409,3 +409,4 @@ dist
 ./config
 ./config/*
 package-lock.json
+dump.rdb

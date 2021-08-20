@@ -37,4 +37,7 @@ export class Player extends BaseEntity {
 
   @Column({ type: 'int', default: 3 })
   role!: number;
+
+  @Column({ type: 'varchar' })
+  refreshToken?: string;
 }

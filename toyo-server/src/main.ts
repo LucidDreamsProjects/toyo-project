@@ -1,28 +1,55 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { config } from 'dotenv';
+// import redis from 'redis';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { AuthService } from './auth/services/auth.service';
+// import { Request, Response, NextFunction } from 'express';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import * as session from 'express-session';
-import axios from 'axios';
 
 config();
 
 async function bootstrap() {
+  let authService: AuthService;
   const PORT = process.env.PORT;
-  const SESSION_SECRET = process.env.SESSION_SECRET;
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  /* const client = redis.createClient(6379);
+
+  client.on('error', (error) => {
+    console.log(error);
+  }); */
 
   app.enableCors();
 
-  app.use(
-    session({
-      secret: `${SESSION_SECRET}`,
-      resave: true,
-      saveUninitialized: false,
-      cookie: { maxAge: 3600000, httpOnly: true },
-    }),
-  );
+  /* function aMiddleware(req: Request, res: Response, next: NextFunction) {
+    next();
+  }
+
+  app.get('/auth/validate', (aMiddleware) => {
+    try {
+      client.get('access_token', async (err, token) => {
+        if (token) {
+          return res.status(200).send({
+            error: false,
+            message: `access token received from the cache`,
+            data: token,
+          });
+        } else {
+          const credentials = await authService.getBearerToken();
+
+          client.set('access_token', credentials.data.access_token);
+
+          return res.status(200).send({
+            error: false,
+            message: `access token received from the cache`,
+            data: credentials.data.access_token,
+          });
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }); */
 
   app.init();
 
