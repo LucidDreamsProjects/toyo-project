@@ -13,16 +13,14 @@ export class NftService {
   private readonly APPLICATION_ID = process.env.APPLICATION_ID;
   private readonly CREATE_DATA_URL = `${process.env.NFT_API_ENDPOINT}/api/apps/${this.APPLICATION_ID}/contracts/${this.CONTRACT_ID}/token-types`;
   private readonly MINT_DATA_URL = `${process.env.NFT_API_ENDPOINT}/api/apps/${this.APPLICATION_ID}/contracts/${this.CONTRACT_ID}/tokens/non-fungible`;
-  private readonly ACCESS_TOKEN = process.env.ACCESS_TOKEN;
+  // private readonly ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 
   constructor(private redisCacheService: RedisCacheService) {}
 
   public async createNft(@Body() dto: CreateNftDto): Promise<any> {
-    const accessToken = this.ACCESS_TOKEN;
-    // const accessToken = await this.redisCacheService.get('access_token');
+    // const accessToken = this.ACCESS_TOKEN;
+    const accessToken = await this.redisCacheService.get('access_token');
     const url = this.CREATE_DATA_URL;
-
-    // console.log(accessToken);
 
     return await axios
       .post(url, dto, {
@@ -38,8 +36,8 @@ export class NftService {
   }
 
   public async mintNft(@Body() dto: MintNftDto): Promise<any> {
-    const accessToken = this.ACCESS_TOKEN;
-    // const accessToken = await this.redisCacheService.get('access_token');
+    // const accessToken = this.ACCESS_TOKEN;
+    const accessToken = await this.redisCacheService.get('access_token');
     const url = this.MINT_DATA_URL;
 
     return await axios

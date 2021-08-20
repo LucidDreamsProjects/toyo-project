@@ -9,16 +9,14 @@ config();
 @Injectable()
 export class ContractService {
   private readonly DATA_URL = `${process.env.NFT_API_ENDPOINT}/api/apps/${process.env.APPLICATION_ID}/contracts`;
-  private readonly ACCESS_TOKEN = process.env.ACCESS_TOKEN;
+  // private readonly ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 
   constructor(private redisCacheService: RedisCacheService) {}
 
   public async createContract(@Body() dto: CreateContractDto): Promise<any> {
-    const accessToken = this.ACCESS_TOKEN;
-    // const accessToken = await this.redisCacheService.get('access_token');
+    // const accessToken = this.ACCESS_TOKEN;
+    const accessToken = await this.redisCacheService.get('access_token');
     const url = this.DATA_URL;
-
-    // console.log(accessToken);
 
     return await axios
       .post(url, dto, {
