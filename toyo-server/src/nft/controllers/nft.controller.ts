@@ -8,12 +8,12 @@ export class NftController {
   constructor(private readonly nftService: NftService) {}
 
   @Post('create')
-  public async createNftTemplate(@Body() dto: CreateNftDto): Promise<any> {
+  public async createNft(@Body() dto: CreateNftDto): Promise<void> {
     return await this.nftService.createNft(dto);
   }
 
   @Post('mint')
-  public async mintNft(@Body() dto: MintNftDto): Promise<any> {
+  public async mintNft(@Body() dto: MintNftDto): Promise<void> {
     return await this.nftService.mintNft(dto);
   }
 }

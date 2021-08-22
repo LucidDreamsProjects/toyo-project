@@ -9,7 +9,7 @@ describe('AuthController', () => {
   let authController: AuthController;
 
   const mockAuthService = {
-    getBearerToken: jest.fn(() => {
+    getCredentials: jest.fn(() => {
       return {
         access_token: expect.any(String),
         refresh_token: expect.any(String),
@@ -35,12 +35,10 @@ describe('AuthController', () => {
   });
 
   expect.assertions(1);
-  it('should get a bearer and refresh token', async () => {
-    return authController.getBearerToken().then((response) => {
+  it('should get credentials and return that', async () => {
+    return authController.getAccessToken().then((response) => {
       expect(response).toEqual({
         access_token: expect.any(String),
-        refresh_token: expect.any(String),
-        session_state: expect.any(String),
       });
     });
   });

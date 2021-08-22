@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RedisCacheModule } from '../../cache/redisCache.module';
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
@@ -7,7 +6,6 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [RedisCacheModule],
       providers: [AuthService],
     }).compile();
 
@@ -18,8 +16,8 @@ describe('AuthService', () => {
     expect(authService).toBeDefined();
   });
 
-  it('should request a bearer and refresh token and return that', async () => {
-    return await authService.getBearerToken().then((response) => {
+  it('should request the credentials and return that', async () => {
+    return await authService.getCredentials().then((response) => {
       expect(response).toEqual({
         access_token: expect.any(String),
         expires_in: expect.any(Number),
@@ -30,6 +28,12 @@ describe('AuthService', () => {
         session_state: expect.any(String),
         token_type: expect.stringMatching('bearer'),
       });
+    });
+  });
+
+  it('should request the access token and return that', async () => {
+    return await authService.getAccessToken().then((response) => {
+      expect.any(String);
     });
   });
 });

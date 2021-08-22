@@ -20,9 +20,9 @@ describe('PlayerController', () => {
         ...dto,
       };
     }),
-    editById: jest.fn().mockImplementation((playerID, dto) => {
+    editByIndex: jest.fn().mockImplementation((index, dto) => {
       return {
-        playerID,
+        index,
         ...dto,
       };
     }),
@@ -68,8 +68,7 @@ describe('PlayerController', () => {
   });
 
   it('should update a Player', () => {
-    const uuid = uuidv4();
-
+    const index = 1001;
     const dto = {
       firstName: 'Lucas',
       lastName: 'Cyrne',
@@ -77,12 +76,12 @@ describe('PlayerController', () => {
     };
 
     expect.assertions(2);
-    return playerController.editById(uuid, dto).then((data) => {
+    return playerController.editByIndex(index, dto).then((data) => {
       expect(data).toEqual({
-        playerID: uuid,
+        index: index,
         ...dto,
       });
-      expect(mockPlayerService.editById).toBeCalled();
+      expect(mockPlayerService.editByIndex).toBeCalled();
     });
   });
 });

@@ -54,16 +54,11 @@ describe('PlayerRepository', () => {
       username: haiku(1),
       email: haiku(2),
       walletAddress: EthereumAddress.from(testKey).address,
-      refreshToken: 'refreshToken',
     };
 
     const savedPlayer = await playerRepository.save(playerDto);
 
     expect(savedPlayer).toBe(playerDto);
-
-    const count = await playerRepository.query(
-      'SELECT COUNT(*) FROM player_User',
-    );
   });
 
   it('should not save an entity and throw error if id missing', async () => {

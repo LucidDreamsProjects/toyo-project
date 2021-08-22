@@ -5,28 +5,29 @@ import { Player } from '../entities/player.entity';
 import { PlayerRepository } from '../repositories/player.repository';
 import { SavePlayerDto } from '../dto/save-player.dto';
 import { EditPlayerDto } from '../dto/edit-player.dto';
+import { v4 as uuidv4 } from 'uuid';
+import { WalletService } from '../../wallet/services/wallet.service';
 
 @Injectable()
 export class PlayerService {
   constructor(
     @InjectRepository(Player)
     private playerRepository: PlayerRepository,
+    private playerService: PlayerService,
+    private walletService: WalletService,
   ) {}
 
   public async save(savePlayerDto: SavePlayerDto): Promise<Player> {
-    // console.log("🔧 Creating a new Player on Toyo's universe...");
     return await this.playerRepository.savePlayer(savePlayerDto);
   }
 
   public async getAll(): Promise<Player[]> {
-    // console.log("🔧 Returning all Players from Toyo's universe...");
     return await this.playerRepository.find();
   }
 
-  public async getById(playerID: string): Promise<Player> {
-    // console.log('🔧 Searching for Player...');
+  public async getByIndex(index: number): Promise<Player> {
     const player = await this.playerRepository
-      .findOneOrFail(playerID)
+      .findOneOrFail(index)
       .then((player) => {
         console.log('🔧  Player found...');
         return player;
@@ -38,13 +39,12 @@ export class PlayerService {
     return player! as Player;
   }
 
-  public async editById(
-    playerID: string,
+  public async editByIndex(
+    index: number,
     editPlayerDto: EditPlayerDto,
   ): Promise<Player> {
-    // console.log("🔧 Updating Player (by Id) from Toyo's universe...");
     const targetPlayer = await this.playerRepository
-      .findOneOrFail(playerID)
+      .findOneOrFail(index)
       .catch((reason) => reason);
 
     if (!targetPlayer) {
@@ -58,8 +58,33 @@ export class PlayerService {
     return updatedPlayer;
   }
 
-  public async deleteById(playerID: string): Promise<void> {
-    // console.log("🔧 Deleting Player (by Id) from Toyo's universe...");
-    await this.playerRepository.delete(playerID);
+  public async deleteByIndex(index: number): Promise<void> {
+    await this.playerRepository.delete(index);
+  }
+
+  public async checkIfAdminExists(): Promise<boolean> {
+    const admin = await this.getByIndex(0);
+
+    if (admin.role === 1) {
+      return true;
+    }
+    return false;
+  }
+
+  public async createAdminAccount(pincode: number): Promise<Player> {
+    const _pincode = {
+      pincode: pincode,
+    };
+    const uuid = uuidv4();
+    const wallet = await this.walletService.createWallet(_pincode);
+
+    const adminDto = {
+      playerID: uuid,
+      username: 'admin',
+      email: 'admin@toyo.com',
+      walletAddress: wallet.address,
+    } as SavePlayerDto;
+
+    return await this.playerService.save(adminDto);
   }
 }

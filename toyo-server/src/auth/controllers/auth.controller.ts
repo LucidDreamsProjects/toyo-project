@@ -8,7 +8,7 @@ export class AuthController {
 
   @HttpCode(200)
   @Post('validate')
-  public async getBearerToken(): Promise<any> {
-    return await this.authService.getBearerToken();
+  public async getBearerToken(): Promise<string | void> {
+    return await this.authService.getAccessToken();
   }
 }

@@ -1,17 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RedisCacheModule } from '../../cache/redisCache.module';
+import { AuthService } from '../../auth/services/auth.service';
 import { ContractService } from './contract.service';
 
 describe('ContractService', () => {
   let contractService: ContractService;
+  let authService: AuthService;
 
   beforeEach(async () => {
+    jest.setTimeout(10000);
     const module: TestingModule = await Test.createTestingModule({
-      imports: [RedisCacheModule],
-      providers: [ContractService],
+      providers: [ContractService, AuthService],
     }).compile();
 
     contractService = await module.get<ContractService>(ContractService);
+    authService = await module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {

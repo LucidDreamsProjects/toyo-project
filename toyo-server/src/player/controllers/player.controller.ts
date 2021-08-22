@@ -31,31 +31,31 @@ export class PlayerController {
     return players;
   }
 
-  @Get(':playerID')
+  @Get(':index')
   public async getById(
-    @Param('playerID', new ParseUUIDPipe())
-    playerID: string,
+    @Param('index', new ParseUUIDPipe())
+    index: number,
   ): Promise<Player | undefined | null | void> {
-    const player = await this.playerService.getById(playerID);
+    const player = await this.playerService.getByIndex(index);
     return player;
   }
 
-  @Patch('edit/:playerID')
-  public async editById(
-    @Param('playerID', new ParseUUIDPipe())
-    playerID: string,
+  @Patch('edit/:index')
+  public async editByIndex(
+    @Param('index', new ParseUUIDPipe())
+    index: number,
     @Body() editPlayerDto: EditPlayerDto,
   ): Promise<Player> {
-    const player = await this.playerService.editById(playerID, editPlayerDto);
+    const player = await this.playerService.editByIndex(index, editPlayerDto);
     return player;
   }
 
-  @Delete('delete/:playerID')
-  public async deleteById(
-    @Param('playerID', new ParseUUIDPipe())
-    playerID: string,
+  @Delete('delete/:index')
+  public async deleteByIndex(
+    @Param('index', new ParseUUIDPipe())
+    index: number,
   ) {
-    const deletedPlayer = await this.playerService.deleteById(playerID);
+    const deletedPlayer = await this.playerService.deleteByIndex(index);
     return deletedPlayer;
   }
 }
