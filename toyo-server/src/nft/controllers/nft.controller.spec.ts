@@ -15,8 +15,8 @@ describe('NtfController', () => {
   let nftController: NftController;
 
   const mockNftService = {
-    createNft: jest.fn((dto) => {
-      return {
+    createNft: jest.fn(async (dto) => {
+      return await {
         id: 51,
         confirmed: true,
         name: 'G-Token',
@@ -48,33 +48,6 @@ describe('NtfController', () => {
             type: 'property',
             name: 'Type',
             value: 'Generic',
-          },
-          {
-            type: 'property',
-            name: 'Talent',
-            value: 'Leadership',
-          },
-          {
-            type: 'boost',
-            name: 'Crafting',
-            value: '+5',
-          },
-          {
-            type: 'boost',
-            name: 'Leadership',
-            value: '+10',
-          },
-          {
-            type: 'stat',
-            name: 'Cool',
-            value: '9',
-            maxValue: '10',
-          },
-          {
-            type: 'stat',
-            name: 'Cool',
-            value: '9',
-            maxValue: '10',
           },
         ],
         transactionHash: EthereumAddress.from(testKey).address,
@@ -123,42 +96,6 @@ describe('NtfController', () => {
         type: 'property',
         name: 'Talent',
         value: 'Leadership',
-      },
-      {
-        type: 'property',
-        name: 'Allergic',
-        value: 'Monstonuts',
-      },
-      {
-        type: 'property',
-        name: 'Hobby',
-        value: 'Scouts',
-      },
-      {
-        type: 'stat',
-        name: 'Hobby',
-        value: 'Scouts',
-      },
-      {
-        type: 'stat',
-        name: 'Age',
-        value: '3',
-      },
-      {
-        type: 'stat',
-        name: 'Cool',
-        value: '9',
-        maxValue: '10',
-      },
-      {
-        type: 'boost',
-        name: 'Crafting',
-        value: '+5',
-      },
-      {
-        type: 'boost',
-        name: 'Leadership',
-        value: '+10',
       },
     ];
 

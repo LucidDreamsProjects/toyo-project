@@ -1,17 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RedisCacheModule } from '../../cache/redisCache.module';
+import { AuthService } from '../../auth/services/auth.service';
 import { NftService } from './nft.service';
 
 describe('NftService', () => {
   let nftService: NftService;
+  let authService: AuthService;
 
   beforeEach(async () => {
+    jest.setTimeout(15000);
     const module: TestingModule = await Test.createTestingModule({
-      imports: [RedisCacheModule],
-      providers: [NftService],
+      providers: [NftService, AuthService],
     }).compile();
 
     nftService = await module.get<NftService>(NftService);
+    authService = await module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {
@@ -43,42 +45,6 @@ describe('NftService', () => {
         type: 'property',
         name: 'Talent',
         value: 'Leadership',
-      },
-      {
-        type: 'property',
-        name: 'Allergic',
-        value: 'Monstonuts',
-      },
-      {
-        type: 'property',
-        name: 'Hobby',
-        value: 'Scouts',
-      },
-      {
-        type: 'stat',
-        name: 'Hobby',
-        value: 'Scouts',
-      },
-      {
-        type: 'stat',
-        name: 'Age',
-        value: '3',
-      },
-      {
-        type: 'stat',
-        name: 'Cool',
-        value: '9',
-        maxValue: '10',
-      },
-      {
-        type: 'boost',
-        name: 'Crafting',
-        value: '+5',
-      },
-      {
-        type: 'boost',
-        name: 'Leadership',
-        value: '+10',
       },
     ];
 
@@ -125,5 +91,5 @@ describe('NftService', () => {
         transactionHash: expect.any(String),
       });
     });
-  });
+  }, 15000);
 });

@@ -5,16 +5,16 @@ import { EditPlayerDto } from '../dto/edit-player.dto';
 
 @EntityRepository(Player)
 export class PlayerRepository extends Repository<Player> {
-  public async savePlayer(savePlayerDto: SavePlayerDto): Promise<Player> {
-    const { playerID, username, email, walletAddress, refreshToken } =
-      savePlayerDto;
+  public async savePlayer(
+    savePlayerDto: SavePlayerDto,
+  ): Promise<Player | void> {
+    const { playerID, username, email, walletAddress } = savePlayerDto;
 
     const player = new Player();
     player.playerID = playerID;
     player.username = username;
     player.email = email;
     player.walletAddress = walletAddress;
-    player.refreshToken = refreshToken;
 
     await player.save();
     return player;
@@ -23,7 +23,7 @@ export class PlayerRepository extends Repository<Player> {
   public async editPlayer(
     editPlayerDto: EditPlayerDto,
     targetPlayer: Player,
-  ): Promise<Player> {
+  ): Promise<Player | void> {
     const { firstName, lastName, address } = editPlayerDto;
 
     targetPlayer.firstName = firstName;

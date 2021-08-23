@@ -13,53 +13,63 @@ export class PlayerService {
     private playerRepository: PlayerRepository,
   ) {}
 
-  public async save(savePlayerDto: SavePlayerDto): Promise<Player> {
-    // console.log("🔧 Creating a new Player on Toyo's universe...");
-    return await this.playerRepository.savePlayer(savePlayerDto);
+  public async save(savePlayerDto: SavePlayerDto): Promise<Player | void> {
+    const player = await this.playerRepository.savePlayer(savePlayerDto);
+
+    if (player) {
+      return player;
+    }
   }
 
-  public async getAll(): Promise<Player[]> {
-    // console.log("🔧 Returning all Players from Toyo's universe...");
-    return await this.playerRepository.find();
+  public async getAll(): Promise<Player[] | void> {
+    const players = await this.playerRepository.find();
+
+    if (players) {
+      return players;
+    }
   }
 
-  public async getById(playerID: string): Promise<Player> {
-    // console.log('🔧 Searching for Player...');
-    const player = await this.playerRepository
-      .findOneOrFail(playerID)
-      .then((player) => {
-        console.log('🔧  Player found...');
-        return player;
-      })
-      .catch((error) => {
-        console.log(`🔧 Player not found...`, error);
-      });
+  public async getByIndex(index: number): Promise<Player | undefined> {
+    const player = await this.playerRepository.findOneOrFail(index);
 
-    return player! as Player;
+    if (player) {
+      return player;
+    }
   }
 
-  public async editById(
-    playerID: string,
+  public async editByIndex(
+    index: number,
     editPlayerDto: EditPlayerDto,
-  ): Promise<Player> {
-    // console.log("🔧 Updating Player (by Id) from Toyo's universe...");
-    const targetPlayer = await this.playerRepository
-      .findOneOrFail(playerID)
-      .catch((reason) => reason);
+  ): Promise<Player | void> {
+    const targetPlayer = await this.playerRepository.findOneOrFail(index);
 
     if (!targetPlayer) {
       throw new NotFoundException(`🔧 Player not found in Toyo's universe.`);
     }
-    const updatedPlayer = this.playerRepository.editPlayer(
+
+    const updatedPlayer = await this.playerRepository.editPlayer(
       editPlayerDto,
       targetPlayer,
     );
 
-    return updatedPlayer;
+    if (updatedPlayer) {
+      return updatedPlayer;
+    }
   }
 
-  public async deleteById(playerID: string): Promise<void> {
-    // console.log("🔧 Deleting Player (by Id) from Toyo's universe...");
-    await this.playerRepository.delete(playerID);
+  public async deleteByIndex(index: number): Promise<void> {
+    await this.playerRepository.delete(index);
+  }
+
+  public async checkIfAdminExists(): Promise<boolean> {
+    const admin = await this.getByIndex(1000);
+
+    if (admin) {
+      if (admin.role === 1) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

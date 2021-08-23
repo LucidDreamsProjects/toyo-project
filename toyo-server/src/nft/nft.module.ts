@@ -1,19 +1,19 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { RedisCacheModule } from '../cache/redisCache.module';
+import { AuthService } from '../auth/services/auth.service';
 import { NftController } from './controllers/nft.controller';
 import { NftService } from './services/nft.service';
 
 @Module({
   imports: [
-    RedisCacheModule,
     HttpModule.register({
-      timeout: 5000,
+      timeout: 15000,
       maxRedirects: 5,
     }),
+    AuthService,
   ],
   controllers: [NftController],
-  providers: [NftService],
+  providers: [NftService, AuthService],
   exports: [NftService],
 })
 export class NftModule {}

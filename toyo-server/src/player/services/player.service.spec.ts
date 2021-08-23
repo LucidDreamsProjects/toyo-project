@@ -5,7 +5,9 @@ import { Player } from '../entities/player.entity';
 import { EthereumAddress } from 'wallet.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { haiku } from '../../utils/haiku';
-import { RedisCacheModule } from '../../cache/redisCache.module';
+import { AuthService } from '../../auth/services/auth.service';
+import { SavePlayerDto } from '../dto/save-player.dto';
+import { WalletService } from '../../wallet/services/wallet.service';
 
 const testKey = Buffer.from(
   '028a8c59fa27d1e0f1643081ff80c3cf0392902acbf76ab0dc9c414b8d115b0ab3',
@@ -13,36 +15,39 @@ const testKey = Buffer.from(
 );
 
 describe('PlayerService', () => {
+  const uuid = uuidv4();
   let playerService: PlayerService;
+  let authService: AuthService;
 
   const mockPlayerRepository = {
-    savePlayer: jest.fn().mockImplementation((dto) => dto),
-    editPlayer: jest.fn().mockImplementation((player) =>
-      Promise.resolve({
-        playerID: uuidv4(),
+    savePlayer: jest.fn().mockImplementation(async (dto) => await dto),
+    editPlayer: jest.fn().mockImplementation(async (player) => {
+      return await {
+        playerID: uuid,
         index: Date.now(),
         username: haiku(1),
         email: haiku(2),
         walletAddress: '0xA8yasidjshoauASPLksjmaOIY7DdmnasidgAQSJpadOa',
         ...player,
-      }),
-    ),
-    findOneOrFail: jest.fn().mockImplementation((playerID: string) =>
-      Promise.resolve({
-        playerID: playerID,
-        index: Date.now(),
+      };
+    }),
+    findOneOrFail: jest.fn().mockImplementation(async (index: number) => {
+      return await {
+        playerID: uuid,
+        index: index,
         username: haiku(1),
         email: haiku(2),
         walletAddress: EthereumAddress.from(testKey).address,
-      }),
-    ),
+      };
+    }),
   };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [RedisCacheModule],
       providers: [
         PlayerService,
+        AuthService,
+        WalletService,
         {
           provide: getRepositoryToken(Player),
           useValue: mockPlayerRepository,
@@ -51,6 +56,7 @@ describe('PlayerService', () => {
     }).compile();
 
     playerService = await module.get<PlayerService>(PlayerService);
+    authService = await module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {
@@ -58,37 +64,52 @@ describe('PlayerService', () => {
   });
 
   it('should create a player record and return that', async () => {
+    const uuid = uuidv4();
+    const username = haiku(1);
+    const email = haiku(2);
+    const accessToken = await authService.getAccessToken();
+
     const dto = {
-      playerID: uuidv4(),
-      index: Date.now(),
-      username: haiku(1),
-      email: haiku(2),
+      playerID: uuid,
+      username: username,
+      email: email,
       walletAddress: EthereumAddress.from(testKey).address,
-      refreshToken: 'refreshToken',
-    };
+      accessToken: accessToken,
+    } as SavePlayerDto;
 
     expect.assertions(1);
-    return playerService.save(dto).then((data) => {
+    return await playerService.save(dto).then((data) => {
       expect(data).toEqual({
         playerID: dto.playerID,
-        index: dto.index,
         username: dto.username,
         email: dto.email,
         walletAddress: dto.walletAddress,
-        refreshToken: dto.refreshToken,
+        accessToken: dto.accessToken,
+      });
+    });
+  });
+
+  it('should get a player by index and return that', async () => {
+    return await playerService.getByIndex(1001).then((data) => {
+      expect(data).toEqual({
+        playerID: expect.any(String),
+        index: expect.any(Number),
+        username: expect.any(String),
+        email: expect.any(String),
+        walletAddress: expect.any(String),
       });
     });
   });
 
   it('should edit a player record and return that', async () => {
-    const uuid = uuidv4();
+    const index = 1000;
     const dto = {
       firstName: 'Lucas',
       lastName: 'Cyrne',
       address: 'p.sherman calle wallaby 42 sidney',
     };
 
-    return playerService.editById(uuid, dto).then((data) => {
+    return playerService.editByIndex(index, dto).then((data) => {
       expect(data).toEqual({
         playerID: expect.any(String),
         index: expect.any(Number),

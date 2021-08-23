@@ -15,8 +15,8 @@ describe('ContractController', () => {
   let contractController: ContractController;
 
   const mockContractService = {
-    createContract: jest.fn((dto) => {
-      return {
+    createContract: jest.fn(async (dto) => {
+      return await {
         name: 'Toyo',
         description: 'Toyo is a awesome fighting blockchain empowered 😎',
         confirmed: true,
@@ -79,8 +79,8 @@ describe('ContractController', () => {
     };
 
     expect.assertions(1);
-    return contractController.createContract(dto).then((response) => {
-      expect(response).toEqual({
+    return await contractController.createContract(dto).then((contract) => {
+      expect(contract).toEqual({
         name: expect.stringMatching('Toyo'),
         description: expect.any(String),
         confirmed: expect.any(Boolean),

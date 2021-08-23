@@ -1,19 +1,19 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { RedisCacheModule } from '../cache/redisCache.module';
+import { AuthService } from '../auth/services/auth.service';
 import { ContractController } from './controllers/contract.controller';
 import { ContractService } from './services/contract.service';
 
 @Module({
   imports: [
-    RedisCacheModule,
     HttpModule.register({
-      timeout: 5000,
+      timeout: 12500,
       maxRedirects: 5,
     }),
+    AuthService,
   ],
   controllers: [ContractController],
-  providers: [ContractService],
+  providers: [ContractService, AuthService],
   exports: [ContractService],
 })
 export class ContractModule {}

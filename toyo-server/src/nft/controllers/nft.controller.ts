@@ -1,3 +1,4 @@
+import { NFT } from '@arkane-network/arkane-connect/dist/src/models/wallet/NFT';
 import { Body, Controller, Post } from '@nestjs/common';
 import { CreateNftDto } from '../dto/create-nft.dto';
 import { MintNftDto } from '../dto/mint-nft.dto';
@@ -8,12 +9,12 @@ export class NftController {
   constructor(private readonly nftService: NftService) {}
 
   @Post('create')
-  public async createNftTemplate(@Body() dto: CreateNftDto): Promise<any> {
+  public async createNft(@Body() dto: CreateNftDto): Promise<NFT | void> {
     return await this.nftService.createNft(dto);
   }
 
   @Post('mint')
-  public async mintNft(@Body() dto: MintNftDto): Promise<any> {
+  public async mintNft(@Body() dto: MintNftDto): Promise<NFT | void> {
     return await this.nftService.mintNft(dto);
   }
 }

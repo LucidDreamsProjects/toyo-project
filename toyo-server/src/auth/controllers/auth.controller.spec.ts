@@ -9,12 +9,8 @@ describe('AuthController', () => {
   let authController: AuthController;
 
   const mockAuthService = {
-    getBearerToken: jest.fn(() => {
-      return {
-        access_token: expect.any(String),
-        refresh_token: expect.any(String),
-        session_state: expect.any(String),
-      };
+    getAccessToken: jest.fn(async (token) => {
+      await expect.any(String);
     }),
   };
 
@@ -35,13 +31,9 @@ describe('AuthController', () => {
   });
 
   expect.assertions(1);
-  it('should get a bearer and refresh token', async () => {
+  it('should get access token and return that', async () => {
     return authController.getBearerToken().then((response) => {
-      expect(response).toEqual({
-        access_token: expect.any(String),
-        refresh_token: expect.any(String),
-        session_state: expect.any(String),
-      });
+      expect.any(String);
     });
   });
 });

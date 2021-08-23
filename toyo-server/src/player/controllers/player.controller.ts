@@ -21,41 +21,36 @@ export class PlayerController {
   public async save(
     @Body() savePlayerDto: SavePlayerDto,
   ): Promise<Player | void> {
-    const player = await this.playerService.save(savePlayerDto);
-    return player;
+    return await this.playerService.save(savePlayerDto);
   }
 
   @Get('all')
-  public async getAll(): Promise<Player[]> {
-    const players = await this.playerService.getAll();
-    return players;
+  public async getAll(): Promise<Player[] | void> {
+    return await this.playerService.getAll();
   }
 
-  @Get(':playerID')
-  public async getById(
-    @Param('playerID', new ParseUUIDPipe())
-    playerID: string,
-  ): Promise<Player | undefined | null | void> {
-    const player = await this.playerService.getById(playerID);
-    return player;
+  @Get(':index')
+  public async getByIndex(
+    @Param('index', new ParseUUIDPipe())
+    index: number,
+  ): Promise<Player | undefined> {
+    return await this.playerService.getByIndex(index);
   }
 
-  @Patch('edit/:playerID')
-  public async editById(
-    @Param('playerID', new ParseUUIDPipe())
-    playerID: string,
+  @Patch('edit/:index')
+  public async editByIndex(
+    @Param('index', new ParseUUIDPipe())
+    index: number,
     @Body() editPlayerDto: EditPlayerDto,
-  ): Promise<Player> {
-    const player = await this.playerService.editById(playerID, editPlayerDto);
-    return player;
+  ): Promise<Player | void> {
+    return await this.playerService.editByIndex(index, editPlayerDto);
   }
 
-  @Delete('delete/:playerID')
-  public async deleteById(
-    @Param('playerID', new ParseUUIDPipe())
-    playerID: string,
-  ) {
-    const deletedPlayer = await this.playerService.deleteById(playerID);
-    return deletedPlayer;
+  @Delete('delete/:index')
+  public async deleteByIndex(
+    @Param('index', new ParseUUIDPipe())
+    index: number,
+  ): Promise<void> {
+    await this.playerService.deleteByIndex(index);
   }
 }

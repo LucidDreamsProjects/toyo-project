@@ -1,17 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RedisCacheModule } from '../../cache/redisCache.module';
+import { AuthService } from '../../auth/services/auth.service';
 import { WalletService } from './wallet.service';
 
 describe('WalletService', () => {
   let walletService: WalletService;
+  let authService: AuthService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [RedisCacheModule],
-      providers: [WalletService],
+      providers: [WalletService, AuthService],
     }).compile();
 
     walletService = await module.get<WalletService>(WalletService);
+    authService = await module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {
@@ -29,8 +30,8 @@ describe('WalletService', () => {
       pincode: pincode,
     };
 
-    return await walletService.createWallet(dto).then((response) => {
-      expect(response).toEqual({
+    return await walletService.createWallet(dto).then((wallet) => {
+      expect(wallet).toEqual({
         success: expect.any(Boolean),
         result: {
           address: expect.any(String),

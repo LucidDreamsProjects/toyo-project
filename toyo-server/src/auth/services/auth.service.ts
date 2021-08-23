@@ -11,7 +11,7 @@ export class AuthService {
   private readonly CLIENT_ID = `${process.env.VENLY_ID}`;
   private readonly CLIENT_SECRET = `${process.env.VENLY_SECRET}`;
 
-  public async getBearerToken(): Promise<any> {
+  public async getCredentials(): Promise<Record<string, string> | void> {
     const url = this.DATA_URL;
     const grantType = this.GRANT_TYPE;
     const clientId = this.CLIENT_ID;
@@ -25,9 +25,17 @@ export class AuthService {
     return await axios
       .post(url, params.toString())
       .then((response) => {
-        // console.log(response.data);
         return response.data;
       })
       .catch((error) => console.log(error));
+  }
+
+  public async getAccessToken(): Promise<string | void> {
+    const credentials = await this.getCredentials();
+
+    if (credentials) {
+      const accessToken = credentials.access_token;
+      return accessToken;
+    }
   }
 }

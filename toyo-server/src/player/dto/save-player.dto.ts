@@ -17,5 +17,5 @@ export class SavePlayerDto {
   walletAddress!: string;
 
   @IsString()
-  refreshToken?: string;
+  accessToken?: string;
 }

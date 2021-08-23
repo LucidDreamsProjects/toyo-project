@@ -14,15 +14,21 @@ describe('PlayerController', () => {
   let playerController: PlayerController;
 
   const mockPlayerService = {
-    save: jest.fn((dto) => {
-      return {
+    save: jest.fn(async (dto) => {
+      return await {
         index: Date.now(),
         ...dto,
       };
     }),
-    editById: jest.fn().mockImplementation((playerID, dto) => {
-      return {
-        playerID,
+    getByIndex: jest.fn().mockImplementation(async (index, dto) => {
+      return await {
+        index,
+        ...dto,
+      };
+    }),
+    editByIndex: jest.fn().mockImplementation(async (index, dto) => {
+      return await {
+        index,
         ...dto,
       };
     }),
@@ -45,15 +51,18 @@ describe('PlayerController', () => {
   });
 
   it('should create a Player', () => {
+    const uuid = uuidv4();
+    const username = haiku(1);
+    const email = haiku(2);
+
     const dto = {
-      playerID: uuidv4(),
-      username: haiku(1),
-      email: haiku(2),
+      playerID: uuid,
+      username: username,
+      email: email,
       walletAddress: EthereumAddress.from(testKey).address,
-      refreshToken: 'refreshToken',
     };
 
-    expect.assertions(2);
+    expect.assertions(1);
     return playerController.save(dto).then((data) => {
       expect(data).toEqual({
         playerID: dto.playerID,
@@ -61,15 +70,12 @@ describe('PlayerController', () => {
         username: dto.username,
         email: dto.email,
         walletAddress: dto.walletAddress,
-        refreshToken: dto.refreshToken,
       });
-      expect(mockPlayerService.save).toBeCalledWith(dto);
     });
   });
 
   it('should update a Player', () => {
-    const uuid = uuidv4();
-
+    const index = 1001;
     const dto = {
       firstName: 'Lucas',
       lastName: 'Cyrne',
@@ -77,12 +83,12 @@ describe('PlayerController', () => {
     };
 
     expect.assertions(2);
-    return playerController.editById(uuid, dto).then((data) => {
+    return playerController.editByIndex(index, dto).then((data) => {
       expect(data).toEqual({
-        playerID: uuid,
+        index: index,
         ...dto,
       });
-      expect(mockPlayerService.editById).toBeCalled();
+      expect(mockPlayerService.editByIndex).toBeCalled();
     });
   });
 });
