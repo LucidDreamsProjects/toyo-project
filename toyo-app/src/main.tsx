@@ -4,6 +4,7 @@ import { RouterContext, useRouter } from "./router";
 import { ArkaneConnect, WindowMode } from "@arkane-network/arkane-connect";
 
 import { Home } from "./views/home/home";
+import { SecretPanel } from "./views/secretPanel/secretPanel";
 import NotFoundPage from "./views/404/notFoundPage";
 
 import "./index.css";
@@ -22,6 +23,9 @@ function Content() {
   switch (location.name) {
     case "home":
       return <Home arkaneConnect={arkaneConnect} />;
+
+    case "secret-panel":
+      return <SecretPanel arkaneConnect={arkaneConnect} />;
 
     case "404":
     default:

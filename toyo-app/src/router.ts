@@ -3,6 +3,8 @@ import { createRouter, InferRouteRef, route } from "@switcher/preact";
 export const appRoutes = [
   route("home", "/"),
 
+  route("secret-panel", "/secret-panel"),
+
   route(
     "example",
     (params: { paramEx: string }) => `/example/${params.paramEx}`
