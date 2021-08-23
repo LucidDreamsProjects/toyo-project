@@ -21,23 +21,20 @@ export class PlayerController {
   public async save(
     @Body() savePlayerDto: SavePlayerDto,
   ): Promise<Player | void> {
-    const player = await this.playerService.save(savePlayerDto);
-    return player;
+    return await this.playerService.save(savePlayerDto);
   }
 
   @Get('all')
-  public async getAll(): Promise<Player[]> {
-    const players = await this.playerService.getAll();
-    return players;
+  public async getAll(): Promise<Player[] | void> {
+    return await this.playerService.getAll();
   }
 
   @Get(':index')
-  public async getById(
+  public async getByIndex(
     @Param('index', new ParseUUIDPipe())
     index: number,
-  ): Promise<Player | undefined | null | void> {
-    const player = await this.playerService.getByIndex(index);
-    return player;
+  ): Promise<Player | undefined> {
+    return await this.playerService.getByIndex(index);
   }
 
   @Patch('edit/:index')
@@ -45,17 +42,15 @@ export class PlayerController {
     @Param('index', new ParseUUIDPipe())
     index: number,
     @Body() editPlayerDto: EditPlayerDto,
-  ): Promise<Player> {
-    const player = await this.playerService.editByIndex(index, editPlayerDto);
-    return player;
+  ): Promise<Player | void> {
+    return await this.playerService.editByIndex(index, editPlayerDto);
   }
 
   @Delete('delete/:index')
   public async deleteByIndex(
     @Param('index', new ParseUUIDPipe())
     index: number,
-  ) {
-    const deletedPlayer = await this.playerService.deleteByIndex(index);
-    return deletedPlayer;
+  ): Promise<void> {
+    await this.playerService.deleteByIndex(index);
   }
 }

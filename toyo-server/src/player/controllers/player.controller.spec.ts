@@ -14,14 +14,20 @@ describe('PlayerController', () => {
   let playerController: PlayerController;
 
   const mockPlayerService = {
-    save: jest.fn((dto) => {
-      return {
+    save: jest.fn(async (dto) => {
+      return await {
         index: Date.now(),
         ...dto,
       };
     }),
-    editByIndex: jest.fn().mockImplementation((index, dto) => {
-      return {
+    getByIndex: jest.fn().mockImplementation(async (index, dto) => {
+      return await {
+        index,
+        ...dto,
+      };
+    }),
+    editByIndex: jest.fn().mockImplementation(async (index, dto) => {
+      return await {
         index,
         ...dto,
       };
@@ -45,15 +51,18 @@ describe('PlayerController', () => {
   });
 
   it('should create a Player', () => {
+    const uuid = uuidv4();
+    const username = haiku(1);
+    const email = haiku(2);
+
     const dto = {
-      playerID: uuidv4(),
-      username: haiku(1),
-      email: haiku(2),
+      playerID: uuid,
+      username: username,
+      email: email,
       walletAddress: EthereumAddress.from(testKey).address,
-      refreshToken: 'refreshToken',
     };
 
-    expect.assertions(2);
+    expect.assertions(1);
     return playerController.save(dto).then((data) => {
       expect(data).toEqual({
         playerID: dto.playerID,
@@ -61,9 +70,7 @@ describe('PlayerController', () => {
         username: dto.username,
         email: dto.email,
         walletAddress: dto.walletAddress,
-        refreshToken: dto.refreshToken,
       });
-      expect(mockPlayerService.save).toBeCalledWith(dto);
     });
   });
 

@@ -1,4 +1,4 @@
-import { Module, OnApplicationBootstrap } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { PlayerController } from './controllers/player.controller';
 import { PlayerService } from './services/player.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -12,7 +12,7 @@ import { HttpModule } from '@nestjs/axios';
   imports: [
     TypeOrmModule.forFeature([Player, PlayerRepository]),
     HttpModule.register({
-      timeout: 10000,
+      timeout: 15000,
       maxRedirects: 5,
     }),
   ],
@@ -20,11 +20,4 @@ import { HttpModule } from '@nestjs/axios';
   providers: [PlayerService, AuthService, WalletService],
   exports: [PlayerService],
 })
-export class PlayerModule implements OnApplicationBootstrap {
-  constructor(private readonly playerService: PlayerService) {}
-
-  async onApplicationBootstrap(): Promise<void> {
-    // Check if admin account exist
-    const adminExists = await this.playerService.checkIfAdminExists();
-  }
-}
+export class PlayerModule {}

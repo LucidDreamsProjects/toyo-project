@@ -9,10 +9,10 @@ export class Player extends BaseEntity {
   index?: number;
 
   @Column({ type: 'varchar', length: 64 })
-  username?: string;
+  username!: string;
 
   @Column({ type: 'varchar', length: 128 })
-  email?: string;
+  email!: string;
 
   @Column({ type: 'varchar', length: 64 })
   firstName?: string;
@@ -36,8 +36,8 @@ export class Player extends BaseEntity {
   walletAddress!: string;
 
   @Column({ type: 'int', default: 3 })
-  role!: number;
+  role?: number;
 
-  @Column({ type: 'varchar' })
-  refreshToken?: string;
+  @Column({ type: 'text' })
+  accessToken?: string;
 }
