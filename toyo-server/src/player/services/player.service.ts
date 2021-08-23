@@ -5,57 +5,56 @@ import { Player } from '../entities/player.entity';
 import { PlayerRepository } from '../repositories/player.repository';
 import { SavePlayerDto } from '../dto/save-player.dto';
 import { EditPlayerDto } from '../dto/edit-player.dto';
-import { v4 as uuidv4 } from 'uuid';
-import { WalletService } from '../../wallet/services/wallet.service';
 
 @Injectable()
 export class PlayerService {
   constructor(
     @InjectRepository(Player)
     private playerRepository: PlayerRepository,
-    private playerService: PlayerService,
-    private walletService: WalletService,
   ) {}
 
-  public async save(savePlayerDto: SavePlayerDto): Promise<Player> {
-    return await this.playerRepository.savePlayer(savePlayerDto);
+  public async save(savePlayerDto: SavePlayerDto): Promise<Player | void> {
+    const player = await this.playerRepository.savePlayer(savePlayerDto);
+
+    if (player) {
+      return player;
+    }
   }
 
-  public async getAll(): Promise<Player[]> {
-    return await this.playerRepository.find();
+  public async getAll(): Promise<Player[] | void> {
+    const players = await this.playerRepository.find();
+
+    if (players) {
+      return players;
+    }
   }
 
-  public async getByIndex(index: number): Promise<Player> {
-    const player = await this.playerRepository
-      .findOneOrFail(index)
-      .then((player) => {
-        console.log('🔧  Player found...');
-        return player;
-      })
-      .catch((error) => {
-        console.log(`🔧 Player not found...`, error);
-      });
+  public async getByIndex(index: number): Promise<Player | undefined> {
+    const player = await this.playerRepository.findOneOrFail(index);
 
-    return player! as Player;
+    if (player) {
+      return player;
+    }
   }
 
   public async editByIndex(
     index: number,
     editPlayerDto: EditPlayerDto,
-  ): Promise<Player> {
-    const targetPlayer = await this.playerRepository
-      .findOneOrFail(index)
-      .catch((reason) => reason);
+  ): Promise<Player | void> {
+    const targetPlayer = await this.playerRepository.findOneOrFail(index);
 
     if (!targetPlayer) {
       throw new NotFoundException(`🔧 Player not found in Toyo's universe.`);
     }
-    const updatedPlayer = this.playerRepository.editPlayer(
+
+    const updatedPlayer = await this.playerRepository.editPlayer(
       editPlayerDto,
       targetPlayer,
     );
 
-    return updatedPlayer;
+    if (updatedPlayer) {
+      return updatedPlayer;
+    }
   }
 
   public async deleteByIndex(index: number): Promise<void> {
@@ -63,28 +62,14 @@ export class PlayerService {
   }
 
   public async checkIfAdminExists(): Promise<boolean> {
-    const admin = await this.getByIndex(0);
+    const admin = await this.getByIndex(1000);
 
-    if (admin.role === 1) {
-      return true;
+    if (admin) {
+      if (admin.role === 1) {
+        return true;
+      }
     }
+
     return false;
-  }
-
-  public async createAdminAccount(pincode: number): Promise<Player> {
-    const _pincode = {
-      pincode: pincode,
-    };
-    const uuid = uuidv4();
-    const wallet = await this.walletService.createWallet(_pincode);
-
-    const adminDto = {
-      playerID: uuid,
-      username: 'admin',
-      email: 'admin@toyo.com',
-      walletAddress: wallet.address,
-    } as SavePlayerDto;
-
-    return await this.playerService.save(adminDto);
   }
 }

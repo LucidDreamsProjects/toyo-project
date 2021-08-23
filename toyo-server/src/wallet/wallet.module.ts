@@ -7,7 +7,7 @@ import { AuthService } from '../auth/services/auth.service';
 @Module({
   imports: [
     HttpModule.register({
-      timeout: 10000,
+      timeout: 5000,
       maxRedirects: 5,
     }),
   ],
