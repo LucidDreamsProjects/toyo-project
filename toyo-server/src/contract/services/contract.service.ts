@@ -14,11 +14,11 @@ export class ContractService {
 
   public async createContract(
     @Body() dto: CreateContractDto,
-  ): Promise<Record<string, any>> {
+  ): Promise<Record<string, string | number> | void> {
     const accessToken = await this.authService.getAccessToken();
     const url = this.DATA_URL;
 
-    return await axios
+    const contract = await axios
       .post(url, dto, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -28,5 +28,9 @@ export class ContractService {
         return response.data;
       })
       .catch((error) => console.log(error));
+
+    if (contract) {
+      return contract;
+    }
   }
 }

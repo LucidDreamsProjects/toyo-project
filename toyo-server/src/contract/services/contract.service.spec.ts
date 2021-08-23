@@ -4,16 +4,14 @@ import { ContractService } from './contract.service';
 
 describe('ContractService', () => {
   let contractService: ContractService;
-  let authService: AuthService;
 
   beforeEach(async () => {
-    jest.setTimeout(10000);
+    jest.setTimeout(12500);
     const module: TestingModule = await Test.createTestingModule({
       providers: [ContractService, AuthService],
     }).compile();
 
     contractService = await module.get<ContractService>(ContractService);
-    authService = await module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {
@@ -21,10 +19,10 @@ describe('ContractService', () => {
   });
 
   it('should create a contract and return that', async () => {
-    const name = 'Toyo';
+    const name = 'Toyo Demo #1000';
     const description = 'Toyo is a awesome fighting blockchain empowered 😎';
     const chain = 'MATIC';
-    const symbol = 'TOYO';
+    const symbol = 'TOY';
     const image = 'https://averylongurl.com/image/contract/2917';
     const externalUrl = 'https://en.wikipedia.org/wiki/Space_Chickens_in_Space';
     const media = [
@@ -45,14 +43,15 @@ describe('ContractService', () => {
       media: media,
     };
 
-    await contractService.createContract(dto).then((response) => {
-      expect(response).toEqual({
+    return await contractService.createContract(dto).then((contract) => {
+      expect(contract).toEqual({
         name: expect.stringMatching('Toyo'),
         description: expect.any(String),
+        externalUrl: expect.any(String),
         confirmed: expect.any(Boolean),
         id: expect.any(Number),
         secretType: expect.any(String),
-        symbol: expect.stringMatching('TOYO'),
+        symbol: expect.stringMatching('TOY'),
         external_link: expect.any(String),
         image: expect.any(String),
         media: expect.arrayContaining([
@@ -64,5 +63,5 @@ describe('ContractService', () => {
         transactionHash: expect.any(String),
       });
     });
-  });
+  }, 15000);
 });

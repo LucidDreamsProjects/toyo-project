@@ -7,7 +7,7 @@ import { ContractService } from './services/contract.service';
 @Module({
   imports: [
     HttpModule.register({
-      timeout: 10000,
+      timeout: 12500,
       maxRedirects: 5,
     }),
     AuthService,
