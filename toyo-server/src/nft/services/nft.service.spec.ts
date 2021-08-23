@@ -7,7 +7,7 @@ describe('NftService', () => {
   let authService: AuthService;
 
   beforeEach(async () => {
-    jest.setTimeout(10000);
+    jest.setTimeout(15000);
     const module: TestingModule = await Test.createTestingModule({
       providers: [NftService, AuthService],
     }).compile();
@@ -91,5 +91,5 @@ describe('NftService', () => {
         transactionHash: expect.any(String),
       });
     });
-  });
+  }, 15000);
 });

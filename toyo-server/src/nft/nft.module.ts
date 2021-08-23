@@ -7,7 +7,7 @@ import { NftService } from './services/nft.service';
 @Module({
   imports: [
     HttpModule.register({
-      timeout: 10000,
+      timeout: 15000,
       maxRedirects: 5,
     }),
     AuthService,
