@@ -9,12 +9,8 @@ describe('AuthController', () => {
   let authController: AuthController;
 
   const mockAuthService = {
-    getCredentials: jest.fn(() => {
-      return {
-        access_token: expect.any(String),
-        refresh_token: expect.any(String),
-        session_state: expect.any(String),
-      };
+    getAccessToken: jest.fn(async (token) => {
+      await expect.any(String);
     }),
   };
 
@@ -35,11 +31,9 @@ describe('AuthController', () => {
   });
 
   expect.assertions(1);
-  it('should get credentials and return that', async () => {
-    return authController.getAccessToken().then((response) => {
-      expect(response).toEqual({
-        access_token: expect.any(String),
-      });
+  it('should get access token and return that', async () => {
+    return authController.getBearerToken().then((response) => {
+      expect.any(String);
     });
   });
 });

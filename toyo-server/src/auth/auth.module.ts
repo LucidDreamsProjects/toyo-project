@@ -6,7 +6,7 @@ import { AuthController } from './controllers/auth.controller';
 @Module({
   imports: [
     HttpModule.register({
-      timeout: 10000,
+      timeout: 12500,
       maxRedirects: 5,
     }),
   ],
