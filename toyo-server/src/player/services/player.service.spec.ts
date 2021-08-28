@@ -6,8 +6,10 @@ import { EthereumAddress } from 'wallet.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { haiku } from '../../utils/haiku';
 import { AuthService } from '../../auth/services/auth.service';
-import { SavePlayerDto } from '../dto/save-player.dto';
+import { CreatePlayerDto } from '../dto/create-player.dto';
 import { WalletService } from '../../wallet/services/wallet.service';
+import { UpdatePlayerDto } from '../dto/update-player.dto';
+import { PlayerRepository } from '../repositories/player.repository';
 
 const testKey = Buffer.from(
   '028a8c59fa27d1e0f1643081ff80c3cf0392902acbf76ab0dc9c414b8d115b0ab3',
@@ -15,31 +17,39 @@ const testKey = Buffer.from(
 );
 
 describe('PlayerService', () => {
-  const uuid = uuidv4();
   let playerService: PlayerService;
-  let authService: AuthService;
 
   const mockPlayerRepository = {
-    savePlayer: jest.fn().mockImplementation(async (dto) => await dto),
-    editPlayer: jest.fn().mockImplementation(async (player) => {
+    save: jest.fn().mockImplementation(async (player: Player) => {
       return await {
-        playerID: uuid,
         index: Date.now(),
-        username: haiku(1),
-        email: haiku(2),
-        walletAddress: '0xA8yasidjshoauASPLksjmaOIY7DdmnasidgAQSJpadOa',
         ...player,
       };
     }),
-    findOneOrFail: jest.fn().mockImplementation(async (index: number) => {
+    findOne: jest.fn().mockImplementation(async (playerId: string) => {
       return await {
-        playerID: uuid,
-        index: index,
+        playerId: playerId,
+        index: 1001,
         username: haiku(1),
+        firstName: 'firstName',
+        lastName: 'lastName',
         email: haiku(2),
-        walletAddress: EthereumAddress.from(testKey).address,
+        walletId: uuidv4(),
+        balance: 10,
       };
     }),
+    update: jest
+      .fn()
+      .mockImplementation(async (playerId: string, dto: UpdatePlayerDto) => {
+        return await {
+          playerId: playerId,
+          index: expect.any(Number),
+          username: dto.address,
+          firstName: dto.firstName,
+          lastName: dto.lastName,
+          email: dto.email,
+        };
+      }),
   };
 
   beforeEach(async () => {
@@ -48,6 +58,7 @@ describe('PlayerService', () => {
         PlayerService,
         AuthService,
         WalletService,
+        PlayerRepository,
         {
           provide: getRepositoryToken(Player),
           useValue: mockPlayerRepository,
@@ -56,7 +67,6 @@ describe('PlayerService', () => {
     }).compile();
 
     playerService = await module.get<PlayerService>(PlayerService);
-    authService = await module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {
@@ -64,61 +74,72 @@ describe('PlayerService', () => {
   });
 
   it('should create a player record and return that', async () => {
-    const uuid = uuidv4();
+    const playerId = uuidv4();
     const username = haiku(1);
     const email = haiku(2);
-    const accessToken = await authService.getAccessToken();
+    const walletId = uuidv4();
+    const balance = 10;
 
-    const dto = {
-      playerID: uuid,
+    const player = {
+      playerId: playerId,
       username: username,
+      firstName: 'firstName',
+      lastName: 'lastName',
       email: email,
-      walletAddress: EthereumAddress.from(testKey).address,
-      accessToken: accessToken,
-    } as SavePlayerDto;
+      walletId: walletId,
+      balance: balance,
+    } as CreatePlayerDto;
 
     expect.assertions(1);
-    return await playerService.save(dto).then((data) => {
+    return await playerService.createService(player).then((data) => {
       expect(data).toEqual({
-        playerID: dto.playerID,
-        username: dto.username,
-        email: dto.email,
-        walletAddress: dto.walletAddress,
-        accessToken: dto.accessToken,
+        playerId: player.playerId,
+        index: expect.any(Number),
+        username: player.username,
+        firstName: player.firstName,
+        lastName: player.lastName,
+        email: player.email,
+        walletId: player.walletId,
       });
     });
   });
 
-  it('should get a player by index and return that', async () => {
-    return await playerService.getByIndex(1001).then((data) => {
-      expect(data).toEqual({
-        playerID: expect.any(String),
+  it('should get a player and return that', async () => {
+    const playerId = uuidv4();
+
+    return await playerService.findOne(playerId).then((player) => {
+      expect(player).toEqual({
+        playerId: playerId,
         index: expect.any(Number),
         username: expect.any(String),
+        firstName: expect.any(String),
+        lastName: expect.any(String),
         email: expect.any(String),
-        walletAddress: expect.any(String),
+        walletId: expect.any(String),
+        balance: expect.any(Number),
       });
     });
   });
 
   it('should edit a player record and return that', async () => {
-    const index = 1000;
-    const dto = {
+    const playerId = uuidv4();
+    const playerDto = {
       firstName: 'Lucas',
       lastName: 'Cyrne',
       address: 'p.sherman calle wallaby 42 sidney',
     };
 
-    return playerService.editByIndex(index, dto).then((data) => {
-      expect(data).toEqual({
-        playerID: expect.any(String),
+    return playerService.update(playerId, playerDto).then((player) => {
+      expect(player).toEqual({
+        playerId: playerId,
         index: expect.any(Number),
         username: expect.any(String),
         email: expect.any(String),
-        firstName: dto.firstName,
-        lastName: dto.lastName,
-        address: dto.address,
-        walletAddress: expect.any(String),
+        firstName: playerDto.firstName,
+        lastName: playerDto.lastName,
+        address: playerDto.address,
+        walletId: expect.any(String),
+        balance: expect.any(Number),
       });
     });
   });

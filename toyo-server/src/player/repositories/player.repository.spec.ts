@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PlayerRepository } from './player.repository';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { Player } from '../entities/player.entity';
-import { SavePlayerDto } from '../dto/save-player.dto';
+import { CreatePlayerDto } from '../dto/create-player.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { EthereumAddress } from 'wallet.ts';
 import { haiku } from '../../utils/haiku';
@@ -23,13 +23,13 @@ describe('PlayerRepository', () => {
       imports: [
         TypeOrmModule.forRoot({
           type: 'mysql' as any,
-          host: `${process.env.TYPEORM_HOST}`,
+          host: '162.240.6.22',
           port: 3306,
-          username: `${process.env.TYPEORM_USERNAME}`,
-          password: `${process.env.TYPEORM_PASSWORD}`,
-          database: `${process.env.TYPEORM_DATABASE}`,
+          username: `wwtoyo_admin`,
+          password: `dd^8A!DPq#ZpjewF2`,
+          database: `wwtoyo_universe`,
           entities: [Player],
-          logging: false,
+          logging: true,
           synchronize: false,
           keepConnectionAlive: true,
         }),
@@ -51,19 +51,44 @@ describe('PlayerRepository', () => {
 
   expect.assertions(1);
   it('should save an entity', async () => {
-    const uuid = uuidv4();
+    const playerId = uuidv4();
     const username = haiku(1);
+    const firstName = 'firstName';
+    const lastName = 'lastName';
     const email = haiku(2);
+    const walletId = uuidv4();
+    const balance = 10;
 
-    const playerDto: SavePlayerDto = {
-      playerID: uuid,
+    const playerDto: CreatePlayerDto = {
+      playerId: playerId,
       username: username,
+      firstName: firstName,
+      lastName: lastName,
       email: email,
-      walletAddress: EthereumAddress.from(testKey).address,
+      walletId: walletId,
+      balance: balance,
     };
 
     const savedPlayer = await playerRepository.save(playerDto);
 
     expect(savedPlayer).toBe(playerDto);
+  });
+
+  it('should get an entity', async () => {
+    const playerId = uuidv4();
+
+    const targetPlayer = await playerRepository.findOne(playerId);
+
+    if (targetPlayer) {
+      expect(targetPlayer).toEqual({
+        playerId: playerId,
+        username: expect.any(String),
+        firstName: expect.any(String),
+        lastName: expect.any(String),
+        email: expect.any(String),
+        walletId: expect.any(String),
+        balance: expect.any(Number),
+      });
+    }
   });
 });
