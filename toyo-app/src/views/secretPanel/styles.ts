@@ -1,113 +1,79 @@
 import styled from "styled-components";
-
-const Background = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  color: #fff;
-  font-size: 0.125em;
-`;
+import { Form } from "formik";
 
 const Section = styled.section`
-  @media screen and (min-width: 1px) and (max-width: 420px) {
-    min-height: 200%;
-  }
-
   display: flex;
-  flex-direction: column;
   flex-shrink: 1;
   width: ${({ width }) => (width ? width : "100%")};
   height: ${({ height }) => (height ? height : "100%")};
-  background-color: hsl(323 21% 16%);
+  max-width: 100%;
+  overflow: hidden;
+  background-color: hsla(350, 93%, 42%, 1);
 
-  a {
+  @media (orientation: landscape) {
+    flex-direction: row;
+  }
+
+  @media (orientation: portrait) {
+    flex-direction: column;
+  }
+`;
+
+const Canvas = styled.section`
+  min-width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  padding: 4rem;
+`;
+
+const Top = styled.section`
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  background: hsla(37, 82%, 50%, 0);
+
+  #ply--balance {
+    display: flex;
+    align-self: right;
+    margin-right: 5.5rem;
     color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  div {
-    padding: 1rem;
-  }
-
-  #logo {
-    display: inline-flex;
-    vertical-align: middle;
-    align-items: center;
-    position: relative;
-    font-size: 0.8rem;
-    text-shadow: 2px 2px 1px #000;
-  }
-
-  #title {
-    display: inline-flex;
-    vertical-align: middle;
-    align-items: center;
-    align-self: left;
-    position: relative;
-    top: 5%;
-    margin-left: 2rem;
-    margin-bottom: 6rem;
-    font-size: 2.441rem;
-    text-shadow: 6px 6px 12px #000;
+    font-weight: 700;
+    font-size: 1.25rem;
+    text-shadow: 0 0 1.25em hsl(0 0% 100% / 0.25), 0 0 0.5em currentColor;
   }
 
   #btn--login {
     display: flex;
-    position: relative;
-    justify-content: center;
-    width: 14rem;
-    height: auto;
-    padding: 1rem;
-    margin: 0 auto;
-    left: -10rem;
-  }
-
-  #btn--transfer {
-    position: relative;
-    width: 50%;
-    left: 8.6rem;
-  }
-
-  .btn--simple {
-    position: relative;
-    padding: 0.5em;
-    width: 75%;
-    top: 0rem;
-    left: 2rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    box-shadow: 2px 2px 16px rgba(0, 0, 0, 0.8);
-  }
-
-  .text--simple {
-    font-size: 0.8rem;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
-  }
-
-  .img--simple {
-    width: 75%;
-    height: auto;
-    cursor: pointer;
-  }
-
-  #boxes {
-    position: relative;
-    top: -2rem;
-    left: 4rem;
+    align-self: right;
   }
 `;
 
-const Row = styled.div`
+const Middle = styled.section`
   display: flex;
-  flex-direction: row;
-  flex-shrink: 1;
-  width: ${({ width }) => (width ? width : "100%")};
-  height: ${({ height }) => (height ? height : "100%")};
-  justify-content: space-between;
+  width: 75%;
+  max-width: 75%;
+  background: hsla(37, 82%, 50%, 0);
+  margin-top: 6rem;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-self: center;
+  width: 100%;
+  height: auto;
+  background: hsla(37, 82%, 50%, 0);
+
+  @media (orientation: landscape) {
+    flex-direction: row;
+  }
+
+  @media (orientation: portrait) {
+    flex-direction: column;
+  }
 `;
 
 const Column = styled.div`
@@ -116,10 +82,26 @@ const Column = styled.div`
   flex-shrink: 1;
   width: ${({ width }) => (width ? width : "100%")};
   height: ${({ height }) => (height ? height : "100%")};
-  justify-content: space-between;
 `;
 
-const Form = styled.form`
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 1;
+  width: ${({ width }) => (width ? width : "100%")};
+  height: ${({ height }) => (height ? height : "100%")};
+`;
+
+const UserDisplay = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
+  background: hsla(37, 82%, 50%, 0);
+`;
+
+const SimpleForm = styled.form`
   @media screen and (min-width: 765px) and (max-width: 1280px) {
     min-width: 20%;
     max-width: 30%;
@@ -168,6 +150,56 @@ const Form = styled.form`
   }
 `;
 
+const NftForm = styled(Form)``;
+
+const Tile = styled.div`
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  padding: 1rem;
+
+  label {
+    color: #fff;
+    font-weight: 800;
+    font-size: 1rem;
+    text-shadow: 0 0 0.25em hsl(0 0% 100% / 0.1), 0 0 0.15em currentColor;
+  }
+
+  div {
+    margin-top: 0.75rem;
+    color: #fff;
+    font-size: 1.25rem;
+    text-shadow: 0 0 0.5em hsl(0 0% 100% / 0.15), 0 0 0.25em #000;
+  }
+`;
+
+const ConstrainedTile = styled(Tile)``;
+
+const ImageTile = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  width: 25%;
+  height: 10rem;
+  background: hsla(37, 82%, 50%, 0);
+  cursor: pointer;
+
+  div {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    text-shadow: 0.1em 0.1em #000;
+  }
+
+  img {
+    margin-top: 1rem;
+    width: 8rem;
+  }
+`;
+
 const NeonButton = styled.button`
   @media screen and (min-width: 1px) and (max-width: 420px) {
     margin: 0 auto;
@@ -176,24 +208,45 @@ const NeonButton = styled.button`
     max-height: 15%;
   }
 
-  display: inline-flex;
+  display: inline-block;
   align-items: center;
   justify-content: center;
   align-self: center;
-  padding: 1.5em;
+  padding: 1em;
   margin: 0 auto;
   width: auto;
-  max-width: 100%;
-  max-height: 80%;
-  font-size: 1rem;
-  font-weight: 800;
-  color: hsl(317 100% 54%);
-  border: 0.25em solid currentColor;
+  min-width: 4rem;
+  min-height: 2rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  /* color: hsla(0, 0%, 0%, 1); */
+  color: hsla(360, 100%, 100%, 1);
+  border: 0.15em solid currentColor;
   border-radius: 0.6em;
   background: none;
   cursor: pointer;
-  text-shadow: 0 0 0.25em hsl(0 0% 100% / 0.25), 0 0 0.45em currentColor;
-  box-shadow: 0 0 1em 0 hsl(317 100% 54%);
+  text-shadow: 0 0 2em hsl(0 0% 100% / 0.25), 0 0 0.75em currentColor;
+  /* box-shadow: 0 0 1em 0 hsla(360, 100%, 100%, 1); */
+  box-shadow: 0em 0em 0.5em 0 hsla(0, 0%, 0%, 1);
+
+  :hover {
+    box-shadow: 0em 0.25em 0.75em 0 hsla(0, 0%, 0%, 1);
+  }
 `;
 
-export { Background, Section, Column, Row, Form, NeonButton };
+export {
+  Canvas,
+  Section,
+  Top,
+  Middle,
+  Container,
+  Column,
+  Row,
+  NftForm,
+  SimpleForm,
+  UserDisplay,
+  Tile,
+  ConstrainedTile,
+  ImageTile,
+  NeonButton,
+};
