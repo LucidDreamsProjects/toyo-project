@@ -22,6 +22,12 @@ function Content() {
   switch (location.name) {
     case "home":
       return <Home arkaneConnect={arkaneConnect} />;
+<<<<<<< Updated upstream
+=======
+
+    case "secret-panel":
+      return <SecretPanel arkaneConnect={arkaneConnect} />;
+>>>>>>> Stashed changes
 
     case "404":
     default:
