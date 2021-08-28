@@ -5,9 +5,9 @@ export async function getWallets(
 ): Promise<void | Wallet[]> {
   const wallets = await arkaneConnect.api
     .getWallets()
-    .then((wallet) => {
-      console.log(`👷 User wallets: ${wallet}`);
-      return wallet;
+    .then((wallets) => {
+      console.log(`👷 your wallets: `, wallets);
+      return wallets;
     })
     .catch((error) => {
       console.error(error);
