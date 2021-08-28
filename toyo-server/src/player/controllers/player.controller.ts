@@ -6,51 +6,62 @@ import {
   Patch,
   Param,
   Delete,
+  NotFoundException,
+  HttpCode,
 } from '@nestjs/common';
-import { SavePlayerDto } from '../dto/save-player.dto';
-import { EditPlayerDto } from '../dto/edit-player.dto';
+import { CreatePlayerDto } from '../dto/create-player.dto';
+import { UpdatePlayerDto } from '../dto/update-player.dto';
 import { Player } from '../entities/player.entity';
 import { PlayerService } from '../services/player.service';
-import { ParseUUIDPipe } from '@nestjs/common';
 
 @Controller('player')
 export class PlayerController {
   constructor(private readonly playerService: PlayerService) {}
 
-  @Post('save')
-  public async save(
-    @Body() savePlayerDto: SavePlayerDto,
-  ): Promise<Player | void> {
-    return await this.playerService.save(savePlayerDto);
+  @HttpCode(200)
+  @Get()
+  public async findAll(): Promise<Player[] | void> {
+    return await this.playerService.findAll();
   }
 
-  @Get('all')
-  public async getAll(): Promise<Player[] | void> {
-    return await this.playerService.getAll();
-  }
-
-  @Get(':index')
-  public async getByIndex(
-    @Param('index', new ParseUUIDPipe())
-    index: number,
+  @HttpCode(200)
+  @Get(':playerId')
+  public async findOne(
+    @Param('playerId')
+    playerId: string,
   ): Promise<Player | undefined> {
-    return await this.playerService.getByIndex(index);
+    console.log(playerId);
+    return await this.playerService.findOne(playerId);
   }
 
-  @Patch('edit/:index')
-  public async editByIndex(
-    @Param('index', new ParseUUIDPipe())
-    index: number,
-    @Body() editPlayerDto: EditPlayerDto,
-  ): Promise<Player | void> {
-    return await this.playerService.editByIndex(index, editPlayerDto);
+  @HttpCode(200)
+  @Post()
+  public async createController(
+    @Body() createPlayerDto: CreatePlayerDto,
+  ): Promise<Player> {
+    return await this.playerService.createService(createPlayerDto);
   }
 
-  @Delete('delete/:index')
+  @HttpCode(200)
+  @Patch(':playerId')
+  public async update(
+    @Param('playerId') playerId: string,
+    @Body() updatePlayerDto: UpdatePlayerDto,
+  ): Promise<Player | undefined> {
+    return await this.playerService.update(playerId, updatePlayerDto);
+  }
+
+  @HttpCode(200)
+  @Delete(':playerId')
   public async deleteByIndex(
-    @Param('index', new ParseUUIDPipe())
-    index: number,
+    @Param('playerId') playerId: string,
   ): Promise<void> {
-    await this.playerService.deleteByIndex(index);
+    const player = await this.playerService.findOne(playerId);
+
+    if (!player) {
+      throw new NotFoundException(`Player not found`);
+    }
+
+    return await this.playerService.remove(playerId);
   }
 }
