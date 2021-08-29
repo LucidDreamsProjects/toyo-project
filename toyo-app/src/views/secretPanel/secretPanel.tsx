@@ -6,12 +6,12 @@ import {
 } from "@arkane-network/arkane-connect";
 import axios from "axios";
 
-import logo from "../../../assets/images/luciddreams.jpg";
-import box1 from "../../../assets/images/box1.jpg";
-import box2 from "../../../assets/images/box2.jpg";
-import box3 from "../../../assets/images/box3.jpg";
-import box4 from "../../../assets/images/box4.jpg";
-import box5 from "../../../assets/images/box5.jpg";
+import logo from "../../assets/images/luciddreams.jpg";
+import box1 from "../../assets/images/box1.jpg";
+import box2 from "../../assets/images/box2.jpg";
+import box3 from "../../assets/images/box3.jpg";
+import box4 from "../../assets/images/box4.jpg";
+import box5 from "../../assets/images/box5.jpg";
 
 import { FunctionalComponent } from "preact";
 import { useWindowSize } from "../../domain/global/hooks/useWindowSize";

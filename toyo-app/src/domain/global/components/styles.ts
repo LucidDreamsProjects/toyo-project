@@ -8,6 +8,7 @@ const Section = styled.section`
   max-width: 100%;
   overflow: hidden;
   background-color: hsla(350, 93%, 42%, 1);
+  background-color: #fff;
 
   @media (orientation: landscape) {
     flex-direction: row;
@@ -15,6 +16,10 @@ const Section = styled.section`
 
   @media (orientation: portrait) {
     flex-direction: column;
+  }
+
+  #play-2-earn {
+    margin-top: 8rem;
   }
 `;
 

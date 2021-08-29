@@ -1,163 +1,24 @@
-<<<<<<< Updated upstream
-import { useEffect, useState } from "preact/hooks";
-import { ArkaneConnect, WindowMode } from "@arkane-network/arkane-connect";
-import axios from "axios";
-
-import logo from "../../../assets/images/luciddreams.jpg";
-import box1 from "../../../assets/images/box1.jpg";
-import box2 from "../../../assets/images/box2.jpg";
-import box3 from "../../../assets/images/box3.jpg";
-
-import { useWindowSize } from "../../hooks/useWindowSize";
-import { createWallet } from "../../services/wallet/createWallet";
-import { mintNft } from "../../services/nft/mintNft";
-import { getNfts } from "../../services/nft/getNfts";
-import { transferNft } from "../../services/nft/transferNft";
-import { SavePlayerDto } from "../../dto/save-player.dto";
-
-import { FunctionalComponent } from "preact";
-import { KeycloakInstance } from "keycloak-js";
-import { Background, Section, Column, Row, Form, NeonButton } from "./styles";
-import { AuthenticationResult } from "@arkane-network/arkane-connect/dist/src/connect/connect";
-
-interface HomeProps {
-  arkaneConnect: ArkaneConnect;
-}
-
-export const Home: FunctionalComponent<HomeProps> = (props): JSX.Element => {
-  let [width, height] = useWindowSize();
-  let [isLogged, setIsLogged] = useState(false);
-  let [player, setPlayer] = useState({});
-  const adminWallet = "0xb03466dFC417f4163fcae65CA220a2D074b5e1e9";
-  const playerWallet = "0x0Ed0939D1b9673629EDBA7807a5Ed115Fc86b54A";
-
-  async function handleInit() {
-    console.log(`👷 Welcome to Toyo's official webpage!`);
-    // console.log(`👷 User is logged? ${isLogged}`);
-
-    if (props.arkaneConnect !== undefined) {
-      console.log(`👷 Device online and ready to go!`);
-    }
-  }
-
-  async function authPlayer(): Promise<void> {
-    let player: Record<string, string | undefined> | void = {};
-    // let wallet: string;
-
-    player = await props.arkaneConnect.flows
-      .authenticate({ windowMode: "POPUP" as WindowMode })
-      .then((result: AuthenticationResult) => {
-        result.authenticated((auth: KeycloakInstance) => {
-          player = {
-            playerID: auth.subject!,
-            email: auth.tokenParsed!.email,
-            sessionState: auth.tokenParsed!.session_state,
-          };
-          console.log(auth);
-          return player;
-        });
-        result.notAuthenticated((auth: undefined | KeycloakInstance) => {
-          //? Maybe we should use some better error handling here...
-          console.log("👷 User couldn't be logged in");
-        });
-      });
-
-    /* if (player !== {}) {
-      await setIsLogged(true);
-      await setPlayer(player!);
-      console.log(player);
-
-      if (!player!.wallet) {
-        //TODO: Create a wallet
-        const newWallet = await createWallet(props.arkaneConnect);
-        console.log(`👷 wallet address: ${newWallet!.address}`);
-        player!.wallet = newWallet?.address;
-      }
-    }
-
-    //TODO: Create a player on our MySQL database
-    if (player?.wallet) {
-      //TODO: Show this info on UI
-      const newPlayer = {
-        playerID: player.playerID,
-        sessionState: player.sessionState,
-        email: player.email,
-        wallet: player.wallet,
-      };
-      await setPlayer(player);
-    } */
-  }
-
-  useEffect(() => {
-    handleInit();
-  }, []);
-
-  return (
-    <html>
-      <body>
-        <Background>
-          <Section>
-            {/* <img src={logo} alt="" /> */}
-            <div id="btn--login">
-              <NeonButton onClick={() => authPlayer()}>LOGIN</NeonButton>
-            </div>
-            <Row width="50%">
-              <Column>
-                <div class="text--simple">ADMIN WALLET {adminWallet}</div>
-                <button
-                  class="text--simple btn--simple"
-                  onClick={() => getNfts(props.arkaneConnect, adminWallet)}
-                >
-                  CHECK ADMIN NFTs
-                </button>
-              </Column>
-              <Column>
-                <div class="text--simple">PLAYER WALLET {playerWallet}</div>
-                <button
-                  class="text--simple btn--simple"
-                  onClick={() => getNfts(props.arkaneConnect, playerWallet)}
-                >
-                  CHECK PLAYER NFTs
-                </button>
-              </Column>
-            </Row>
-            <div id="btn--transfer">
-              <button
-                class="text--simple btn--simple"
-                onClick={() => transferNft(props.arkaneConnect)}
-              >
-                TRANSFER NFT BETWEEN WALLETS
-              </button>
-            </div>
-            <Row width="75%">
-              <Column id="boxes">
-                <div onClick={() => mintNft(101, [playerWallet])}>
-                  <div class="text--simple">WARRIOR BOX</div>
-                  <img class="img--simple" src={box1} />
-                </div>
-                <div onClick={() => mintNft(51, [playerWallet])}>
-                  <div class="text--simple">HERO BOX</div>
-                  <img class="img--simple" src={box2} />
-                </div>
-                <div onClick={() => mintNft(1, [playerWallet])}>
-                  <div class="text--simple">EPIC BOX</div>
-                  <img class="img--simple" src={box3} />
-                </div>
-              </Column>
-            </Row>
-          </Section>
-        </Background>
-      </body>
-    </html>
-  );
-};
-=======
 import { FunctionalComponent } from "preact";
 import { ArkaneConnect } from "@arkane-network/arkane-connect";
 import { useEffect } from "react";
 import { useWindowSize } from "../../domain/global/hooks/useWindowSize";
 import { useState } from "preact/hooks";
 import { Player } from "../../domain/player/interfaces/player";
+
+import {
+  Body,
+  HomeCanvas,
+  GraffitiBackground,
+  GraffitiLogo,
+  Section,
+  Column,
+  Row,
+  Menu,
+} from "./styles";
+
+import toyo1 from "../../assets/images/toyo1.png";
+import toyo2 from "../../assets/images/toyo2.png";
+import menu from "../../assets/images/menu.png";
 
 interface HomeProps {
   arkaneConnect: ArkaneConnect;
@@ -184,7 +45,314 @@ export const Home: FunctionalComponent<HomeProps> = (props): JSX.Element => {
   }, []);
 
   return (
-    
-  )
+    <html>
+      <Body>
+        <Menu>
+          <img src={menu} alt="Toyo menu button" />
+        </Menu>
+        <Section id="section-1">
+          <GraffitiBackground>
+            GRAFFITI BACKGROUND
+            <img src="" alt="" />
+          </GraffitiBackground>
+          <GraffitiLogo>
+            GRAFFITI LOGO
+            <img src="" alt="" />
+          </GraffitiLogo>
+          <HomeCanvas id="toyo">
+            <Row id="top-row">
+              <div id="toyo-1">
+                <img src={toyo1} alt="" />
+              </div>
+              <Column width="26%">
+                <div id="logo">
+                  LOGO
+                  <img src="" alt="" />
+                </div>
+                <div id="btn-video">
+                  WATCH ME
+                  <img src="" alt="" />
+                </div>
+              </Column>
+              <div id="toyo-2">
+                <img src={toyo2} alt="" />
+              </div>
+            </Row>
+          </HomeCanvas>
+        </Section>
+        <Section id="section-2">
+          <HomeCanvas id="wit">
+            <Row>
+              <div id="toyo-3">
+                <img src={toyo1} alt="" />
+              </div>
+              <Column id="wit-wrapper">
+                <div id="wit-title">
+                  WHAT IS TOYO
+                  <img src="" alt="" />
+                </div>
+                <div id="wit-text">
+                  <p>
+                    Toyo is an NFT Game with Play2Earn mechanics, inspired by
+                    the action
+                    <br />
+                    figures of our childhood.
+                    <br />
+                    <br />
+                    Many generation grew up playing with those toys, putting
+                    them to face
+                    <br />
+                    each other in insane battles (well, at least in our heads,
+                    right?).
+                    <br />
+                    From the excitement of building heroes to the happiness when
+                    enemies
+                    <br />
+                    were destroyed, we were the writers of our own stories.
+                    <br />
+                    <br />
+                    Who else misses our child's imagination? Toyo intends to
+                    bring that
+                    <br />
+                    nostalgia back.
+                    <br />
+                    <br />
+                    We are really excited to build what would be the Toyo
+                    Metaverse. A vast
+                    <br />
+                    world where you and your Toyos could, together, write your
+                    own path for
+                    <br />
+                    glory.
+                  </p>
+                </div>
+                <div id="btn-discord">
+                  BTN DISCORD
+                  <img src="" alt="" />
+                </div>
+              </Column>
+              <div id="toyo-4">
+                <img src={toyo2} alt="" />
+              </div>
+            </Row>
+          </HomeCanvas>
+        </Section>
+        <Section id="section-3">
+          <div id="p2e-bg">
+            <img src="" alt="" />
+          </div>
+          <HomeCanvas id="p2e">
+            <Column>
+              <div id="p2e-top">
+                <div id="title-p2e-bg">
+                  BACKGROUND
+                  <img src="" alt="" />
+                  <div id="toyo-5">
+                    <img src={toyo1} alt="" />
+                  </div>
+                  <div id="title-p2e">
+                    PLAY 2 EARN
+                    <img src="" alt="" />
+                  </div>
+                </div>
+              </div>
+              <Row id="p2e-text-blocks">
+                <div id="text-block-1">
+                  <p>
+                    We strongly believe that any
+                    <br />
+                    person should be awarded for the
+                    <br />
+                    entire effort they put into games.
+                    <br />
+                    As we also believe this is the
+                    <br />
+                    future of gaming.
+                  </p>
+                </div>
+                <div id="text-block-2">
+                  <p>
+                    While playing Toyo, you will have
+                    <br />
+                    the ability to earn fungible
+                    <br />
+                    tokens that can also be used to
+                    <br />
+                    buy in-game assets, as well as
+                    <br />
+                    non-fungible tokens (NFTs) which
+                    <br />
+                    can be characters, replaceable
+                    <br />
+                    parts, skills, and more.
+                    <br />
+                    <br />
+                    All this in the transparency of
+                    <br />
+                    blockchain technology.
+                  </p>
+                </div>
+              </Row>
+              <Row id="p2e-neon-cards">
+                <div class="neon-card">
+                  <div class="neon-card-border">
+                    <img src="" alt="" />
+                    <div class="neon-card-bg">
+                      <img src="" alt="" />
+                    </div>
+                    <div class="neon-card-items">
+                      <img src="" alt="" />
+                    </div>
+                  </div>
+                  <div class="neon-card-info">
+                    <h2 class="neon-card-title">EARN TOKENS</h2>
+                    <p class="neon-card-text">
+                      Earn Toyo in Tournaments, PVP fights and quest fights.
+                    </p>
+                  </div>
+                </div>
+                <div class="neon-card">
+                  <div class="neon-card-border">
+                    <img src="" alt="" />
+                    <div class="neon-card-bg">
+                      <img src="" alt="" />
+                    </div>
+                    <div class="neon-card-items">
+                      <img src="" alt="" />
+                    </div>
+                  </div>
+                  <div class="neon-card-info">
+                    <h2 class="neon-card-title">EARN TOYOS</h2>
+                    <p class="neon-card-text">
+                      Earn Toyos (NFTs) in Tournaments, and high stake fights.
+                    </p>
+                  </div>
+                </div>
+                <div class="neon-card">
+                  <div class="neon-card-border">
+                    <img src="" alt="" />
+                    <div class="neon-card-bg">
+                      <img src="" alt="" />
+                    </div>
+                    <div class="neon-card-items">
+                      <img src="" alt="" />
+                    </div>
+                  </div>
+                  <div class="neon-card-info">
+                    <h2 class="neon-card-title">EARN PARTS</h2>
+                    <p class="neon-card-text">
+                      Earn parts in Tournaments, and quest fights.
+                    </p>
+                  </div>
+                </div>
+              </Row>
+            </Column>
+          </HomeCanvas>
+        </Section>
+        <Section id="section-4">
+          <div id="pvp-bg">
+            <img src="" alt="" />
+          </div>
+          <HomeCanvas id="pvp">
+            <Row id="pvp-wrapper">
+              <Column>
+                <div id="pvp-title">PVP MODULE</div>
+                <div id="pvp-text">
+                  Test your strategy combined with your "Toyos" abilities and
+                  <br />
+                  strength against others players.
+                </div>
+              </Column>
+              <div id="pvp-video">
+                VIDEO
+                {/* <video width="100%" height="100%" autoPlay>
+                  <source src="" type="video/mp4"></source>
+                </video> */}
+              </div>
+            </Row>
+          </HomeCanvas>
+        </Section>
+        <Section id="section-5">
+          <HomeCanvas id="collect">
+            <div id="collect-title">COLLECT</div>
+            <Row id="collect-wrapper">
+              <div id="collect-text">
+                <p>
+                  Expect to have various range of unique
+                  <br />
+                  styles of Toyos, from warriors to punks,
+                  <br />
+                  high-techs, athletes, gangstas, badasses,
+                  <br />
+                  fashionistas, and many more. The ranges
+                  <br />
+                  will also depend on wich region they come
+                  <br />
+                  from. Toyos will also be defined by
+                  <br />
+                  different tiers of Rarity based on their
+                  <br />
+                  parts.
+                  <br />
+                  <br />
+                  Expect to have various range of unique
+                  <br />
+                  styles of Toyos, from warriors to punks,
+                  <br />
+                  high-techs, athletes, gangstas, badasses,
+                  <br />
+                  fashionistas, and many more. The ranges
+                  <br />
+                  will also depend on wich region they come
+                  <br />
+                  from. Toyos will also be defined by.
+                </p>
+              </div>
+              <div id="collect-img">
+                IMAGE COLECIONÁVEIS (Toyos)
+                <img src="" alt="" />
+              </div>
+            </Row>
+          </HomeCanvas>
+        </Section>
+        <Section id="section-6">
+          <HomeCanvas id="customize">
+            <div id="customize-title">
+              CUSTOMIZE TITLE
+              <img src="" alt="" />
+            </div>
+            <Row id="customize-wrapper">
+              <div id="customize-img">
+                CUSTOMIZE IMG
+                <img src="" alt="" />
+              </div>
+              <div id="customize-text">
+                <p>
+                  Any toyo can be highly customized, with
+                  <br />
+                  different NFT arms set, NFT hands, NFT leg
+                  <br />
+                  sets, NFT heads, NFT accessories, and even
+                  <br />
+                  NFT skills. Our team will work hard to
+                  <br />
+                  create hundreds of extra parts that can be
+                  <br />
+                  attached to your Toyo, making it one of a<br />
+                  kind.
+                  <br />
+                  <br />
+                  When customizing your Toyo, pay attention
+                  <br />
+                  to what stats and skills the different
+                  <br />
+                  parts add to your Toyo.
+                </p>
+              </div>
+            </Row>
+          </HomeCanvas>
+        </Section>
+      </Body>
+    </html>
+  );
 };
->>>>>>> Stashed changes
