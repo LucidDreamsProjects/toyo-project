@@ -2,10 +2,11 @@ html,
 body {
   display: grid;
   place-items: center;
+  height: auto;
   min-height: 100vh;
   width: 100vw;
   background: #fafafa;
-  font-family: "Helvetica Neue", arial, sans-serif;
+  font-family: "Roboto", monospace, sans-serif;
   font-weight: 400;
   font-size: 16px;
   color: #444;
