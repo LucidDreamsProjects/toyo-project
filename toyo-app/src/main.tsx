@@ -3,7 +3,8 @@ import { useContext } from "preact/hooks";
 import { RouterContext, useRouter } from "./router";
 import { ArkaneConnect, WindowMode } from "@arkane-network/arkane-connect";
 
-import { Home } from "./views/home/home";
+// import { Home } from "./views/home/home";
+import { SecretPanel } from "./views/secretPanel/secretPanel";
 import NotFoundPage from "./views/404/notFoundPage";
 
 import "./index.css";
@@ -22,12 +23,9 @@ function Content() {
   switch (location.name) {
     case "home":
       return <Home arkaneConnect={arkaneConnect} />;
-<<<<<<< Updated upstream
-=======
 
     case "secret-panel":
       return <SecretPanel arkaneConnect={arkaneConnect} />;
->>>>>>> Stashed changes
 
     case "404":
     default:

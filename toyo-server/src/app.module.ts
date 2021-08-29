@@ -14,13 +14,13 @@ config();
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql' as any,
-      host: `${process.env.TYPEORM_HOST}`,
+      host: '162.240.6.22',
       port: 3306,
-      username: `${process.env.TYPEORM_USERNAME}`,
-      password: `${process.env.TYPEORM_PASSWORD}`,
-      database: `${process.env.TYPEORM_DATABASE}`,
+      username: `wwtoyo_admin`,
+      password: `dd^8A!DPq#ZpjewF2`,
+      database: `wwtoyo_universe`,
       entities: [Player],
-      logging: false,
+      logging: true,
       synchronize: false,
       keepConnectionAlive: true,
     }),

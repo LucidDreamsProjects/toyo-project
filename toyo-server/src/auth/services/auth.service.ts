@@ -25,6 +25,7 @@ export class AuthService {
     return await axios
       .post(url, params.toString())
       .then((response) => {
+        // console.log(response.data);
         return response.data;
       })
       .catch((error) => console.log(error));

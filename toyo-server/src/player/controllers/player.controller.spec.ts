@@ -20,15 +20,15 @@ describe('PlayerController', () => {
         ...dto,
       };
     }),
-    getByIndex: jest.fn().mockImplementation(async (index, dto) => {
+    findOne: jest.fn().mockImplementation(async (playerId, dto) => {
       return await {
-        index,
+        playerId,
         ...dto,
       };
     }),
-    editByIndex: jest.fn().mockImplementation(async (index, dto) => {
+    update: jest.fn().mockImplementation(async (playerId, dto) => {
       return await {
-        index,
+        playerId,
         ...dto,
       };
     }),
@@ -50,45 +50,55 @@ describe('PlayerController', () => {
     expect(playerController).toBeDefined();
   });
 
-  it('should create a Player', () => {
-    const uuid = uuidv4();
+  it('should create a Player and return that', () => {
+    const playerId = uuidv4();
     const username = haiku(1);
+    const firstName = 'firstName';
+    const lastName = 'lastName';
     const email = haiku(2);
+    const walletId = uuidv4();
+    const balance = 10;
 
-    const dto = {
-      playerID: uuid,
+    const player = {
+      playerId: playerId,
       username: username,
+      firstName: firstName,
+      lastName: lastName,
       email: email,
-      walletAddress: EthereumAddress.from(testKey).address,
+      walletId: walletId,
+      balance: balance,
     };
 
     expect.assertions(1);
-    return playerController.save(dto).then((data) => {
+    return playerController.createController(player).then((data) => {
       expect(data).toEqual({
-        playerID: dto.playerID,
+        playerId: player.playerId,
         index: expect.any(Number),
-        username: dto.username,
-        email: dto.email,
-        walletAddress: dto.walletAddress,
+        username: player.username,
+        firstName: player.firstName,
+        lastName: player.lastName,
+        email: player.email,
+        walletId: player.walletId,
       });
     });
   });
 
-  it('should update a Player', () => {
-    const index = 1001;
-    const dto = {
+  it('should update a Player by uuid', async () => {
+    const playerId = uuidv4();
+    const player = {
       firstName: 'Lucas',
       lastName: 'Cyrne',
       address: 'p.sherman calle wallaby 42 sidney',
     };
 
-    expect.assertions(2);
-    return playerController.editByIndex(index, dto).then((data) => {
+    expect.assertions(1);
+    return await playerController.update(playerId, player).then((data) => {
       expect(data).toEqual({
-        index: index,
-        ...dto,
+        playerId: playerId,
+        firstName: player.firstName,
+        lastName: player.lastName,
+        address: player.address,
       });
-      expect(mockPlayerService.editByIndex).toBeCalled();
     });
   });
 });

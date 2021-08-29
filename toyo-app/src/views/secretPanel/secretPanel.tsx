@@ -13,40 +13,67 @@ import box3 from "../../../assets/images/box3.jpg";
 import box4 from "../../../assets/images/box4.jpg";
 import box5 from "../../../assets/images/box5.jpg";
 
+import { useWindowSize } from "../../hooks/useWindowSize";
+import { mintNft } from "../../services/nft/mintNft";
+import { getNfts } from "../../services/nft/getNfts";
+import { transferNft } from "../../services/nft/transferNft";
+
 import { FunctionalComponent } from "preact";
-import { useWindowSize } from "../../domain/global/hooks/useWindowSize";
-import { Top, Middle, UserDisplay, NeonButton } from "./styles";
 import {
   Section,
   Canvas,
+  Top,
+  Middle,
   Container,
   Column,
-} from "../../domain/global/components/styles";
-import { Tile, ImageTile } from "../../domain/global/components/form/style";
-import { NftTemplateForm } from "../../domain/nft/components/nftTemplateForm";
-import { SyntheticEvent } from "react";
-
-import { mintNft } from "../../domain/nft/services/mintNft";
-import { getNfts } from "../../domain/nft/services/getNfts";
-import { transferNft } from "../../domain/nft/services/transferNft";
-
-import { authPlayer } from "../../domain/auth/services/authPlayer";
-import { AuthenticationResult } from "@arkane-network/arkane-connect/dist/src/connect/connect";
-import { getProfile } from "../../domain/player/services/getProfile";
-import { findPlayerById } from "../../domain/player/services/findPlayerById";
-import { Player } from "../../domain/player/interfaces/player";
-import { savePlayer } from "../../domain/player/services/savePlayer";
-import { SavePlayerDto } from "../../domain/player/dto/save-player.dto";
+  Row,
+  NftForm,
+  SimpleForm,
+  UserDisplay,
+  Tile,
+  ConstrainedTile,
+  ImageTile,
+  NeonButton,
+} from "./styles";
+import { authPlayer } from "../../services/auth/authPlayer";
+import { getProfile } from "../../services/player/getProfile";
+import { findPlayerById } from "../../services/player/findPlayerById";
+import { Player } from "../../services/player/interfaces/player";
+import { savePlayer } from "../../services/player/savePlayer";
+import { SavePlayerDto } from "../../services/player/dto/save-player.dto";
+import { Nft } from "../../services/nft/interfaces/nft";
+import { SaveNftDto } from "../../services/nft/dto/save-nft.dto";
 import { KeycloakInstance } from "keycloak-js";
-
-import { Nft } from "../../domain/nft/interfaces/nft";
-import { SaveNftDto } from "../../domain/nft/dto/save-nft.dto";
-import { createWallet } from "../../domain/wallet/services/createWallet";
-import { createNft } from "../../domain/nft/services/createNft";
-import { getWallets } from "../../domain/wallet/services/getWallets";
+import { AuthenticationResult } from "@arkane-network/arkane-connect/dist/src/connect/connect";
+import { createWallet } from "../../services/wallet/createWallet";
+import { getWallets } from "../../services/wallet/getWallets";
+import { createNft } from "../../services/nft/createNft";
+import { SyntheticEvent } from "react";
+import {
+  Formik,
+  FormikHelpers,
+  FormikProps,
+  Form,
+  Field,
+  FieldArray,
+  ErrorMessage,
+} from "formik";
 
 interface SecretPanelProps {
   arkaneConnect: ArkaneConnect;
+}
+
+interface NftFormikFormValues {
+  name: "";
+  description: "";
+  image: "";
+  externalUrls: "";
+  backgroundColor: "";
+  fungible: false;
+  maxSupply: 0;
+  burnable: true;
+  animationUrls: [];
+  attributes: [];
 }
 
 export const SecretPanel: FunctionalComponent<SecretPanelProps> = (
@@ -136,6 +163,268 @@ export const SecretPanel: FunctionalComponent<SecretPanelProps> = (
           console.log("👷 User couldn't be authenticated");
         });
       });
+  };
+
+  const NftTemplateForm = (): JSX.Element => {
+    const initialValues: NftFormikFormValues = {
+      name: "",
+      description: "",
+      image: "",
+      externalUrls: "",
+      backgroundColor: "",
+      fungible: false,
+      maxSupply: 0,
+      burnable: true,
+      animationUrls: [],
+      attributes: [],
+    };
+
+    return (
+      <div>
+        <h1>CREATE NFT TEMPLATES</h1>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={async (values) => {
+            const nft = {
+              name: values.name,
+              description: values.description,
+              image: values.image,
+              externalUrls: values.externalUrls,
+              backgroundColor: values.backgroundColor,
+              fungible: values.fungible,
+              maxSupply: values.maxSupply,
+              burnable: values.burnable,
+              animationUrls: values.animationUrls,
+              attributes: values.attributes,
+            } as SaveNftDto;
+
+            console.log(nft);
+
+            try {
+              await createNft(nft);
+            } catch (err) {
+              console.log(err);
+            }
+          }}
+        >
+          {({ values }) => (
+            <Form>
+              <Tile class="tile">
+                <label htmlFor="name">NOME</label>
+                <Field id="name" name="name" placeholder="name" />
+              </Tile>
+              <Tile class="tile">
+                <label htmlFor="description">DESCRIPTION</label>
+                <Field
+                  id="description"
+                  name="description"
+                  placeholder="description"
+                />
+              </Tile>
+              <Tile class="tile">
+                <label htmlFor="image">IMAGE</label>
+                <Field id="image" name="image" placeholder="image" />
+              </Tile>
+              <Tile class="tile">
+                <label htmlFor="externalUrl">EXTERNAL URL</label>
+                <Field
+                  id="externalUrl"
+                  name="externalUrls"
+                  placeholder="external url"
+                />
+              </Tile>
+              <Tile class="tile">
+                <label htmlFor="backgroundColor">BACKGROUND COLOR</label>
+                <Field
+                  id="backgroundColor"
+                  name="backgroundColor"
+                  placeholder="background color"
+                />
+              </Tile>
+              <Tile class="tile col">
+                <label htmlFor="fungible">FUNGIBLE</label>
+                <div>YES</div>
+                <Field
+                  id="fungible"
+                  name="fungible"
+                  type="radio"
+                  value="true"
+                />
+                <div>NO</div>
+                <Field
+                  id="fungible"
+                  name="fungible"
+                  type="radio"
+                  value="false"
+                />
+              </Tile>
+              <Tile class="tile">
+                <label htmlFor="maxSupply">MAX SUPPLY</label>
+                <Field
+                  id="maxSupply"
+                  name="maxSupply"
+                  type="number"
+                  placeholder="max supply"
+                />
+              </Tile>
+              <Tile class="tile">
+                <label htmlFor="burnable">BURNABLE</label>
+                <div>YES</div>
+                <Field
+                  id="burnable"
+                  name="burnable"
+                  type="radio"
+                  value="true"
+                />
+                <div>NO</div>
+                <Field
+                  id="burnable"
+                  name="burnable"
+                  type="radio"
+                  value="false"
+                />
+              </Tile>
+              <ConstrainedTile class="tile">
+                <label htmlFor="animationUrls">ANIMATION URL</label>
+                <FieldArray name="animationUrls">
+                  {({ insert, remove, push }) => (
+                    <div>
+                      {values.animationUrls.length > 0 &&
+                        values.animationUrls.map((animationUrls, index) => (
+                          <div className="row" key={index}>
+                            <div className="col">
+                              <label htmlFor={`animationUrls.${index}.type`}>
+                                Type
+                              </label>
+                              <Field
+                                name={`animationUrls.${index}.type`}
+                                placeholder="video"
+                                type="text"
+                              />
+                              <ErrorMessage
+                                name={`animationUrls.${index}.type`}
+                                component="div"
+                                className="field-error"
+                              />
+                            </div>
+                            <div className="col">
+                              <label htmlFor={`animationUrls.${index}.value`}>
+                                Value
+                              </label>
+                              <Field
+                                name={`animationUrls.${index}.value`}
+                                placeholder="http://img.arkane.network/chuck_soundtrack.mp3"
+                                type="text"
+                              />
+                              <ErrorMessage
+                                name={`animationUrls.${index}.value`}
+                                component="div"
+                                className="field-error"
+                              />
+                            </div>
+                            <div className="col">
+                              <button
+                                type="button"
+                                className="secondary"
+                                onClick={() => remove(index)}
+                              >
+                                X
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      <button
+                        type="button"
+                        className="secondary"
+                        onClick={() => push({ type: "", value: "" })}
+                      >
+                        Add Animation Url
+                      </button>
+                    </div>
+                  )}
+                </FieldArray>
+              </ConstrainedTile>
+              <ConstrainedTile class="tile">
+                <label htmlFor="attributes">ATTRIBUTES</label>
+                <FieldArray name="attributes">
+                  {({ insert, remove, push }) => (
+                    <div>
+                      {values.attributes.length > 0 &&
+                        values.attributes.map((attributes, index) => (
+                          <div className="row" key={index}>
+                            <div className="col">
+                              <label htmlFor={`attributes.${index}.type`}>
+                                Type
+                              </label>
+                              <Field
+                                name={`attributes.${index}.type`}
+                                placeholder="property"
+                                type="text"
+                              />
+                              <ErrorMessage
+                                name={`attributes.${index}.type`}
+                                component="div"
+                                className="field-error"
+                              />
+                            </div>
+                            <div className="col">
+                              <label htmlFor={`attributes.${index}.name`}>
+                                Name
+                              </label>
+                              <Field
+                                name={`attributes.${index}.name`}
+                                placeholder="Generic"
+                                type="text"
+                              />
+                              <ErrorMessage
+                                name={`attributes.${index}.name`}
+                                component="div"
+                                className="field-error"
+                              />
+                            </div>
+                            <div className="col">
+                              <label htmlFor={`attributes.${index}.value`}>
+                                Value
+                              </label>
+                              <Field
+                                name={`attributes.${index}.value`}
+                                placeholder="Token"
+                                type="text"
+                              />
+                              <ErrorMessage
+                                name={`attributes.${index}.value`}
+                                component="div"
+                                className="field-error"
+                              />
+                            </div>
+                            <div className="col">
+                              <button
+                                type="button"
+                                className="secondary"
+                                onClick={() => remove(index)}
+                              >
+                                X
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      <button
+                        type="button"
+                        className="secondary"
+                        onClick={() => push({ type: "", name: "", value: "" })}
+                      >
+                        Add Attribute
+                      </button>
+                    </div>
+                  )}
+                </FieldArray>
+              </ConstrainedTile>
+              <button type="submit">Submit</button>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    );
   };
 
   useEffect(() => {

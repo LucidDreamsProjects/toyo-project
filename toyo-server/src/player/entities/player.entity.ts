@@ -3,16 +3,16 @@ import { BaseEntity, Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 @Entity({ name: 'player_User' })
 export class Player extends BaseEntity {
   @PrimaryGeneratedColumn()
-  playerID!: string;
+  playerId?: string;
 
   @Column({ type: 'int' })
   index?: number;
 
   @Column({ type: 'varchar', length: 64 })
-  username!: string;
+  username?: string;
 
   @Column({ type: 'varchar', length: 128 })
-  email!: string;
+  email?: string;
 
   @Column({ type: 'varchar', length: 64 })
   firstName?: string;
@@ -20,24 +20,24 @@ export class Player extends BaseEntity {
   @Column({ type: 'varchar', length: 128 })
   lastName?: string;
 
-  @Column({ type: 'int' })
-  icon?: number;
-
   @Column({ type: 'varchar', length: 128 })
   address?: string;
 
-  @Column({ type: 'uuid' })
-  inventory?: string;
+  @Column({ type: 'int' })
+  icon?: number;
 
   @Column({ type: 'varchar', length: 512 })
   replays?: string;
 
+  @Column({ type: 'uuid' })
+  inventory?: string;
+
   @Column({ type: 'varchar', unique: true, length: 256 })
-  walletAddress!: string;
+  walletId?: string;
 
   @Column({ type: 'int', default: 3 })
   role?: number;
 
-  @Column({ type: 'text' })
-  accessToken?: string;
+  @Column({ type: 'float' })
+  balance?: number;
 }

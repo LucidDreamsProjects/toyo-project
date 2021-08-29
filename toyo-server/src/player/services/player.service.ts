@@ -1,75 +1,59 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Player } from '../entities/player.entity';
 import { PlayerRepository } from '../repositories/player.repository';
-import { SavePlayerDto } from '../dto/save-player.dto';
-import { EditPlayerDto } from '../dto/edit-player.dto';
+import { CreatePlayerDto } from '../dto/create-player.dto';
+import { UpdatePlayerDto } from '../dto/update-player.dto';
 
 @Injectable()
 export class PlayerService {
   constructor(
-    @InjectRepository(Player)
+    @InjectRepository(PlayerRepository)
     private playerRepository: PlayerRepository,
   ) {}
 
-  public async save(savePlayerDto: SavePlayerDto): Promise<Player | void> {
-    const player = await this.playerRepository.savePlayer(savePlayerDto);
-
-    if (player) {
-      return player;
-    }
+  public async createService(
+    createPlayerDto: CreatePlayerDto,
+  ): Promise<Player> {
+    console.log(createPlayerDto);
+    return await this.playerRepository.createPlayer(createPlayerDto);
   }
 
-  public async getAll(): Promise<Player[] | void> {
-    const players = await this.playerRepository.find();
-
-    if (players) {
-      return players;
-    }
+  public async findAll(): Promise<Player[]> {
+    return await this.playerRepository.findAll();
   }
 
-  public async getByIndex(index: number): Promise<Player | undefined> {
-    const player = await this.playerRepository.findOneOrFail(index);
+  public async findOne(playerId: string): Promise<Player> {
+    const player = await this.playerRepository.findOne(playerId);
 
-    if (player) {
-      return player;
+    if (!player) {
+      throw new NotFoundException(`Player not found`);
     }
+
+    return player;
   }
 
-  public async editByIndex(
-    index: number,
-    editPlayerDto: EditPlayerDto,
-  ): Promise<Player | void> {
-    const targetPlayer = await this.playerRepository.findOneOrFail(index);
+  public async update(
+    playerId: string,
+    updatePlayerDto: UpdatePlayerDto,
+  ): Promise<Player | undefined> {
+    const player = await this.playerRepository.findOne(playerId);
+    console.log(player);
 
-    if (!targetPlayer) {
-      throw new NotFoundException(`🔧 Player not found in Toyo's universe.`);
+    if (!player) {
+      throw new NotFoundException(`Player not found`);
     }
 
-    const updatedPlayer = await this.playerRepository.editPlayer(
-      editPlayerDto,
-      targetPlayer,
-    );
-
-    if (updatedPlayer) {
-      return updatedPlayer;
-    }
+    return this.playerRepository.editPlayer(playerId, updatePlayerDto);
   }
 
-  public async deleteByIndex(index: number): Promise<void> {
-    await this.playerRepository.delete(index);
-  }
-
-  public async checkIfAdminExists(): Promise<boolean> {
-    const admin = await this.getByIndex(1000);
-
-    if (admin) {
-      if (admin.role === 1) {
-        return true;
-      }
-    }
-
-    return false;
+  public async remove(playerId: string): Promise<void> {
+    await this.playerRepository.delete(playerId);
   }
 }
