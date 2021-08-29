@@ -13,11 +13,6 @@ import box3 from "../../assets/images/box3.jpg";
 import box4 from "../../assets/images/box4.jpg";
 import box5 from "../../assets/images/box5.jpg";
 
-import { useWindowSize } from "../../hooks/useWindowSize";
-import { mintNft } from "../../services/nft/mintNft";
-import { getNfts } from "../../services/nft/getNfts";
-import { transferNft } from "../../services/nft/transferNft";
-
 import { FunctionalComponent } from "preact";
 import {
   Section,
@@ -58,6 +53,7 @@ import {
   FieldArray,
   ErrorMessage,
 } from "formik";
+import { useWindowSize } from "../../domain/global/hooks/useWindowSize";
 
 interface SecretPanelProps {
   arkaneConnect: ArkaneConnect;
