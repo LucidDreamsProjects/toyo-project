@@ -21,8 +21,8 @@ function Content() {
   const arkaneConnect = new ArkaneConnect("Toyo", options);
 
   switch (location.name) {
-    /* case "home":
-      return <Home arkaneConnect={arkaneConnect} />; */
+    case "home":
+      return <Home arkaneConnect={arkaneConnect} />;
 
     case "secret-panel":
       return <SecretPanel arkaneConnect={arkaneConnect} />;
