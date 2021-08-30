@@ -6,7 +6,7 @@ export async function getWallets(
   const wallets = await arkaneConnect.api
     .getWallets()
     .then((wallets) => {
-      console.log(`👷 your wallets: `, wallets);
+      console.log(`👷 your wallets from Widget API: `, wallets);
       return wallets;
     })
     .catch((error) => {

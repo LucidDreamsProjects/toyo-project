@@ -1,8 +1,9 @@
+import { Wallet } from "@arkane-network/arkane-connect";
+
 export interface SavePlayerDto {
   playerId?: string;
   firstName?: string;
   lastName?: string;
   email?: string;
-  walletId?: string;
-  balance?: number;
+  wallets: never[] | Wallet[];
 }

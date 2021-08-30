@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlayerModule } from './player/player.module';
 import { Player } from './player/entities/player.entity';
+import { Nft } from './nft/entities/nft.entity';
 import { AuthModule } from './auth/auth.module';
 import { ContractModule } from './contract/contract.module';
 import { NftModule } from './nft/nft.module';
@@ -19,7 +20,7 @@ config();
       username: `wwtoyo_admin`,
       password: `dd^8A!DPq#ZpjewF2`,
       database: `wwtoyo_universe`,
-      entities: [Player],
+      entities: [Player, Nft],
       logging: true,
       synchronize: false,
       keepConnectionAlive: true,

@@ -19,7 +19,5 @@ export async function findPlayerById(
       console.log(`👷 Player not found... 😢`);
     });
 
-  if (player) {
-    return player;
-  }
+  return player;
 }

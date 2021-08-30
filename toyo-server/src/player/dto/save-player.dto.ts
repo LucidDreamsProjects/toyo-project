@@ -1,6 +1,7 @@
-import { IsString, IsNumber, IsNotEmpty } from 'class-validator';
+import { Wallet } from '@arkane-network/arkane-connect';
+import { IsString, IsNumber, IsNotEmpty, IsArray } from 'class-validator';
 
-export class CreatePlayerDto {
+export class SavePlayerDto {
   @IsString()
   @IsNotEmpty()
   playerId!: string;
@@ -21,11 +22,7 @@ export class CreatePlayerDto {
   @IsNotEmpty()
   lastName!: string;
 
-  @IsString()
+  @IsArray()
   @IsNotEmpty()
-  walletId!: string;
-
-  @IsNumber()
-  @IsNotEmpty()
-  balance!: number;
+  wallets?: string;
 }

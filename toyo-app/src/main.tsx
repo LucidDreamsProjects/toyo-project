@@ -5,6 +5,7 @@ import { ArkaneConnect, WindowMode } from "@arkane-network/arkane-connect";
 
 import { Home } from "./views/home/home";
 import { SecretPanel } from "./views/secretPanel/secretPanel";
+import { NewPage } from "./views/newPage/newPage";
 import NotFoundPage from "./views/404/notFoundPage";
 
 import "./index.css";
@@ -26,6 +27,9 @@ function Content() {
 
     case "secret-panel":
       return <SecretPanel arkaneConnect={arkaneConnect} />;
+
+    case "new-page":
+      return <NewPage />;
 
     case "404":
     default:

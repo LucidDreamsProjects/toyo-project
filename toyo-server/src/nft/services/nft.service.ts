@@ -29,6 +29,7 @@ export class NftService {
     const contractId = this.CONTRACT_ID;
     const url = this.CREATE_DATA_URL;
     const accessToken = await this.authService.getAccessToken();
+    console.log('=================== service', dto);
 
     const nft = await axios
       .post(url, dto, {

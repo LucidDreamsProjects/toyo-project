@@ -1,7 +1,7 @@
 import { Repository, EntityRepository } from 'typeorm';
 import { Player } from '../entities/player.entity';
 import { Injectable } from '@nestjs/common';
-import { CreatePlayerDto } from '../dto/create-player.dto';
+import { SavePlayerDto } from '../dto/save-player.dto';
 import { UpdatePlayerDto } from '../dto/update-player.dto';
 
 @Injectable()
@@ -21,9 +21,8 @@ export class PlayerRepository extends Repository<Player> {
     return player;
   }
 
-  public async createPlayer(createPlayerDto: CreatePlayerDto): Promise<Player> {
-    const { playerId, firstName, lastName, email, walletId, balance } =
-      createPlayerDto;
+  public async savePlayer(savePlayerDto: SavePlayerDto): Promise<Player> {
+    const { playerId, firstName, lastName, email, wallets } = savePlayerDto;
 
     const player = new Player();
     player.playerId = playerId;
@@ -31,8 +30,13 @@ export class PlayerRepository extends Repository<Player> {
     player.firstName = firstName;
     player.lastName = lastName;
     player.email = email;
-    player.walletId = walletId;
-    player.balance = balance;
+    player.wallets = JSON.stringify(wallets);
+
+    console.log('================ player wallets', player.wallets);
+
+    console.log(this);
+
+    console.log(this.save);
 
     await this.save(player);
     return player;
@@ -42,7 +46,7 @@ export class PlayerRepository extends Repository<Player> {
     playerId: string,
     updatePlayerDto: UpdatePlayerDto,
   ): Promise<Player | undefined> {
-    const { username, firstName, lastName, email } = updatePlayerDto;
+    const { username, firstName, lastName, email, wallets } = updatePlayerDto;
     const player = await this.findOne(playerId);
 
     if (player) {
@@ -50,6 +54,7 @@ export class PlayerRepository extends Repository<Player> {
       player.firstName = firstName;
       player.lastName = lastName;
       player.email = email;
+      player.wallets = wallets;
       await this.save(player);
 
       return player;

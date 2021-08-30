@@ -42,6 +42,7 @@ import { KeycloakInstance } from "keycloak-js";
 import { AuthenticationResult } from "@arkane-network/arkane-connect/dist/src/connect/connect";
 import { createWallet } from "../../services/wallet/createWallet";
 import { getWallets } from "../../services/wallet/getWallets";
+import { getWalletsFromServer } from "../../services/wallet/getWalletsFromServer";
 import { createNft } from "../../services/nft/createNft";
 import { SyntheticEvent } from "react";
 import {
@@ -90,12 +91,6 @@ export const SecretPanel: FunctionalComponent<SecretPanelProps> = (
     console.log(`👷 actual player: `, player);
   }
 
-  const handleGetWalletAddress = async () => {
-    const wallet = await getWallets(props.arkaneConnect);
-    const address = wallet.result.address;
-    player.walletAddress = address;
-  };
-
   const handleAuthPlayer = async () => {
     // FETCH Player from Venly's servers
     const player = await getProfile(props.arkaneConnect);
@@ -111,21 +106,21 @@ export const SecretPanel: FunctionalComponent<SecretPanelProps> = (
 
       if (targetPlayer) {
         setPlayer(targetPlayer);
-        handleGetWalletAddress();
         console.log(`👷 your info: `, targetPlayer);
       } else {
         console.log("👷 Don't worry, we'll set you up on the action 😉!");
-        const wallet = createWallet();
-        const walletId = wallet.result.id;
-        const walletAddress = wallet.result.address;
-        const balance = wallet.result.balance;
+        const _wallets = await getWallets(props.arkaneConnect);
+        console.log(_wallets);
+
+        const _walletsFromServer = await getWalletsFromServer();
+        console.log(_walletsFromServer);
+
         const newPlayer = {
           playerId: playerId,
           firstName: firstName,
           lastName: lastName,
           email: email,
-          walletId: walletId,
-          balance: balance,
+          wallets: JSON.stringify(_wallets),
         } as SavePlayerDto;
 
         await savePlayer(newPlayer);
@@ -135,9 +130,7 @@ export const SecretPanel: FunctionalComponent<SecretPanelProps> = (
           firstName: newPlayer.firstName,
           lastName: newPlayer.lastName,
           email: newPlayer.email,
-          walletId: newPlayer.walletId,
-          walletAddress: walletAddress,
-          balance: newPlayer.balance,
+          wallets: newPlayer.wallets,
         };
 
         setPlayer(_newPlayer);
@@ -434,7 +427,7 @@ export const SecretPanel: FunctionalComponent<SecretPanelProps> = (
           <Canvas>
             <Column>
               <Top>
-                <div id="ply--balance">$ {player.balance}</div>
+                {/* <div id="ply--balance">$ {player.balance}</div> */}
                 <div id="btn--login">
                   <NeonButton onClick={() => authPlayer(props.arkaneConnect)}>
                     LOGIN
@@ -457,10 +450,10 @@ export const SecretPanel: FunctionalComponent<SecretPanelProps> = (
                     <label htmlFor="email">EMAIL:</label>
                     <div id="email">{player.email}</div>
                   </Tile>
-                  <Tile>
+                  {/* <Tile>
                     <label htmlFor="id">WALLET:</label>
                     <div id="id">{player.walletId}</div>
-                  </Tile>
+                  </Tile> */}
                 </UserDisplay>
               </Middle>
             </Column>
@@ -475,23 +468,23 @@ export const SecretPanel: FunctionalComponent<SecretPanelProps> = (
           <Canvas>
             {player ? (
               <Container>
-                <ImageTile onClick={() => mintNft(0, [player.walletAddress!])}>
+                <ImageTile onClick={() => {}}>
                   <div>WARRIOR BOX</div>
                   <img src={box1} />
                 </ImageTile>
-                <ImageTile onClick={() => mintNft(0, [player.walletAddress!])}>
+                <ImageTile onClick={() => {}}>
                   <div>HERO BOX</div>
                   <img src={box2} />
                 </ImageTile>
-                <ImageTile onClick={() => mintNft(0, [player.walletAddress!])}>
+                <ImageTile onClick={() => {}}>
                   <div>RARE BOX</div>
                   <img src={box3} />
                 </ImageTile>
-                <ImageTile onClick={() => mintNft(0, [player.walletAddress!])}>
+                <ImageTile onClick={() => {}}>
                   <div>EPIC BOX</div>
                   <img src={box4} />
                 </ImageTile>
-                <ImageTile onClick={() => mintNft(0, [player.walletAddress!])}>
+                <ImageTile onClick={() => {}}>
                   <div>LEGENDARY BOX</div>
                   <img src={box5} />
                 </ImageTile>

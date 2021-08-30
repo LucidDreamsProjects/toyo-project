@@ -40,4 +40,21 @@ export class WalletService {
       })
       .catch((error) => console.log(error));
   }
+
+  public async getWallets(): Promise<Wallet[] | undefined> {
+    const accessToken = await this.authService.getAccessToken();
+    const url = this.DATA_URL;
+
+    return await axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        return response.data;
+      })
+      .catch((error) => console.log(error));
+  }
 }

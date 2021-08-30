@@ -12,7 +12,7 @@ export class NftController {
   @HttpCode(200)
   @Post('create')
   public async createNft(@Body() dto: CreateNftDto): Promise<NFT | void> {
-    console.log(dto);
+    console.log('=============== controller', dto);
     return await this.nftService.createNft(dto);
   }
 
