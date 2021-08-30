@@ -1,3 +1,5 @@
+import { Wallet } from "@arkane-network/arkane-connect";
+
 export interface Player {
   playerId: string | undefined;
   index?: number | undefined;
@@ -5,7 +7,5 @@ export interface Player {
   firstName: string | undefined;
   lastName: string | undefined;
   email: string | undefined;
-  walletId: string | undefined;
-  walletAddress: string | undefined;
-  balance: number | undefined;
+  wallets: string;
 }

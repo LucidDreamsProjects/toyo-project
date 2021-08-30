@@ -9,7 +9,7 @@ import {
   NotFoundException,
   HttpCode,
 } from '@nestjs/common';
-import { CreatePlayerDto } from '../dto/create-player.dto';
+import { SavePlayerDto } from '../dto/save-player.dto';
 import { UpdatePlayerDto } from '../dto/update-player.dto';
 import { Player } from '../entities/player.entity';
 import { PlayerService } from '../services/player.service';
@@ -35,11 +35,11 @@ export class PlayerController {
   }
 
   @HttpCode(200)
-  @Post()
-  public async createController(
-    @Body() createPlayerDto: CreatePlayerDto,
+  @Post('save')
+  public async savePlayer(
+    @Body() savePlayerDto: SavePlayerDto,
   ): Promise<Player> {
-    return await this.playerService.createService(createPlayerDto);
+    return await this.playerService.savePlayer(savePlayerDto);
   }
 
   @HttpCode(200)
@@ -53,7 +53,7 @@ export class PlayerController {
 
   @HttpCode(200)
   @Delete(':playerId')
-  public async deleteByIndex(
+  public async deleteByPlayerId(
     @Param('playerId') playerId: string,
   ): Promise<void> {
     const player = await this.playerService.findOne(playerId);

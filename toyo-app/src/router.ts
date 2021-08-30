@@ -5,6 +5,8 @@ export const appRoutes = [
 
   route("secret-panel", "/secret-panel"),
 
+  route("new-page", "/new-page"),
+
   route(
     "example",
     (params: { paramEx: string }) => `/example/${params.paramEx}`

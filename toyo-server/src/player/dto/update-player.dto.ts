@@ -1,8 +1,9 @@
+import { Wallet } from '@arkane-network/arkane-connect';
 import { PartialType } from '@nestjs/mapped-types';
-import { IsString } from 'class-validator';
-import { CreatePlayerDto } from './create-player.dto';
+import { IsArray, IsString } from 'class-validator';
+import { SavePlayerDto } from './save-player.dto';
 
-export class UpdatePlayerDto extends PartialType(CreatePlayerDto) {
+export class UpdatePlayerDto extends PartialType(SavePlayerDto) {
   @IsString()
   username?: string;
 
@@ -17,4 +18,7 @@ export class UpdatePlayerDto extends PartialType(CreatePlayerDto) {
 
   @IsString()
   address?: string;
+
+  @IsArray()
+  wallets?: string;
 }

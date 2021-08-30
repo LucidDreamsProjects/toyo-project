@@ -1,14 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Player } from '../entities/player.entity';
 import { PlayerRepository } from '../repositories/player.repository';
-import { CreatePlayerDto } from '../dto/create-player.dto';
+import { SavePlayerDto } from '../dto/save-player.dto';
 import { UpdatePlayerDto } from '../dto/update-player.dto';
 
 @Injectable()
@@ -18,11 +13,8 @@ export class PlayerService {
     private playerRepository: PlayerRepository,
   ) {}
 
-  public async createService(
-    createPlayerDto: CreatePlayerDto,
-  ): Promise<Player> {
-    console.log(createPlayerDto);
-    return await this.playerRepository.createPlayer(createPlayerDto);
+  public async savePlayer(savePlayerDto: SavePlayerDto): Promise<Player> {
+    return await this.playerRepository.savePlayer(savePlayerDto);
   }
 
   public async findAll(): Promise<Player[]> {

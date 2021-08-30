@@ -1,3 +1,4 @@
+import { Wallet } from '@arkane-network/arkane-connect';
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'player_User' })
@@ -32,12 +33,9 @@ export class Player extends BaseEntity {
   @Column({ type: 'uuid' })
   inventory?: string;
 
-  @Column({ type: 'varchar', unique: true, length: 256 })
-  walletId?: string;
+  @Column({ type: 'text', unique: true })
+  wallets?: string;
 
   @Column({ type: 'int', default: 3 })
   role?: number;
-
-  @Column({ type: 'float' })
-  balance?: number;
 }

@@ -13,7 +13,6 @@ import { NftRepository } from './repositories/nft.repository';
       timeout: 15000,
       maxRedirects: 5,
     }),
-    AuthService,
   ],
   controllers: [NftController],
   providers: [NftService, AuthService],

@@ -3,6 +3,5 @@ export interface SavePlayerDto {
   firstName?: string;
   lastName?: string;
   email?: string;
-  walletId?: string;
-  balance?: number;
+  wallets: string;
 }
