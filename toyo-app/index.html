@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link
+    <!-- <link
       rel="icon"
       type="image/svg+xml"
       href="/assets/images/luciddreams.jpg"
-    />
+    /> -->
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
@@ -23,6 +23,7 @@
       window.process = process;
       window.EventEmitter = EventEmitter;
     </script>
+    <script src="/node_modules/@arkane-network/arkane-connect/dist/connect.js"></script>
     <title>Toyo Demo</title>
     <meta
       name="description"
@@ -35,6 +36,6 @@
   </head>
   <body>
     <div id="app"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="./src/main.jsx"></script>
   </body>
 </html>
