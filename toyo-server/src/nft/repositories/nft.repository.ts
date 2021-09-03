@@ -6,27 +6,17 @@ import { SaveNftDto } from '../dto/save-nft.dto';
 @Injectable()
 @EntityRepository(Nft)
 export class NftRepository extends Repository<Nft> {
-  public async saveNft(saveNftDto: SaveNftDto): Promise<Nft> {
-    const { nftId, contractId, name, maxSupply, currentSupply } = saveNftDto;
+  public async saveNft(dto: SaveNftDto): Promise<Nft> {
+    const { nftId, templateId, playerId, name, value } = dto;
 
     const nft = new Nft();
     nft.nftId = nftId;
-    nft.contractId = contractId;
+    nft.templateId = templateId;
+    nft.playerId = playerId;
     nft.name = name;
-    nft.maxSupply = maxSupply;
-    nft.currentSupply = currentSupply;
+    nft.value = value;
 
     await this.save(nft);
-    return nft;
-  }
-
-  public async findById(nftId: number): Promise<Nft | undefined> {
-    const nft = await this.findOne(nftId);
-
-    if (nft) {
-      console.log(nft);
-    }
-
     return nft;
   }
 }

@@ -35,7 +35,7 @@ export class PlayerController {
   }
 
   @HttpCode(200)
-  @Post('save')
+  @Post()
   public async savePlayer(
     @Body() savePlayerDto: SavePlayerDto,
   ): Promise<Player> {

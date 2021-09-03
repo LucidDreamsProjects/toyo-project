@@ -1,0 +1,130 @@
+
+-=-=-=-=-=-= CONTRACT
+{
+  name: 'Toyo Demo #001',
+  description: 'Toyo is a awesome fighting blockchain empowered 😎',
+  confirmed: false,
+  id: 1067,
+  secretType: 'MATIC',
+  symbol: 'TOY',
+  externalUrl: 'https://en.wikipedia.org/wiki/Space_Chickens_in_Space',
+  external_link: 'https://en.wikipedia.org/wiki/Space_Chickens_in_Space',
+  image: 'https://averylongurl.com/image/contract/2917',
+  media: [
+    {
+      type: 'image',
+      value: 'https://dg31sz3gwrwan.cloudfront.net/fanart/355763/1357791-0-q80.jpg'
+    }
+  ],
+  transactionHash: '0xd852957b6f1710a02c195342d70909b7f2f07ff1cd42e2909898436f6065f4fb'
+}
+
+-=-=-=-=-=-= NFT TEMPLATE
+{
+    "id": 1,
+    "confirmed": true,
+    "name": "Generic Chest",
+    "description": "A generic token made to be related with a single object in Toyo's universe",
+    "image": "https://img.icons8.com/emoji/452/coin-emoji.png",
+    "imageThumbnail": "https://img.icons8.com/emoji/452/coin-emoji.png",
+    "imagePreview": "https://img.icons8.com/emoji/452/coin-emoji.png",
+    "externalUrl": "https://readymag.com/luciddreams/toyo/",
+    "backgroundColor": "#FFFFFF",
+    "fungible": false,
+    "burnable": true,
+    "maxSupply": 10,
+    "currentSupply": 10,
+    "animationUrls": [
+        {
+            "type": "audio",
+            "value": "http://img.arkane.network/chuck_soundtrack.mp3"
+        },
+        {
+            "type": "video",
+            "value": "http://img.arkane.network/chuck_trailer.mp4"
+        }
+    ],
+    "attributes": [
+        {
+            "type": "property",
+            "name": "token",
+            "value": "generic"
+        }
+    ],
+    "transactionHash": "0x784ae4546ba461b3888becc8d610166d197eaa478970f61068b3ace6a5c94e1e"
+}
+
+-=-=-=-=-=-=-=-=-= ADMIN WALLET
+address: "0x5579Ed3E4BD2ce1a0518E0309291c6487408e03c"
+alias: "non_fungible_gamora"
+archived: false
+balance: {available: true, secretType: "MATIC", balance: 0, gasBalance: 0, symbol: "MATIC", …}
+createdAt: "2021-08-29T23:02:15.157888"
+description: "Non fungible Gamora"
+hasCustomPin: false
+id: "877de31c-7be0-4e0c-9d80-4af218bad84e"
+identifier: null
+primary: false
+secretType: "MATIC"
+walletType: "THREEWAY_SHARED
+
+-=-=-=-=-=-=-=-=-= MINT NFTS
+[
+  {
+    transactionHash: '0x54248a79e508e9303c0f7f8e3ea0ea55b2aee5ee8149f324893199a3d3a7ecdf',
+    metadata: {
+      name: 'Generic Chest',
+      description: "A generic token made to be related with a single object in Toyo's universe",
+      image: 'https://img.icons8.com/emoji/452/coin-emoji.png',
+      imagePreview: 'https://img.icons8.com/emoji/452/coin-emoji.png',
+      imageThumbnail: 'https://img.icons8.com/emoji/452/coin-emoji.png',
+      backgroundColor: '#FFFFFF',
+      background_color: '#FFFFFF',
+      animationUrl: 'http://img.arkane.network/chuck_soundtrack.mp3',
+      animation_url: 'http://img.arkane.network/chuck_soundtrack.mp3',
+      externalUrl: 'https://readymag.com/luciddreams/toyo/',
+      external_url: 'https://readymag.com/luciddreams/toyo/',
+      animationUrls: [Array],
+      maxSupply: 10,
+      attributes: [Array],
+      contract: [Object],
+      asset_contract: [Object],
+      fungible: false
+    },
+    destinations: [ '0x5579Ed3E4BD2ce1a0518E0309291c6487408e03c' ],
+    tokenIds: [ 52 ]
+  }
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=
+
+
+Olá, gostaria de receber pelo meu serviço prestado enquanto desenvolvedor de códigos. Eu recebo mensalmente pelo serviço prestado do meu contratante, o Micky. Mês passado não tive problemas mas esse mês o cenário é diferente, o sistema me identificou como um vendedor de produtos e reteve meu pagamento até o envio do mesmo. O problema é que não há produto, e sim um serviço prestado diariamente. Como podemos resolver isso?
+
+transaction ID: 205856403D365933J Date: 31/08/2021 value: R$ 3.233,26
+
+Como eu falei, sou desenvolvedor e não tenho nenhum portfólio que possa exibir, porém, tenho meu perfil no Linkedin. Vou passar tanto o meu quanto o da empresa no qual o Micky é um dos gestores.
+
+meu perfil: https://www.linkedin.com/in/lucas-cyrne-8b8314153/
+
+perfil do rementente: https://www.linkedin.com/in/mickyhuang/
+
+A empresa pra qual trabalho como desenvolvedor: https://www.linkedin.com/company/lucid-dreams-dubai/mycompany/
+
+Espero que sejam informações suficientes, sendo bem franco, se tratando de pagamento de salário, me incomoda bastante ter quaisquer tipo de dificuldades em obter o mesmo. Como mês passado a gente fez essa transferência sem maiores complicações, me questiono se isso teve haver com o método de envio ou algo do tipo? Pois se sim, posso orientar depois o Micky quanto a isso.
+
+Eu havia comentado, Carolina, que não posso me dar o luxo de esperar até 21 dias para análise e recebimento do meu salário. Vou repetir pois é disso que se trata, é o meu salário, Carolina.
+
+A mesma transação foi realizada no mesmo dia no mês passado, pela mesma pessoa, evidenciando o que digo. Não têm método realmente para gente agilizar isso? Se isso não for resolvido logo, eu deixo de pagar minhas contas, a faculdade, isso não pode ficar assim.

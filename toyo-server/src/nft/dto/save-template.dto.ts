@@ -1,18 +1,18 @@
 import { IsString, IsNumber } from 'class-validator';
 
-export class SaveNftDto {
-  @IsNumber()
-  nftId!: number;
-
+export class SaveTemplateDto {
   @IsNumber()
   templateId!: number;
 
-  @IsString()
-  playerId!: string;
+  @IsNumber()
+  contractId!: number;
 
   @IsString()
   name!: string;
 
   @IsNumber()
-  value!: number;
+  maxSupply?: number;
+
+  @IsNumber()
+  currentSupply?: number;
 }

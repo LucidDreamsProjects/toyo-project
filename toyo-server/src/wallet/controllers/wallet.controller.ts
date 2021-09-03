@@ -8,7 +8,7 @@ export class WalletController {
   constructor(private readonly walletService: WalletService) {}
 
   @HttpCode(200)
-  @Post('create')
+  @Post()
   public async createWallet(
     @Body() dto: SaveWalletDto,
   ): Promise<Wallet | undefined> {
@@ -16,7 +16,7 @@ export class WalletController {
   }
 
   @HttpCode(200)
-  @Get('all')
+  @Get()
   public async getWallets(): Promise<Wallet[] | undefined> {
     return await this.walletService.getWallets();
   }

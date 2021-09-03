@@ -36,6 +36,7 @@ export class AuthService {
 
     if (credentials) {
       const accessToken = credentials.access_token;
+      // console.log(`👷 Setting up your credentials`);
       return accessToken;
     }
   }

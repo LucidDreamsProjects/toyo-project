@@ -4,6 +4,9 @@ export class MintNftDto {
   @IsNumber()
   typeId!: number;
 
-  @IsArray()
-  destinations!: Array<string>;
+  @IsNumber()
+  value!: number;
+
+  @IsNumber()
+  quantity!: number;
 }

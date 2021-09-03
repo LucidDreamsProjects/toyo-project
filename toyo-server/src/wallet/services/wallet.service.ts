@@ -35,6 +35,7 @@ export class WalletService {
         },
       })
       .then((response) => {
+        console.log(`👷 Generating a new wallet for some unknown purposes...`);
         console.log(response.data);
         return response.data;
       })
@@ -52,6 +53,7 @@ export class WalletService {
         },
       })
       .then((response) => {
+        console.log(`👷 Your wallets: `);
         console.log(response.data);
         return response.data;
       })

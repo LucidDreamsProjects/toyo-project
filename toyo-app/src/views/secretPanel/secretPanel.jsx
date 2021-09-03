@@ -19,12 +19,11 @@ import {
   ImageTile,
   NeonButton,
 } from "./styles";
-import { getProfile } from "../../services/player/getProfile";
-import { findPlayerById } from "../../services/player/findPlayerById";
-import { savePlayer } from "../../services/player/savePlayer";
-import { getWallets } from "../../services/wallet/getWallets";
-import { getWalletsFromServer } from "../../services/wallet/getWalletsFromServer";
-import { createNft } from "../../services/nft/createNft";
+import { getProfile } from "../../domain/player/services/getProfile";
+import { findPlayerById } from "../../domain/player/services/findPlayerById";
+import { savePlayer } from "../../domain/player/services/savePlayer";
+import { getWallets } from "../../domain/wallet/services/getWallets";
+import { createNft } from "../../domain/nft/services/createNft";
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import { useWindowSize } from "../../domain/global/hooks/useWindowSize";
 
@@ -62,31 +61,27 @@ export function SecretPanel(props) {
         console.log(`👷 your info: `, targetPlayer);
       } else {
         console.log("👷 Don't worry, we'll set you up on the action 😉!");
+        let i = 0;
+        let walletIds = [];
         const _wallets = await getWallets(props.arkaneConnect);
-        console.log(_wallets);
 
-        const _walletsFromServer = await getWalletsFromServer();
-        console.log(_walletsFromServer);
+        for (i = 0; i < _wallets.length; ++i) {
+          walletIds.push(_wallets[i].id);
+        }
 
         const newPlayer = {
           playerId: playerId,
           firstName: firstName,
           lastName: lastName,
           email: email,
-          wallets: JSON.stringify(_wallets),
+          wallets: JSON.stringify(walletIds),
         };
+        //? To reverse JSON.stringy(obj), use JSON.parse(obj)
+
+        console.log(JSON.stringify(newPlayer));
 
         await savePlayer(newPlayer);
-
-        const _newPlayer = {
-          playerId: newPlayer.playerId,
-          firstName: newPlayer.firstName,
-          lastName: newPlayer.lastName,
-          email: newPlayer.email,
-          wallets: newPlayer.wallets,
-        };
-
-        setPlayer(_newPlayer);
+        setPlayer(newPlayer);
       }
     }
   };
@@ -140,7 +135,7 @@ export function SecretPanel(props) {
               attributes: values.attributes,
             };
 
-            console.log(nft);
+            console.log(JSON.stringify(nft));
 
             try {
               await createNft(nft);

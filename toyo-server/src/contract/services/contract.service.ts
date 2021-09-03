@@ -1,8 +1,10 @@
+import axios from 'axios';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ContractRepository } from '../repositories/contract.repository';
 import { CreateContractDto } from '../dto/create-contract.dto';
 import { Body, Injectable } from '@nestjs/common';
-import axios from 'axios';
-import { config } from 'dotenv';
 import { AuthService } from '../../auth/services/auth.service';
+import { config } from 'dotenv';
 
 config();
 
@@ -10,7 +12,11 @@ config();
 export class ContractService {
   private readonly DATA_URL = `${process.env.NFT_API_ENDPOINT}/api/apps/${process.env.APPLICATION_ID}/contracts`;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    @InjectRepository(ContractRepository)
+    private contractRepository: ContractRepository,
+    private authService: AuthService,
+  ) {}
 
   public async createContract(
     @Body() dto: CreateContractDto,
@@ -31,7 +37,18 @@ export class ContractService {
       .catch((error) => console.log(error));
 
     if (contract) {
-      return contract;
+      const _contract = {
+        contractId: contract.id,
+        name: contract.name,
+        description: contract.description,
+        chain: contract.secretType,
+        symbol: contract.symbol,
+        externalUrl: contract.externalUrl,
+      };
+
+      await this.contractRepository.saveContract(_contract);
     }
+
+    return contract;
   }
 }

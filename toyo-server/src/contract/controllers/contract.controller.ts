@@ -7,7 +7,7 @@ export class ContractController {
   constructor(private readonly contractService: ContractService) {}
 
   @HttpCode(200)
-  @Post('create')
+  @Post()
   public async createContract(@Body() dto: CreateContractDto): Promise<any> {
     return await this.contractService.createContract(dto);
   }

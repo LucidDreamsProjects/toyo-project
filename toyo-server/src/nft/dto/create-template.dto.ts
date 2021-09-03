@@ -1,6 +1,6 @@
 import { IsString, IsBoolean, IsArray } from 'class-validator';
 
-export class CreateNftDto {
+export class CreateTemplateDto {
   @IsString()
   name!: string;
 

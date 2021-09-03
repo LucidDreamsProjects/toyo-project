@@ -18,16 +18,16 @@ function Content() {
     windowMode: "POPUP",
   };
 
-  // const arkaneConnect = new ArkaneConnect("Toyo", options);
+  const arkaneConnect = new ArkaneConnect("Toyo", options);
 
   switch (location.name) {
     case "home":
-      return <Home />;
-    // return <Home arkaneConnect={arkaneConnect} />;
+      // return <Home />;
+      return <Home arkaneConnect={arkaneConnect} />;
 
     case "secret-panel":
-      return <SecretPanel />;
-    // return <SecretPanel arkaneConnect={arkaneConnect} />;
+      // return <SecretPanel />;
+      return <SecretPanel arkaneConnect={arkaneConnect} />;
 
     case "function-references":
       return <FunctionReferences />;
