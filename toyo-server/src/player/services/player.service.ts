@@ -36,7 +36,7 @@ export class PlayerService {
     updatePlayerDto: UpdatePlayerDto,
   ): Promise<Player | undefined> {
     const player = await this.playerRepository.findOne(playerId);
-    console.log(player);
+    // console.log(player);
 
     if (!player) {
       throw new NotFoundException(`Player not found`);

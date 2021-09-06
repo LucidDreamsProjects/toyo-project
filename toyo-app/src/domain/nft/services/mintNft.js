@@ -1,12 +1,12 @@
 import axios from "axios";
 
-export async function mintNft(typeId, walletAddress) {
-  const url = `http://localhost:8080/nft/mint`;
+export async function mintNft(typeId, quantity) {
+  const url = `http://localhost:8080/template/token `;
 
   axios
     .post(url, {
       typeId: typeId,
-      destinations: walletAddress,
+      quantity: quantity,
     })
     .then((response) => {
       // console.log(response.data);

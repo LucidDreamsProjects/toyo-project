@@ -8,7 +8,16 @@ const Section = styled.section`
   height: ${({ height }) => (height ? height : "100%")};
   max-width: 100%;
   overflow: hidden;
-  background-color: hsla(350, 93%, 42%, 1);
+  background-color: #fff;
+
+  #transactions {
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    align-items: center;
+    justify-content: center;
+    /* background-color: yellow; */
+  }
 
   @media (orientation: landscape) {
     flex-direction: row;
@@ -24,6 +33,193 @@ const Canvas = styled.section`
   max-width: 100%;
   max-height: 100%;
   padding: 4rem;
+
+  .form-contract {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    min-width: 50%;
+    max-width: 75%;
+    padding: 2rem;
+    /* background-color: yellow; */
+
+    form {
+      position: relative;
+      width: 100%;
+      right: 1rem;
+
+      div {
+        display: flex;
+      }
+
+      #field-array {
+        display: flex;
+        flex-direction: column;
+
+        div {
+          display: flex;
+          flex-direction: column;
+        }
+
+        button {
+          min-width: 25%;
+          max-width: 50%;
+        }
+
+        button:last-child {
+          margin-top: 0.5rem;
+        }
+      }
+
+      input {
+        min-width: 60%;
+        max-width: 100%;
+        padding: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      button {
+        padding: 0.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      #btn-submit {
+        margin-top: 1rem;
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  .form-template {
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 50%;
+    max-width: 75%;
+    padding: 2rem;
+    /* background-color: yellow; */
+
+    form {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      width: 100%;
+      right: 1rem;
+
+      #field-array {
+        display: flex;
+        flex-direction: column;
+        /* background-color: yellow; */
+
+        div {
+          display: flex;
+          flex-direction: column;
+        }
+
+        button {
+          cursor: pointer;
+        }
+      }
+
+      input {
+        min-width: 60%;
+        max-width: 100%;
+        padding: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      input[type="radio"] {
+        position: relative;
+        top: -1.3rem;
+      }
+
+      button {
+        padding: 0.6rem;
+        border-radius: 6px;
+      }
+
+      #btn-submit {
+        width: 25%;
+        margin-top: 1rem;
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  div.form-transfer {
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 100%;
+    padding: 0;
+    /* background-color: yellow; */
+
+    form {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      width: 100%;
+      /* background-color: yellow; */
+
+      #btn-submit {
+        margin: 0 auto;
+        width: 50%;
+      }
+    }
+  }
+
+  div#mint-nft {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    align-items: center;
+    padding: 2rem;
+    width: 35%;
+    height: auto;
+    /* background-color: yellow; */
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-self: center;
+      justify-content: center;
+      width: 100%;
+      height: 50%;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  div#transfer-nft {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    width: 35%;
+    height: auto;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-self: center;
+      justify-content: center;
+      position: relative;
+      width: 100%;
+      height: 50%;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+
+      button {
+        padding: 0.4rem;
+        border-radius: 6px;
+      }
+    }
+  }
 `;
 
 const Top = styled.section`
@@ -47,7 +243,20 @@ const Top = styled.section`
 
   #btn--login {
     display: flex;
-    align-self: right;
+    position: relative;
+    flex-direction: column;
+    align-items: flex-end;
+
+    button {
+      display: inline-block;
+      position: relative;
+      margin-left: auto;
+      margin-right: 0;
+    }
+
+    button:last-child {
+      margin-top: 1rem;
+    }
   }
 `;
 
@@ -55,7 +264,7 @@ const Middle = styled.section`
   display: flex;
   width: 75%;
   max-width: 75%;
-  background: hsla(37, 82%, 50%, 0);
+  /* background: hsla(37, 82%, 50%, 1); */
   margin-top: 6rem;
 `;
 
@@ -90,6 +299,10 @@ const Row = styled.div`
   flex-shrink: 1;
   width: ${({ width }) => (width ? width : "100%")};
   height: ${({ height }) => (height ? height : "100%")};
+
+  @media screen and (max-width: 760px) {
+    flex-direction: column;
+  }
 `;
 
 const UserDisplay = styled.div`
@@ -160,17 +373,17 @@ const Tile = styled.div`
   padding: 1rem;
 
   label {
-    color: #fff;
+    color: #000;
     font-weight: 800;
-    font-size: 1rem;
-    text-shadow: 0 0 0.25em hsl(0 0% 100% / 0.1), 0 0 0.15em currentColor;
+    font-size: 0.8rem;
+    text-shadow: 0 0 0.25em hsl(0 0% 100% / 0.1), 0 0 0.1em currentColor;
   }
 
   div {
     margin-top: 0.75rem;
-    color: #fff;
-    font-size: 1.25rem;
-    text-shadow: 0 0 0.5em hsl(0 0% 100% / 0.15), 0 0 0.25em #000;
+    color: #000;
+    font-size: 1rem;
+    text-shadow: 0 0 0.5em hsl(0 0% 100% / 0.15), 0 0 0.1em #000;
   }
 `;
 
@@ -188,10 +401,9 @@ const ImageTile = styled.div`
   cursor: pointer;
 
   div {
-    color: #fff;
+    color: #000;
     font-weight: 700;
     font-size: 1rem;
-    text-shadow: 0.1em 0.1em #000;
   }
 
   img {
@@ -217,20 +429,21 @@ const NeonButton = styled.button`
   width: auto;
   min-width: 4rem;
   min-height: 2rem;
-  font-size: 0.72rem;
+  font-size: 0.64rem;
   font-weight: 600;
-  /* color: hsla(0, 0%, 0%, 1); */
-  color: hsla(360, 100%, 100%, 1);
+  color: ${({ color }) => color};
+  /* color: hsla(360, 100%, 100%, 1); */
   border: 0.15em solid currentColor;
   border-radius: 0.6em;
   background: none;
   cursor: pointer;
-  text-shadow: 0 0 2em hsl(0 0% 100% / 0.25), 0 0 0.75em currentColor;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 2em hsl(0 0% 100% / 0.15), 0 0 0.075em currentColor;
   /* box-shadow: 0 0 1em 0 hsla(360, 100%, 100%, 1); */
-  box-shadow: 0em 0em 0.5em 0 hsla(0, 0%, 0%, 1);
+  box-shadow: 0em 0em 0.25em 0 currentColor;
 
   :hover {
-    box-shadow: 0em 0.25em 0.75em 0 hsla(0, 0%, 0%, 1);
+    box-shadow: 0em 0.25em 0.75em 0 currentColor;
   }
 `;
 
