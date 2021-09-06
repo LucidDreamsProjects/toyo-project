@@ -7,15 +7,13 @@ import { SaveTemplateDto } from '../dto/save-template.dto';
 @EntityRepository(Template)
 export class TemplateRepository extends Repository<Template> {
   public async saveTemplate(dto: SaveTemplateDto): Promise<Template> {
-    console.log('repository: ', dto);
-    const { templateId, contractId, name, maxSupply, currentSupply } = dto;
+    // console.log('repository: ', dto);
+    const { templateId, contractId, name } = dto;
 
     const template = new Template();
     template.templateId = templateId;
     template.contractId = contractId;
     template.name = name;
-    template.maxSupply = maxSupply;
-    template.currentSupply = currentSupply;
 
     console.log('template: ', template);
 

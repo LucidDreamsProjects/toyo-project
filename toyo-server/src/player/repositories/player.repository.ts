@@ -32,12 +32,6 @@ export class PlayerRepository extends Repository<Player> {
     player.email = email;
     player.wallets = JSON.stringify(wallets);
 
-    console.log('================ player wallets', player.wallets);
-
-    console.log(this);
-
-    console.log(this.save);
-
     await this.save(player);
     return player;
   }

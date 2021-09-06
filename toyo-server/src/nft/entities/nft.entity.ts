@@ -8,8 +8,8 @@ export class Nft extends BaseEntity {
   @Column({ type: 'int' })
   templateId?: number;
 
-  @Column({ type: 'varchar', length: 256 })
-  playerId?: string;
+  @Column({ type: 'int' })
+  contractId?: number;
 
   @Column({ type: 'varchar', length: 64 })
   name?: string;

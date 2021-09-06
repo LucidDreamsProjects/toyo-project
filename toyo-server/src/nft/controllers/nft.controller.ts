@@ -1,25 +1,15 @@
 import { NFT } from '@arkane-network/arkane-connect/dist/src/models/wallet/NFT';
-import {
-  Body,
-  Controller,
-  Post,
-  HttpCode,
-  Param,
-  Get,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Post, HttpCode, Param, Get } from '@nestjs/common';
 import { CreateTemplateDto } from '../dto/create-template.dto';
 import { NftService } from '../services/nft.service';
-import { SignerResult } from '@arkane-network/arkane-connect';
-import { TransferNftDto } from '../dto/transfer-nft.dto';
 import { MintNftDto } from '../dto/mint-nft.dto';
 
-@Controller('nft')
+@Controller('template')
 export class NftController {
   constructor(private readonly nftService: NftService) {}
 
   @HttpCode(200)
-  @Post('template')
+  @Post()
   public async createTemplate(
     @Body() dto: CreateTemplateDto,
   ): Promise<NFT | void> {
@@ -27,17 +17,17 @@ export class NftController {
   }
 
   @HttpCode(200)
-  @Get('template')
+  @Get()
   public async getTemplates(): Promise<NFT[] | void> {
     return await this.nftService.getTemplates();
   }
 
   @HttpCode(200)
-  @Get('template/:typeId')
-  public async getTemplate(
+  @Get(':typeId')
+  public async getTemplateById(
     @Param('typeId') typeId: number,
   ): Promise<NFT | void> {
-    return await this.nftService.getTemplate(typeId);
+    return await this.nftService.getTemplateById(typeId);
   }
 
   @HttpCode(200)
@@ -48,12 +38,26 @@ export class NftController {
     return await this.nftService.mintNft(dto);
   }
 
-  @HttpCode(200)
-  @Post('token/transfer:pincode')
+  /* @HttpCode(200)
+  @Patch('token')
+  public async updateNft(@Body() dto: UpdateNftDto): Promise<Nft | void> {
+    return await this.nftService.updateNft(dto);
+  } */
+
+  /* @HttpCode(200)
+  @Get('token/:templateId/token/:tokenId')
+  public async getNftById(
+    @Param('templateId') templateId: string,
+    @Param('tokenId') tokenId: string,
+  ): Promise<Nft> {
+    return await this.nftService.getNftById(templateId, tokenId);
+  } */
+
+  /* @HttpCode(200)
+  @Post('transfer/template/token')
   public async transferNft(
-    @Param('pincode') pincode: string,
-    @Body() dto: TransferNftDto,
+    @Body() dto: TransferRequestDto,
   ): Promise<SignerResult | void> {
-    return await this.nftService.transferNft(pincode, dto);
-  }
+    return await this.nftService.transferNft(dto);
+  } */
 }

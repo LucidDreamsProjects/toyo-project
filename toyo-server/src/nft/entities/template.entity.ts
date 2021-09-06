@@ -10,10 +10,4 @@ export class Template extends BaseEntity {
 
   @Column({ type: 'varchar', length: 64 })
   name?: string;
-
-  @Column({ type: 'int' })
-  maxSupply?: number;
-
-  @Column({ type: 'int' })
-  currentSupply?: number;
 }

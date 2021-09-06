@@ -30,7 +30,7 @@ export class PlayerController {
     @Param('playerId')
     playerId: string,
   ): Promise<Player | undefined> {
-    console.log(playerId);
+    // console.log(playerId);
     return await this.playerService.findOne(playerId);
   }
 

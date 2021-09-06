@@ -9,10 +9,4 @@ export class SaveTemplateDto {
 
   @IsString()
   name!: string;
-
-  @IsNumber()
-  maxSupply?: number;
-
-  @IsNumber()
-  currentSupply?: number;
 }

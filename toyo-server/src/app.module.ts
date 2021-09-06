@@ -23,7 +23,7 @@ config();
       password: `dd^8A!DPq#ZpjewF2`,
       database: `wwtoyo_universe`,
       entities: [Player, Nft, Template, Contract],
-      logging: true,
+      logging: false,
       synchronize: false,
       keepConnectionAlive: true,
     }),

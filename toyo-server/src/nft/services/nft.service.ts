@@ -1,16 +1,13 @@
 import { CreateTemplateDto } from '../dto/create-template.dto';
-import { Body, Injectable, Query } from '@nestjs/common';
-import axios from 'axios';
-import { config } from 'dotenv';
+import { Injectable } from '@nestjs/common';
 import { MintNftDto } from '../dto/mint-nft.dto';
 import { AuthService } from '../../auth/services/auth.service';
 import { NFT } from '@arkane-network/arkane-connect/dist/src/models/wallet/NFT';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TemplateRepository } from '../repositories/template.repository';
 import { NftRepository } from '../repositories/nft.repository';
-import { TransferNftDto } from '../dto/transfer-nft.dto';
-import { Param } from '@nestjs/common';
-import { SignerResult } from '@arkane-network/arkane-connect';
+import axios from 'axios';
+import { config } from 'dotenv';
 
 config();
 
@@ -18,7 +15,11 @@ config();
 export class NftService {
   private readonly ADMIN_ID = '2f8231ca-8a79-43c9-bf21-ac8702a4e1c7';
   private readonly ADMIN_ADDRESS = '0x5579Ed3E4BD2ce1a0518E0309291c6487408e03c';
-  private readonly CONTRACT_ID = 1078;
+  private readonly CONTRACT_TRANSACTION_HASH =
+    '0x936328178ab088eb4623951425001953ee4e013b2e3db86ead1942ce33f96e16';
+  private readonly CONTRACT_ADDRESS =
+    '0x13711768E43eF8Bb402782F8E397345F4E1626c9';
+  private readonly CONTRACT_ID = 1095;
   private readonly APPLICATION_ID = process.env.APPLICATION_ID;
   private readonly CREATE_TEMPLATE_URL = `${process.env.NFT_API_ENDPOINT}/api/apps/${this.APPLICATION_ID}/contracts/${this.CONTRACT_ID}/token-types`;
   private readonly MINT_NFT_URL = `${process.env.NFT_API_ENDPOINT}/api/apps/${this.APPLICATION_ID}/contracts/${this.CONTRACT_ID}/tokens/non-fungible`;
@@ -54,8 +55,6 @@ export class NftService {
         templateId: template.id,
         contractId: contractId,
         name: template.name,
-        maxSupply: template.maxSupply,
-        currentSupply: template.currentSupply,
       };
 
       await this.templateRepository.saveTemplate(_template);
@@ -85,7 +84,7 @@ export class NftService {
     return templates;
   }
 
-  public async getTemplate(typeId: number): Promise<NFT | void> {
+  public async getTemplateById(typeId: number): Promise<NFT | void> {
     const accessToken = await this.authService.getAccessToken();
     const url = `${process.env.NFT_API_ENDPOINT}/api/apps/${this.APPLICATION_ID}/contracts/${this.CONTRACT_ID}/token-types/${typeId}`;
     console.log(url);
@@ -97,7 +96,7 @@ export class NftService {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        console.log('GET TEMPLATE BY ID', response.data);
         return response.data;
       })
       .catch((error) => {
@@ -107,16 +106,47 @@ export class NftService {
     return template;
   }
 
+  private async updateTemplate(typeId: number): Promise<NFT | void> {
+    const contractId = this.CONTRACT_ID;
+    const url = `${process.env.NFT_API_ENDPOINT}/api/apps/${this.APPLICATION_ID}/contracts/${this.CONTRACT_ID}/token-types/${typeId}`;
+    const accessToken = await this.authService.getAccessToken();
+
+    const template = await axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        console.log('UPDATING TEMPLATE', response.data);
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    if (template) {
+      const _template = {
+        templateId: template.id,
+        contractId: contractId,
+        name: template.name,
+        maxSupply: template.maxSupply,
+        currentSupply: template.currentSupply,
+      };
+
+      await this.templateRepository.saveTemplate(_template);
+    }
+  }
+
   public async mintNft(
     dto: MintNftDto,
   ): Promise<Array<Record<string, string | number>> | void> {
     let i = 0;
     const nftArray = [];
+    const contractId = this.CONTRACT_ID;
     const url = this.MINT_NFT_URL;
-    const id = this.ADMIN_ID;
     const wallet = this.ADMIN_ADDRESS;
     const typeId = dto.typeId;
-    const value = dto.value;
     const quantity = dto.quantity;
     const accessToken = await this.authService.getAccessToken();
     const _dto = {
@@ -144,14 +174,14 @@ export class NftService {
         const _nft = {
           nftId: nft.tokenIds[0],
           templateId: typeId,
-          playerId: id,
+          contractId: contractId,
           name: nft.metadata.name,
-          value: value,
         };
 
         nftArray.push(_nft);
 
         await this.nftRepository.saveNft(_nft);
+        await this.updateTemplate(typeId);
       }
     }
 
@@ -159,19 +189,65 @@ export class NftService {
     return nftArray;
   }
 
-  public async transferNft(
-    @Param() pincode: string,
-    @Body() dto: TransferNftDto,
+  /* public async updateNft(dto: UpdateNftDto): Promise<Nft | void> {
+    const nft = await this.nftRepository.getNftById(dto.templateId, dto.nftId);
+
+    nft.playerId = dto.playerId;
+
+    await this.nftRepository.save(nft);
+
+    return nft;
+  }} */
+
+  /* private async getNfts(typeId: number): Promise<NFT[]> {
+    const accessToken = await this.authService.getAccessToken();
+    const url = `${process.env.NFT_API_ENDPOINT}/api/apps/${this.APPLICATION_ID}/contracts/${this.CONTRACT_ID}/token-types/${typeId}/tokens`;
+
+    const nftArray = await axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    return nftArray;
+  } */
+
+  /* public async getNftById(templateId: string, tokenId: string): Promise<Nft> {
+    return await this.nftRepository.getNftById(templateId, tokenId);
+  } */
+
+  /* public async transferNft(
+    @Body() dto: TransferRequestDto,
   ): Promise<SignerResult | void> {
     const url = this.TRANSFER_NFT_URL;
     const accessToken = await this.authService.getAccessToken();
+    const nft = await this.getNftById(dto.templateId, dto.tokenId);
+    const value = nft.value;
+
+    const _dto = {
+      tokenId: dto.tokenId,
+      tokenAddress: dto.tokenAddress,
+      type: 'NFT_TRANSFER',
+      walletId: dto.walletId[0],
+      to: dto.to,
+      secretType: 'MATIC',
+      value: value,
+    };
 
     const signerResult = await axios
       .post(
         url,
         {
-          transactionRequest: dto,
-          pincode: pincode,
+          transactionRequest: _dto,
+          pincode: dto.pincode,
         },
         {
           headers: {
@@ -188,5 +264,5 @@ export class NftService {
       });
 
     return signerResult;
-  }
+  } */
 }

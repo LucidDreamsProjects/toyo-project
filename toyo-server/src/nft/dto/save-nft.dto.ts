@@ -7,12 +7,9 @@ export class SaveNftDto {
   @IsNumber()
   templateId!: number;
 
-  @IsString()
-  playerId!: string;
+  @IsNumber()
+  contractId!: number;
 
   @IsString()
   name!: string;
-
-  @IsNumber()
-  value!: number;
 }
