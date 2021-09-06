@@ -5,7 +5,6 @@ import preact from "@preact/preset-vite";
 export default defineConfig({
   plugins: [
     preact(),
-    "@babel/plugin-transform-react-jsx",
     {
       pragma: "h",
       pragmaFrag: "Fragment",
