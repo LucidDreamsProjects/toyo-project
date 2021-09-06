@@ -1,10 +1,11 @@
-import { useEffect, useState } from "preact/hooks";
+import { useCallback, useEffect, useState } from "preact/hooks";
 
-import box1 from "../../assets/images/box1.jpg";
-import box2 from "../../assets/images/box2.jpg";
-import box3 from "../../assets/images/box3.jpg";
-import box4 from "../../assets/images/box4.jpg";
-import box5 from "../../assets/images/box5.jpg";
+import box1 from "../../assets/images/box1.png";
+import box2 from "../../assets/images/box2.png";
+
+import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
+import ReCAPTCHA from "react-google-recaptcha";
+import ReactSession from "react-client-session";
 
 import {
   Section,
@@ -12,6 +13,7 @@ import {
   Top,
   Middle,
   Container,
+  Row,
   Column,
   UserDisplay,
   Tile,
@@ -19,20 +21,33 @@ import {
   ImageTile,
   NeonButton,
 } from "./styles";
+import { useWindowSize } from "../../domain/global/hooks/useWindowSize";
 import { getProfile } from "../../domain/player/services/getProfile";
 import { findPlayerById } from "../../domain/player/services/findPlayerById";
 import { savePlayer } from "../../domain/player/services/savePlayer";
 import { getWallets } from "../../domain/wallet/services/getWallets";
-import { createNft } from "../../domain/nft/services/createNft";
-import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
-import { useWindowSize } from "../../domain/global/hooks/useWindowSize";
+import { createContract } from "../../domain/contract/services/createContract";
+import { connectMetamask } from "../../domain/wallet/services/connectMetamask";
+import { manageWallets } from "../../domain/wallet/services/manageWallets";
+import { createTemplate } from "../../domain/nft/services/createTemplate";
+import { transferNft } from "../../domain/nft/services/transferNft";
+import { mintNft } from "../../domain/nft/services/mintNft";
+import { getNfts } from "../../domain/nft/services/getNfts";
 
 export function SecretPanel(props) {
+  const RECAPTCHA_SITE_KEY = "6LdR8EYcAAAAAPFLQkrMGHrJGCcwGIRNzXUi00gp";
   let [width, height] = useWindowSize();
   let [player, setPlayer] = useState({});
   let [logged, isLogged] = useState(false);
+  let [verified, isVerified] = useState(true);
+  let [nfts, setNfts] = useState([]);
 
-  async function handleInit() {
+  const onChange = (value) => {
+    console.log("Captcha value:", value);
+    isVerified(false);
+  };
+
+  const handleInit = async () => {
     console.log(`👷 Welcome to Toyo's official webpage!`);
 
     if (props.arkaneConnect !== undefined) {
@@ -41,9 +56,16 @@ export function SecretPanel(props) {
 
     console.log(`👷 isLogged: `, logged);
     console.log(`👷 actual player: `, player);
-  }
+  };
 
   const handleAuthPlayer = async () => {
+    if (logged === true && player) {
+      await manageWallets(props.arkaneConnect);
+      const wallets = await getWallets(props.arkaneConnect);
+      setPlayer({ ...player, wallets: wallets });
+      return;
+    }
+
     // FETCH Player from Venly's servers
     const player = await getProfile(props.arkaneConnect);
 
@@ -57,16 +79,21 @@ export function SecretPanel(props) {
       const targetPlayer = await findPlayerById(playerId);
 
       if (targetPlayer) {
-        setPlayer(targetPlayer);
+        const wallets = await getWallets(props.arkaneConnect);
+        // const address = _wallets[0].address;
+        // ReactSessions.set("player", targetPlayer);
         console.log(`👷 your info: `, targetPlayer);
+        setPlayer({ ...targetPlayer, wallets: wallets });
       } else {
         console.log("👷 Don't worry, we'll set you up on the action 😉!");
+        await manageWallets(props.arkaneConnect);
+
         let i = 0;
         let walletIds = [];
-        const _wallets = await getWallets(props.arkaneConnect);
+        const wallets = await getWallets(props.arkaneConnect);
 
-        for (i = 0; i < _wallets.length; ++i) {
-          walletIds.push(_wallets[i].id);
+        for (i = 0; i < wallets.length; ++i) {
+          walletIds.push(`${wallets[i].id}`);
         }
 
         const newPlayer = {
@@ -74,14 +101,14 @@ export function SecretPanel(props) {
           firstName: firstName,
           lastName: lastName,
           email: email,
-          wallets: JSON.stringify(walletIds),
+          wallets: wallets,
         };
-        //? To reverse JSON.stringy(obj), use JSON.parse(obj)
+        // console.log(newPlayer);
+        await setPlayer(newPlayer);
 
-        console.log(JSON.stringify(newPlayer));
-
+        // ReactSession.set("player", newPlayer);
+        newPlayer.wallets = walletIds;
         await savePlayer(newPlayer);
-        setPlayer(newPlayer);
       }
     }
   };
@@ -102,7 +129,161 @@ export function SecretPanel(props) {
       });
   };
 
-  const NftTemplateForm = () => {
+  /* const handleNfts = async () => {
+    let i = 0;
+    let nftArray = [];
+    // const arrLength = player.wallets.length;
+    const wallets = await getWallets(props.arkaneConnect);
+    for (i; i < wallets.length; ++i) {
+      const _nfts = await getNfts(props.arkaneConnect, wallets[i].address);
+      nftArray.push(_nfts);
+    }
+    // console.log(nftArray);
+    await setNfts(nftArray);
+  }; */
+
+  const ContractForm = () => {
+    const initialValues = {
+      name: "",
+      description: "",
+      chain: "",
+      symbol: "",
+      image: "",
+      externalUrl: "",
+      media: [],
+    };
+
+    return (
+      <div class="form-contract">
+        <h1>CREATE CONTRACT</h1>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={async (values) => {
+            const contract = {
+              name: values.name,
+              description: values.description,
+              chain: values.chain,
+              symbol: values.symbol,
+              image: values.image,
+              externalUrl: values.externalUrl,
+              media: values.media,
+            };
+
+            console.log(JSON.stringify(contract));
+
+            try {
+              await createContract(contract);
+            } catch (err) {
+              console.log(err);
+            }
+          }}
+        >
+          {({ values }) => (
+            <Form>
+              <Tile class="tile">
+                <label htmlFor="name">NOME</label>
+                <Field id="name" name="name" placeholder="name" />
+              </Tile>
+              <Tile class="tile">
+                <label htmlFor="description">DESCRIPTION</label>
+                <Field
+                  id="description"
+                  name="description"
+                  placeholder="description"
+                />
+              </Tile>
+              <Tile class="tile">
+                <label htmlFor="chain">CHAIN ("MATIC")</label>
+                <Field id="chain" name="chain" placeholder="chain" />
+              </Tile>
+              <Tile class="tile">
+                <label htmlFor="symbol">SYMBOL</label>
+                <Field id="symbol" name="symbol" placeholder="symbol" />
+              </Tile>
+              <Tile class="tile">
+                <label htmlFor="image">IMAGE</label>
+                <Field id="image" name="image" placeholder="image" />
+              </Tile>
+              <Tile class="tile">
+                <label htmlFor="externalUrl">EXTERNAL URL</label>
+                <Field
+                  id="externalUrl"
+                  name="externalUrl"
+                  placeholder="external url"
+                />
+              </Tile>
+              <ConstrainedTile class="tile">
+                <label htmlFor="media">MEDIA</label>
+                <FieldArray name="media">
+                  {({ insert, remove, push }) => (
+                    <div id="field-array">
+                      {values.media.length > 0 &&
+                        values.media.map((media, index) => (
+                          <div className="row" key={index}>
+                            <div className="col">
+                              <label htmlFor={`media.${index}.type`}>
+                                Type
+                              </label>
+                              <Field
+                                name={`media.${index}.type`}
+                                placeholder="video"
+                                type="text"
+                              />
+                              <ErrorMessage
+                                name={`media.${index}.type`}
+                                component="div"
+                                className="field-error"
+                              />
+                            </div>
+                            <div className="col">
+                              <label htmlFor={`media.${index}.value`}>
+                                Value
+                              </label>
+                              <Field
+                                name={`media.${index}.value`}
+                                placeholder="http://img.arkane.network/chuck_soundtrack.mp3"
+                                type="text"
+                              />
+                              <ErrorMessage
+                                name={`media.${index}.value`}
+                                component="div"
+                                className="field-error"
+                              />
+                            </div>
+                            <div className="col">
+                              <button
+                                type="button"
+                                className="secondary"
+                                onClick={() => remove(index)}
+                              >
+                                X
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      <button
+                        id="btn-add"
+                        type="button"
+                        className="secondary"
+                        onClick={() => push({ type: "", value: "" })}
+                      >
+                        Add Media
+                      </button>
+                    </div>
+                  )}
+                </FieldArray>
+              </ConstrainedTile>
+              <button id="btn-submit" type="submit">
+                Submit
+              </button>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    );
+  };
+
+  const TemplateForm = () => {
     const initialValues = {
       name: "",
       description: "",
@@ -117,12 +298,12 @@ export function SecretPanel(props) {
     };
 
     return (
-      <div>
+      <div class="form-template">
         <h1>CREATE NFT TEMPLATES</h1>
         <Formik
           initialValues={initialValues}
           onSubmit={async (values) => {
-            const nft = {
+            const template = {
               name: values.name,
               description: values.description,
               image: values.image,
@@ -135,10 +316,10 @@ export function SecretPanel(props) {
               attributes: values.attributes,
             };
 
-            console.log(JSON.stringify(nft));
+            // console.log(JSON.stringify(template));
 
             try {
-              await createNft(nft);
+              await createTemplate(template);
             } catch (err) {
               console.log(err);
             }
@@ -223,7 +404,7 @@ export function SecretPanel(props) {
               </Tile>
               <ConstrainedTile class="tile">
                 <label htmlFor="animationUrls">ANIMATION URL</label>
-                <FieldArray name="animationUrls">
+                <FieldArray id="field-array" name="animationUrls">
                   {({ insert, remove, push }) => (
                     <div>
                       {values.animationUrls.length > 0 &&
@@ -262,7 +443,6 @@ export function SecretPanel(props) {
                             <div className="col">
                               <button
                                 type="button"
-                                className="secondary"
                                 onClick={() => remove(index)}
                               >
                                 X
@@ -272,7 +452,6 @@ export function SecretPanel(props) {
                         ))}
                       <button
                         type="button"
-                        className="secondary"
                         onClick={() => push({ type: "", value: "" })}
                       >
                         Add Animation Url
@@ -283,7 +462,7 @@ export function SecretPanel(props) {
               </ConstrainedTile>
               <ConstrainedTile class="tile">
                 <label htmlFor="attributes">ATTRIBUTES</label>
-                <FieldArray name="attributes">
+                <FieldArray id="field-array" name="attributes">
                   {({ insert, remove, push }) => (
                     <div>
                       {values.attributes.length > 0 &&
@@ -356,7 +535,80 @@ export function SecretPanel(props) {
                   )}
                 </FieldArray>
               </ConstrainedTile>
-              <button type="submit">Submit</button>
+              <button id="btn-submit" type="submit">
+                Submit
+              </button>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    );
+  };
+
+  const TransferForm = () => {
+    const secretType = "MATIC";
+
+    const initialValues = {
+      walletId: "",
+      to: "",
+      tokenAddress: "",
+      tokenId: "",
+      secretType: "",
+      value: "",
+    };
+
+    return (
+      <div class="form-transfer">
+        <Formik
+          initialValues={initialValues}
+          onSubmit={async (values) => {
+            const dto = {
+              walletId: values.walletId,
+              to: values.to,
+              tokenAddress: values.tokenAddress,
+              tokenId: values.tokenId,
+              secretType: "MATIC",
+              value: 0.0000000001,
+            };
+
+            console.log(dto);
+
+            try {
+              await transferNft(props.arkaneConnect, dto, player.walletId);
+            } catch (err) {
+              console.log(err);
+            }
+          }}
+        >
+          {({ values }) => (
+            <Form>
+              <Tile class="tile">
+                <label htmlFor="walletId">FROM</label>
+                <Field id="walletId" name="walletId" placeholder="from" />
+              </Tile>
+              <Tile class="tile">
+                <label htmlFor="to">TO</label>
+                <Field id="to" name="to" placeholder="to" />
+              </Tile>
+              <Tile class="tile">
+                <label htmlFor="tokenAddress">TOKEN ADDRESS</label>
+                <Field
+                  id="tokenAddress"
+                  name="tokenAddress"
+                  placeholder="token address"
+                />
+              </Tile>
+              <Tile class="tile">
+                <label htmlFor="tokenId">TOKEN ID</label>
+                <Field id="tokenId" name="tokenId" placeholder="token Id" />
+              </Tile>
+              <ReCAPTCHA
+                sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                onChange={() => onChange()}
+              />
+              <button id="btn-submit" type="submit" disabled={verified}>
+                Submit
+              </button>
             </Form>
           )}
         </Formik>
@@ -375,11 +627,19 @@ export function SecretPanel(props) {
           <Canvas>
             <Column>
               <Top>
-                {/* <div id="ply--balance">$ {player.balance}</div> */}
                 <div id="btn--login">
-                  <NeonButton onClick={() => authPlayer(props.arkaneConnect)}>
-                    LOGIN
+                  <NeonButton
+                    color={"hsla(273, 100%, 45%, 1)"}
+                    onClick={() => authPlayer(props.arkaneConnect)}
+                  >
+                    CONNECT WITH VENLY
                   </NeonButton>
+                  {/* <NeonButton
+                    color={"hsla(22, 100%, 43%, 1)"}
+                    onClick={() => connectMetamask()}
+                  >
+                    CONNECT WITH METAMASK
+                  </NeonButton> */}
                 </div>
               </Top>
               <Middle>
@@ -398,48 +658,109 @@ export function SecretPanel(props) {
                     <label htmlFor="email">EMAIL:</label>
                     <div id="email">{player.email}</div>
                   </Tile>
-                  {/* <Tile>
-                    <label htmlFor="id">WALLET:</label>
-                    <div id="id">{player.walletId}</div>
-                  </Tile> */}
+                  {logged === true ? (
+                    player.wallets.map((wallet, index) => {
+                      return (
+                        <>
+                          <Tile>
+                            <label htmlFor="walletName">
+                              WALLET #{index} NAME:
+                            </label>
+                            <div id="walletName">{wallet.alias}</div>
+                          </Tile>
+                          <Tile>
+                            <label htmlFor="walletId">
+                              WALLET #{index} ID:
+                            </label>
+                            <div id="waleltId">{wallet.id}</div>
+                          </Tile>
+                          <Tile>
+                            <label htmlFor="address">
+                              WALLET #{index} ADDRESS:
+                            </label>
+                            <div id="address">{wallet.address}</div>
+                          </Tile>
+                        </>
+                      );
+                    })
+                  ) : (
+                    <Tile>
+                      <label htmlFor="wallets">WALLETS:</label>
+                    </Tile>
+                  )}
                 </UserDisplay>
               </Middle>
             </Column>
           </Canvas>
         </Section>
+        {/* <Section>
+          <Canvas>
+            <div>YOUR NFTS:</div>
+            <button type="button" onClick={() => handleNfts()}>
+              GET NFTS
+            </button>
+            {nfts.map((nft, index) => {
+              console.log(nfts);
+              console.log(nft);
+              return (
+                <>
+                  <Tile>
+                    <label htmlFor="nftId">NFT ID:</label>
+                    <div id="nftId">{nft.id}</div>
+                  </Tile>
+                  <Tile>
+                    <label htmlFor="nftName">NFT NAME:</label>
+                    <div id="nftName">{nft.name}</div>
+                  </Tile>
+                </>
+              );
+            })}
+          </Canvas>
+        </Section> */}
         <Section>
           <Canvas>
-            <NftTemplateForm />
+            <Row>
+              <ContractForm />
+              <TemplateForm />
+            </Row>
           </Canvas>
         </Section>
         <Section>
           <Canvas>
-            {player ? (
-              <Container>
-                <ImageTile onClick={() => {}}>
-                  <div>WARRIOR BOX</div>
-                  <img src={box1} />
-                </ImageTile>
-                <ImageTile onClick={() => {}}>
-                  <div>HERO BOX</div>
-                  <img src={box2} />
-                </ImageTile>
-                <ImageTile onClick={() => {}}>
-                  <div>RARE BOX</div>
-                  <img src={box3} />
-                </ImageTile>
-                <ImageTile onClick={() => {}}>
-                  <div>EPIC BOX</div>
-                  <img src={box4} />
-                </ImageTile>
-                <ImageTile onClick={() => {}}>
-                  <div>LEGENDARY BOX</div>
-                  <img src={box5} />
-                </ImageTile>
-              </Container>
-            ) : (
-              <div>Your NFTs will be placed here when you login</div>
-            )}
+            <Row id="transactions">
+              {player ? (
+                <Container id="mint-nft">
+                  <h1>MINT NFT</h1>
+                  <ImageTile onClick={() => mintNft(2, 1)}>
+                    <h2>LEGACY BOX</h2>
+                    <img src={box1} />
+                  </ImageTile>
+                  <ImageTile onClick={() => mintNft(3, 1)}>
+                    <h2>SUPER RARE BOX</h2>
+                    <img src={box2} />
+                  </ImageTile>
+                </Container>
+              ) : (
+                <div>Your NFTs will be placed here when you login</div>
+              )}
+              {player ? (
+                <Container id="transfer-nft">
+                  <h1>TRANSFER NFT</h1>
+                  <ImageTile>
+                    <h2>REGULAR BOX</h2>
+                    <img src={box1} />
+                    <TransferForm />
+                  </ImageTile>
+                  <ImageTile>
+                    <h2>ADVANCED BOX</h2>
+                    <img src={box2} />
+                    <TransferForm />
+                  </ImageTile>
+                </Container>
+              ) : (
+                <div>Your NFTs will be placed here when you login</div>
+              )}
+            </Row>
           </Canvas>
         </Section>
       </body>

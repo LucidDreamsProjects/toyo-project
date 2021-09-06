@@ -102,7 +102,7 @@ export function FunctionReferences() {
     return wallets;
   };
 
-  const connectWallet = async () => {
+  const connectMetamask = async () => {
     console.log("a");
     if (window.ethereum) {
       //check if Metamask is installed
@@ -234,7 +234,7 @@ export function FunctionReferences() {
         <button onClick={() => getWallets()}>GET WALLETS</button>
         <button onClick={() => getAccount()}>GET ACCOUNT</button>
         <button onClick={() => manageWallets()}>MANAGE WALLETS</button>
-        <button onClick={() => connectWallet()}>CONNECT METAMASK</button>
+        <button onClick={() => connectMetamask()}>CONNECT METAMASK</button>
         <button onClick={() => mintNft(1, [wallet])}>MINT NFT</button>
         <button onClick={() => getNfts(wallet)}>GET NFTs</button>
         <button onClick={() => transferNft(wallet)}>
