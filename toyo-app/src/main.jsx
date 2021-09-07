@@ -1,4 +1,3 @@
-import "vite/modulepreload-polyfill";
 import { render } from "preact";
 import { useContext } from "preact/hooks";
 import { RouterContext, useRouter } from "./router";
