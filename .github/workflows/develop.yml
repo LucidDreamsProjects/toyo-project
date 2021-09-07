@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - develop
+      - release
 name: 🚀 Deploy website on push
 jobs:
   web-deploy:
@@ -17,4 +17,4 @@ jobs:
           server: ${{ secrets.ftp_host }}
           username: ${{ secrets.ftp_user }}
           password: ${{ secrets.ftp_password }}
-          server-dir: src/
+          server-dir: .

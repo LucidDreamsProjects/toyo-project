@@ -13,13 +13,13 @@ config();
 
 @Injectable()
 export class NftService {
-  private readonly ADMIN_ID = '2f8231ca-8a79-43c9-bf21-ac8702a4e1c7';
-  private readonly ADMIN_ADDRESS = '0x5579Ed3E4BD2ce1a0518E0309291c6487408e03c';
+  // private readonly ADMIN_ID = '2f8231ca-8a79-43c9-bf21-ac8702a4e1c7';
+  private readonly ADMIN_ADDRESS = '0x560fA4ccE918f9A4924218b7Ff86124C22ADFbc6';
   private readonly CONTRACT_TRANSACTION_HASH =
-    '0x936328178ab088eb4623951425001953ee4e013b2e3db86ead1942ce33f96e16';
+    '0x38af02c780bf661681c0fcac47d69dc7756788b16056181b2f04ec3e75099ddf';
   private readonly CONTRACT_ADDRESS =
-    '0x13711768E43eF8Bb402782F8E397345F4E1626c9';
-  private readonly CONTRACT_ID = 1095;
+    '0x5e0c89847f548cba84a6bca62b7a2ee09c1a9a99';
+  private readonly CONTRACT_ID = 1099;
   private readonly APPLICATION_ID = process.env.APPLICATION_ID;
   private readonly CREATE_TEMPLATE_URL = `${process.env.NFT_API_ENDPOINT}/api/apps/${this.APPLICATION_ID}/contracts/${this.CONTRACT_ID}/token-types`;
   private readonly MINT_NFT_URL = `${process.env.NFT_API_ENDPOINT}/api/apps/${this.APPLICATION_ID}/contracts/${this.CONTRACT_ID}/tokens/non-fungible`;

@@ -1,7 +1,7 @@
 {
   "name": "toyo-app",
   "version": "0.0.0",
-  "homepage": "https://site.toyofight.io",
+  "homepage": "https://toyofight.io",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

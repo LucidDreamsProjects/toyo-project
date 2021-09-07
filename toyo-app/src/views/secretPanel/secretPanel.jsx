@@ -79,10 +79,11 @@ export function SecretPanel(props) {
       const targetPlayer = await findPlayerById(playerId);
 
       if (targetPlayer) {
-        const wallets = await getWallets(props.arkaneConnect);
         // const address = _wallets[0].address;
         // ReactSessions.set("player", targetPlayer);
         console.log(`👷 your info: `, targetPlayer);
+        await manageWallets(props.arkaneConnect);
+        const wallets = await getWallets(props.arkaneConnect);
         setPlayer({ ...targetPlayer, wallets: wallets });
       } else {
         console.log("👷 Don't worry, we'll set you up on the action 😉!");
@@ -568,13 +569,13 @@ export function SecretPanel(props) {
               tokenAddress: values.tokenAddress,
               tokenId: values.tokenId,
               secretType: "MATIC",
-              value: 0.0000000001,
+              value: 0.1,
             };
 
             console.log(dto);
 
             try {
-              await transferNft(props.arkaneConnect, dto, player.walletId);
+              await transferNft(props.arkaneConnect, dto);
             } catch (err) {
               console.log(err);
             }
@@ -731,11 +732,11 @@ export function SecretPanel(props) {
               {player ? (
                 <Container id="mint-nft">
                   <h1>MINT NFT</h1>
-                  <ImageTile onClick={() => mintNft(2, 1)}>
+                  <ImageTile onClick={() => mintNft(51, 1)}>
                     <h2>LEGACY BOX</h2>
                     <img src={box1} />
                   </ImageTile>
-                  <ImageTile onClick={() => mintNft(3, 1)}>
+                  <ImageTile onClick={() => mintNft(1, 1)}>
                     <h2>SUPER RARE BOX</h2>
                     <img src={box2} />
                   </ImageTile>

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function transferNft(arkaneConnect, dto, walletId) {
+export async function transferNft(arkaneConnect, dto) {
   let i = 0;
   let nft = {};
   const secretType = "MATIC";
