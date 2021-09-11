@@ -2,28 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <!-- <link
-      rel="icon"
-      type="image/svg+xml"
-      href="/assets/images/luciddreams.jpg"
-    /> -->
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <script>
-      window.global = window;
-    </script>
-    <script type="module">
-      import process from "process";
-      import { Buffer } from "buffer";
-      import EventEmitter from "events";
-      window.Buffer = Buffer;
-      window.process = process;
-      window.EventEmitter = EventEmitter;
-    </script>
-    <script src="/node_modules/@arkane-network/arkane-connect/dist/connect.js"></script>
     <title>Toyo Demo</title>
     <meta
       name="description"
@@ -35,7 +18,7 @@
     />
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="./src/main.jsx"></script>
+    <div id="root"></div>
+    <!-- <script type="module" src="./src/index.jsx"></script> -->
   </body>
 </html>

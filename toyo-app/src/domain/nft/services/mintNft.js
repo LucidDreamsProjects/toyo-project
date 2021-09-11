@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function mintNft(typeId, quantity) {
-  const url = `http://localhost:8080/template/token `;
+  const url = `http://localhost:8000/template/token `;
 
   axios
     .post(url, {

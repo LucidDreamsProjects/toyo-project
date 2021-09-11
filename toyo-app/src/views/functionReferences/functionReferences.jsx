@@ -1,9 +1,6 @@
-import { useState } from "preact/hooks";
+import { ArkaneConnect } from "@arkane-network/arkane-connect";
+import { useState } from "react";
 import axios from "axios";
-
-import { config } from "dotenv";
-
-config();
 
 export function FunctionReferences() {
   let [wallet, setWallet] = useState("");
@@ -102,8 +99,7 @@ export function FunctionReferences() {
     return wallets;
   };
 
-  const connectMetamask = async () => {
-    console.log("a");
+  /* const connectMetamask = async () => {
     if (window.ethereum) {
       //check if Metamask is installed
       try {
@@ -126,10 +122,10 @@ export function FunctionReferences() {
           "🦊 You must install Metamask into your browser: https://metamask.io/download.html",
       };
     }
-  };
+  }; */
 
   const mintNft = async (typeId, [wallet]) => {
-    const url = "http://localhost:8080/nft/mint";
+    const url = "http://localhost:8000/nft/mint";
 
     axios
       .post(url, {
@@ -151,7 +147,8 @@ export function FunctionReferences() {
       // gasPrice: "0x09184e72a000", // customizable by user during MetaMask confirmation.
       // gas: "0x2710", // customizable by user during MetaMask confirmation.
       to: "0x8dB402e86Bc94bD1F15Ab00E7D89b94ADd493c64", // Required except during contract publications.
-      from: ethereum.selectedAddress, // must match user's active address.
+      //! MUST UNCOMMENT BELOW
+      // from: ethereum.selectedAddress, // must match user's active address.
       value: "0x00", // Only required to send ether to the recipient from the initiating external account.
       // data: "0x7f7465737432000000000000000000000000000000000000000000000000000000600057", // Optional, but used for defining smart contract creation and interaction.
       chainId: "137", // Used to prevent transaction reuse across blockchains. Auto-filled by MetaMask.
@@ -161,10 +158,11 @@ export function FunctionReferences() {
 
     // txHash is a hex string
     // As with any RPC call, it may throw an error
-    const txHash = await ethereum.request({
+    //! MUST UNCOMMENT BELOW
+    /* const txHash = await ethereum.request({
       method: "eth_sendTransaction",
       params: [transactionParameters],
-    });
+    }); */
   };
 
   const getNfts = async (wallet) => {
@@ -227,23 +225,21 @@ export function FunctionReferences() {
   };
 
   return (
-    <html>
-      <body>
-        <div>FUNCTION REFERENCES</div>
-        <button onClick={() => authPlayer()}>AUTH PLAYER</button>
-        <button onClick={() => getWallets()}>GET WALLETS</button>
-        <button onClick={() => getAccount()}>GET ACCOUNT</button>
-        <button onClick={() => manageWallets()}>MANAGE WALLETS</button>
-        <button onClick={() => connectMetamask()}>CONNECT METAMASK</button>
-        <button onClick={() => mintNft(1, [wallet])}>MINT NFT</button>
-        <button onClick={() => getNfts(wallet)}>GET NFTs</button>
-        <button onClick={() => transferNft(wallet)}>
-          TRANSFER NFTs (must use from secondary account)
-        </button>
-        <button onClick={() => sendTransaction()}>
-          TRANSFER NFTs TROUGH METAMASK (must use from secondary account)
-        </button>
-      </body>
-    </html>
+    <div id="body">
+      <div>FUNCTION REFERENCES</div>
+      <button onClick={() => authPlayer()}>AUTH PLAYER</button>
+      <button onClick={() => getWallets()}>GET WALLETS</button>
+      <button onClick={() => getAccount()}>GET ACCOUNT</button>
+      <button onClick={() => manageWallets()}>MANAGE WALLETS</button>
+      {/* <button onClick={() => connectMetamask()}>CONNECT METAMASK</button> */}
+      <button onClick={() => mintNft(1, [wallet])}>MINT NFT</button>
+      <button onClick={() => getNfts(wallet)}>GET NFTs</button>
+      <button onClick={() => transferNft(wallet)}>
+        TRANSFER NFTs (must use from secondary account)
+      </button>
+      <button onClick={() => sendTransaction()}>
+        TRANSFER NFTs TROUGH METAMASK (must use from secondary account)
+      </button>
+    </div>
   );
 }

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlayerModule } from './player/player.module';
+import { AppController } from './app.controller';
 import { Contract } from './contract/entities/contract.entity';
 import { Template } from './nft/entities/template.entity';
 import { Player } from './player/entities/player.entity';
@@ -33,5 +34,6 @@ config();
     ContractModule,
     NftModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}

@@ -1,5 +1,4 @@
-export const connectMetamask = async () => {
-  console.log("a");
+/* export const connectMetamask = async () => {
   if (window.ethereum) {
     //check if Metamask is installed
     try {
@@ -21,4 +20,4 @@ export const connectMetamask = async () => {
         "🦊 You must install Metamask into your browser: https://metamask.io/download.html",
     };
   }
-};
+}; */

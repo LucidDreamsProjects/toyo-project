@@ -28,6 +28,8 @@ const Section = styled.section`
   }
 `;
 
+const Body = styled(Section);
+
 const Canvas = styled.section`
   min-width: 100%;
   max-width: 100%;
@@ -448,6 +450,7 @@ const NeonButton = styled.button`
 `;
 
 export {
+  Body,
   Canvas,
   Section,
   Top,

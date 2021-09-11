@@ -16,10 +16,10 @@ export class NftService {
   // private readonly ADMIN_ID = '2f8231ca-8a79-43c9-bf21-ac8702a4e1c7';
   private readonly ADMIN_ADDRESS = '0x560fA4ccE918f9A4924218b7Ff86124C22ADFbc6';
   private readonly CONTRACT_TRANSACTION_HASH =
-    '0x38af02c780bf661681c0fcac47d69dc7756788b16056181b2f04ec3e75099ddf';
+    '0xb679dac2e7cbe77eed47aa68caa2e9a86a35c2763140ffae6bb30935ccbc3000';
   private readonly CONTRACT_ADDRESS =
-    '0x5e0c89847f548cba84a6bca62b7a2ee09c1a9a99';
-  private readonly CONTRACT_ID = 1099;
+    '0x4ef2ab3c77fe8c311836db3fc4dc0b111d9667ae';
+  private readonly CONTRACT_ID = 1111;
   private readonly APPLICATION_ID = process.env.APPLICATION_ID;
   private readonly CREATE_TEMPLATE_URL = `${process.env.NFT_API_ENDPOINT}/api/apps/${this.APPLICATION_ID}/contracts/${this.CONTRACT_ID}/token-types`;
   private readonly MINT_NFT_URL = `${process.env.NFT_API_ENDPOINT}/api/apps/${this.APPLICATION_ID}/contracts/${this.CONTRACT_ID}/tokens/non-fungible`;

@@ -405,8 +405,9 @@ Temporary Items
 =======
 # Local
 .env
-dist
 ./config
 ./config/*
 package-lock.json
 dump.rdb
+./dist
+./node_modules

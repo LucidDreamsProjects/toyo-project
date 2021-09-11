@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function findPlayerById(playerId) {
-  const url = "http://localhost:8080/player/" + playerId;
+  const url = "http://localhost:8000/player/" + playerId;
 
   const player = await axios({
     method: "get",

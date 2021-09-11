@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Body = styled.body`
+const Body = styled.div`
   #section-1 {
     /* background-color: yellow; */
     margin-bottom: 2rem;
