@@ -8,7 +8,7 @@ const helmet = require("helmet");
 const compression = require("compression");
 (0, dotenv_1.config)();
 async function bootstrap() {
-    const PORT = 8000;
+    const PORT = process.env.PORT || 8080;
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.use(helmet());
     app.use(compression());
