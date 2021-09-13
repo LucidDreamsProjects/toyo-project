@@ -3,13 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlayerModule } from './player/player.module';
 import { AppController } from './app.controller';
 import { Contract } from './contract/entities/contract.entity';
-import { Template } from './nft/entities/template.entity';
+import { Template } from './token/entities/template.entity';
 import { Player } from './player/entities/player.entity';
-import { Nft } from './nft/entities/nft.entity';
+import { Token } from './token/entities/token.entity';
 import { AuthModule } from './auth/auth.module';
 import { ContractModule } from './contract/contract.module';
-import { NftModule } from './nft/nft.module';
-import { WalletModule } from './wallet/wallet.module';
+import { TokenModule } from './token/token.module';
 import { config } from 'dotenv';
 
 config();
@@ -17,22 +16,21 @@ config();
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql' as any,
+      type: 'mysql',
       host: '162.240.6.22',
       port: 3306,
-      username: `wwtoyo_admin`,
-      password: `dd^8A!DPq#ZpjewF2`,
-      database: `wwtoyo_universe`,
-      entities: [Player, Nft, Template, Contract],
+      username: `toyoverse`,
+      password: `=N3Z8L4V6+SE`,
+      database: `toyovers_universe`,
+      entities: [Player, Token, Template, Contract],
       logging: false,
       synchronize: false,
       keepConnectionAlive: true,
     }),
     AuthModule,
-    WalletModule,
     PlayerModule,
     ContractModule,
-    NftModule,
+    TokenModule,
   ],
   controllers: [AppController],
 })

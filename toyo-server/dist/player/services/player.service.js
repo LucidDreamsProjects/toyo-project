@@ -38,7 +38,8 @@ let PlayerService = class PlayerService {
         if (!player) {
             throw new common_1.NotFoundException(`Player not found`);
         }
-        return this.playerRepository.editPlayer(playerId, updatePlayerDto);
+        const updatedPlayer = await this.playerRepository.editPlayer(playerId, updatePlayerDto);
+        return updatedPlayer;
     }
     async remove(playerId) {
         await this.playerRepository.delete(playerId);

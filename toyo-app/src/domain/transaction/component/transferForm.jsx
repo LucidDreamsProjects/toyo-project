@@ -1,5 +1,5 @@
 import { Formik, Form, Field } from "formik";
-import { transferNft } from "../../nft/services/transferNft";
+import { transferToken } from "../../token/services/transferToken";
 import { Tile } from "../../../views/secretPanel/styles";
 
 export const TransferForm = (props) => {
@@ -31,7 +31,7 @@ export const TransferForm = (props) => {
           console.log(dto);
 
           try {
-            await transferNft(props.arkaneConnect, dto);
+            await transferToken(props.arkaneConnect, dto);
           } catch (err) {
             console.log(err);
           }

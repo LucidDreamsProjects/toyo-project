@@ -14,7 +14,6 @@ const player_service_1 = require("./services/player.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const player_repository_1 = require("./repositories/player.repository");
 const auth_service_1 = require("../auth/services/auth.service");
-const wallet_service_1 = require("../wallet/services/wallet.service");
 let PlayerModule = class PlayerModule {
 };
 PlayerModule = __decorate([
@@ -27,7 +26,7 @@ PlayerModule = __decorate([
             }),
         ],
         controllers: [player_controller_1.PlayerController],
-        providers: [player_service_1.PlayerService, auth_service_1.AuthService, wallet_service_1.WalletService],
+        providers: [player_service_1.PlayerService, auth_service_1.AuthService],
         exports: [player_service_1.PlayerService],
     })
 ], PlayerModule);

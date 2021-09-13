@@ -36,13 +36,16 @@ export class PlayerService {
     updatePlayerDto: UpdatePlayerDto,
   ): Promise<Player | undefined> {
     const player = await this.playerRepository.findOne(playerId);
-    // console.log(player);
 
     if (!player) {
       throw new NotFoundException(`Player not found`);
     }
 
-    return this.playerRepository.editPlayer(playerId, updatePlayerDto);
+    const updatedPlayer = await this.playerRepository.editPlayer(
+      playerId,
+      updatePlayerDto,
+    );
+    return updatedPlayer;
   }
 
   public async remove(playerId: string): Promise<void> {

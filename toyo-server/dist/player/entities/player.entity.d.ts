@@ -6,10 +6,6 @@ export declare class Player extends BaseEntity {
     email?: string;
     firstName?: string;
     lastName?: string;
-    address?: string;
-    icon?: number;
-    replays?: string;
-    inventory?: string;
     wallets?: string;
     role?: number;
 }

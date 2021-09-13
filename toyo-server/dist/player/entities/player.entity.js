@@ -38,22 +38,6 @@ __decorate([
     __metadata("design:type", String)
 ], Player.prototype, "lastName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 128 }),
-    __metadata("design:type", String)
-], Player.prototype, "address", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: 'int' }),
-    __metadata("design:type", Number)
-], Player.prototype, "icon", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 512 }),
-    __metadata("design:type", String)
-], Player.prototype, "replays", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: 'uuid' }),
-    __metadata("design:type", String)
-], Player.prototype, "inventory", void 0);
-__decorate([
     (0, typeorm_1.Column)({ type: 'text', unique: true }),
     __metadata("design:type", String)
 ], Player.prototype, "wallets", void 0);

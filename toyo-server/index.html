@@ -1,0 +1,133 @@
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Venly">
+  <meta name="application-name" content="Venly">
+  <meta name="keywords" content="">
+  <meta name="robots" content="noindex, nofollow">
+
+          <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Log in to Arkane</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/auth/resources/ki4kh/login/venly/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/auth/resources/ki4kh/login/venly/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/auth/resources/ki4kh/login/venly/favicon-16x16.png">
+  <link rel="manifest" href="/auth/resources/ki4kh/login/venly/site.webmanifest">
+  <link rel="mask-icon" href="/auth/resources/ki4kh/login/venly/safari-pinned-tab.svg" color="#7927ff">
+  <meta name="msapplication-TileColor" content="#f6f5ff">
+  <meta name="theme-color" content="#f6f5ff">
+
+          <link href="/auth/resources/ki4kh/login/venly/components/bootstrap/bootstrap.min.css?v=0.17" rel="stylesheet"/>
+          <link href="/auth/resources/ki4kh/login/venly/css/login.min.css?v=0.17" rel="stylesheet"/>
+
+  <script src="/auth/resources/ki4kh/login/venly/components/modernizr/modernizr.js"></script>
+</head>
+
+<body class="page--login">
+<script>
+  var queryDict = {};
+  location.search.substr(1).split('&').forEach(function(item) {
+      queryDict[item.split('=')[0]] = item.split('=')[1];
+  });
+  var uri = decodeURIComponent(queryDict.client_id);
+  if (uri && (uri.toLowerCase() === 'arkane' || uri.toLowerCase() === 'venly')) {
+    document.body.classList.add('venly');
+  } else {
+    document.body.classList.add('whitelabel');
+  }
+</script>
+
+<div class="container">
+
+  <main class="main" role="main">
+      <div class="main__container container">
+          <div class="main__wrapper">
+              <div class="main__flex">
+                  <div class="main__header">
+                          <p class="main__header">
+                              <br>
+                              <img class="logo"
+                                   src="https://content.venly.io/img/login.venly.io/logo.png"
+                                   alt="Venly logo"/>
+                          </p>
+                  </div>
+                  <div class="main__info">
+          <strong>Connecting to Venly</strong>
+                  </div>
+                  <div class="main__box">
+                      <div class="main__content">
+                          <div class="main__content__text">
+          <form class="form" onsubmit="login.disabled = true; return true;" action="https://login-staging.arkane.network/auth/realms/Arkane/login-actions/authenticate?session_code=nEUUYGnTDpbowwO5FoWigW02Ac36bOKOAeI-7oqmnCQ&amp;execution=8bdfd17f-41a4-4e6a-8609-050d2adf032e&amp;client_id=Arkane&amp;tab_id=pDPFLhs81YU" method="post" novalidate>
+                  <div class="login login--social">
+                          <a href="/auth/realms/Arkane/broker/google/login?client_id=Arkane&amp;tab_id=pDPFLhs81YU&amp;session_code=nEUUYGnTDpbowwO5FoWigW02Ac36bOKOAeI-7oqmnCQ" class="btn btn--social btn--social--google">
+                              Log in with Google
+                          </a>
+                          <a href="/auth/realms/Arkane/broker/arkane-facebook/login?client_id=Arkane&amp;tab_id=pDPFLhs81YU&amp;session_code=nEUUYGnTDpbowwO5FoWigW02Ac36bOKOAeI-7oqmnCQ" class="btn btn--social btn--social--arkane-facebook">
+                              Log in with Facebook
+                          </a>
+                          <a href="/auth/realms/Arkane/broker/arkane-twitter/login?client_id=Arkane&amp;tab_id=pDPFLhs81YU&amp;session_code=nEUUYGnTDpbowwO5FoWigW02Ac36bOKOAeI-7oqmnCQ" class="btn btn--social btn--social--arkane-twitter">
+                              Log in with Twitter
+                          </a>
+                      <div class="separator">
+                          <div><a href="#collapseUsernamePassword" data-toggle="collapse" role="button">or Using Email</a></div>
+                      </div>
+                  </div>
+
+                  <div class="login login--default collapse" id="collapseUsernamePassword">
+                      <div class="control">
+                          <input id="username" class="control__input" name="username" placeholder="Email Address"
+                                 value="" type="email" autocomplete="off"/>
+              </div>
+
+              <div class="control">
+                <input class="control__input" id="password" name="password" type="password"
+                       autocomplete="current-password"
+                       placeholder="Enter Password"/>
+              </div>
+
+
+                  <div class="form__actions">
+                          <a href="/auth/realms/Arkane/login-actions/reset-credentials?client_id=Arkane&amp;tab_id=pDPFLhs81YU">
+                              Forgot Password
+                          </a>
+                      <button class="btn btn--primary" name="login" type="submit">
+                          Log In
+                      </button>
+                  </div>
+              <br>
+            </div>
+            <div class="form__extra-cta">
+              <span>New here?</span>
+              <a href="/auth/realms/Arkane/login-actions/registration?client_id=Arkane&amp;tab_id=pDPFLhs81YU">
+                  Create Account
+              </a>
+            </div>
+          </form>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="main__content__footer">
+                      <div class="main__content__footer__poweredby">
+                      </div>
+                      <div>
+                          <a class="link link--muted" target="_blank" href="https://venly.io/terms">Terms, Conditions &amp; Privacy</a>
+                      </div>
+                  </div>
+                  <div class="sign-up-footer">
+                      <span></span>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </main>
+</div>
+
+
+      <script src="/auth/resources/ki4kh/login/venly/components/jquery/jquery.min.js" type="text/javascript"></script>
+      <script src="/auth/resources/ki4kh/login/venly/js/scripts.min.js" type="text/javascript"></script>
+      <script src="/auth/resources/ki4kh/login/venly/components/parsley/parsley.min.js" type="text/javascript"></script>
+      <script src="/auth/resources/ki4kh/login/venly/components/bootstrap/bootstrap.bundle.min.js" type="text/javascript"></script>
+</body>
+</html>

@@ -21,18 +21,6 @@ export class Player extends BaseEntity {
   @Column({ type: 'varchar', length: 128 })
   lastName?: string;
 
-  @Column({ type: 'varchar', length: 128 })
-  address?: string;
-
-  @Column({ type: 'int' })
-  icon?: number;
-
-  @Column({ type: 'varchar', length: 512 })
-  replays?: string;
-
-  @Column({ type: 'uuid' })
-  inventory?: string;
-
   @Column({ type: 'text', unique: true })
   wallets?: string;
 

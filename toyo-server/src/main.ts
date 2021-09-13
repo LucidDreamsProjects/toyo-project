@@ -21,7 +21,10 @@ async function bootstrap() {
   app.init();
 
   await app.listen(`${PORT}`, () => {
-    console.log(`⚡️ [server]: Server is running at http://localhost:${PORT}`);
+    console.log(
+      // `⚡️ [server]: Server is running at http://162.240.6.22/:${PORT}`,
+      `⚡️ [server]: Server is running at ${process.env.BASE_URL_DEVELOPMENT}:${PORT}`,
+    );
   });
 }
 

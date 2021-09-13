@@ -185,8 +185,8 @@ export function FunctionReferences() {
     return nfts;
   };
 
-  // const transferNft = async (fromId, toId, tokenAddress, tokenId)
-  const transferNft = async (playerWallet) => {
+  // const transferToken = async (fromId, toId, tokenAddress, tokenId)
+  const transferToken = async (playerWallet) => {
     const adminWallet = "877de31c-7be0-4e0c-9d80-4af218bad84e";
 
     console.log(playerWallet);
@@ -234,7 +234,7 @@ export function FunctionReferences() {
       {/* <button onClick={() => connectMetamask()}>CONNECT METAMASK</button> */}
       <button onClick={() => mintNft(1, [wallet])}>MINT NFT</button>
       <button onClick={() => getNfts(wallet)}>GET NFTs</button>
-      <button onClick={() => transferNft(wallet)}>
+      <button onClick={() => transferToken(wallet)}>
         TRANSFER NFTs (must use from secondary account)
       </button>
       <button onClick={() => sendTransaction()}>

@@ -29,9 +29,9 @@ import { savePlayer } from "../../domain/player/services/savePlayer";
 import { getWallets } from "../../domain/wallet/services/getWallets";
 import { createContract } from "../../domain/contract/services/createContract";
 import { manageWallets } from "../../domain/wallet/services/manageWallets";
-import { createTemplate } from "../../domain/nft/services/createTemplate";
-import { transferNft } from "../../domain/nft/services/transferNft";
-import { mintNft } from "../../domain/nft/services/mintNft";
+import { createTemplate } from "../../domain/token/services/createTemplate";
+import { transferNft } from "../../domain/token/services/transferToken";
+import { mintNft } from "../../domain/token/services/mintToken";
 
 export function SecretPanel(props) {
   // const RECAPTCHA_SITE_KEY = "6LdR8EYcAAAAAPFLQkrMGHrJGCcwGIRNzXUi00gp";
@@ -566,7 +566,7 @@ export function SecretPanel(props) {
             console.log(dto);
 
             try {
-              await transferNft(props.arkaneConnect, dto);
+              await transferToken(props.arkaneConnect, dto);
             } catch (err) {
               console.log(err);
             }
