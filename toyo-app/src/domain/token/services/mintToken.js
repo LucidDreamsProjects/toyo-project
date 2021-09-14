@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function mintToken(typeId, quantity) {
-  const url = `http://localhost:8000/template/token `;
+  const url = `http://162.240.6.22:8080/template/token `;
 
   return await axios
     .post(url, {
