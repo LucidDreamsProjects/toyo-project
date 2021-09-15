@@ -28,7 +28,7 @@ import { savePlayer } from "../../domain/player/services/savePlayer";
 import { updatePlayer } from "../../domain/player/services/updatePlayer";
 import { getWallets } from "../../domain/wallet/services/getWallets";
 import { manageWallets } from "../../domain/wallet/services/manageWallets";
-import { transferToken } from "../../domain/token/services/transferToken";
+import { transferNftToken } from "../../domain/token/services/transferNftToken";
 import { mintToken } from "../../domain/token/services/mintToken";
 
 export function AdminPanel(props) {
@@ -65,7 +65,7 @@ export function AdminPanel(props) {
         value,
       };
 
-      await transferToken(arkaneConnect, transactionRequest);
+      await transferNftToken(arkaneConnect, transactionRequest);
       isLoading(false);
     }
   };

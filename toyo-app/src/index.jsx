@@ -6,10 +6,12 @@ import { Home } from "./views/home/home";
 import { FunctionReferences } from "./views/functionReferences/functionReferences";
 import { NoMatch } from "./views/noMatch/noMatch";
 import { AdminPanel } from "./views/adminPanel/adminPanel";
+import { AlternativePanel } from "./views/alternativePanel/alternativePanel";
 
 import "./index.css";
 
 const App = () => {
+  const clientId = process.env.REACT_APP_VENLY_ID;
   const options = {
     environment: "staging",
     windowMode: "POPUP",
@@ -24,6 +26,9 @@ const App = () => {
       </Route>
       <Route path="/admin-panel">
         <AdminPanel arkaneConnect={arkaneConnect} />
+      </Route>
+      <Route path="/alternative-panel">
+        <AlternativePanel arkaneConnect={arkaneConnect} />
       </Route>
       <Route path="/references">
         <FunctionReferences />

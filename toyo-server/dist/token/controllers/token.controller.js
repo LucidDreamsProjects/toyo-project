@@ -17,7 +17,6 @@ const common_1 = require("@nestjs/common");
 const create_template_dto_1 = require("../dto/create-template.dto");
 const token_service_1 = require("../services/token.service");
 const mint_token_dto_1 = require("../dto/mint-token.dto");
-const transfer_token_dto_1 = require("../dto/transfer-token.dto");
 let TokenController = class TokenController {
     constructor(tokenService) {
         this.tokenService = tokenService;
@@ -33,10 +32,6 @@ let TokenController = class TokenController {
     }
     async mintToken(dto) {
         return await this.tokenService.mintToken(dto);
-    }
-    async transferToken(dto) {
-        console.log('controlador: ', dto);
-        return await this.tokenService.transferToken(dto);
     }
 };
 __decorate([
@@ -70,14 +65,6 @@ __decorate([
     __metadata("design:paramtypes", [mint_token_dto_1.MintTokenDto]),
     __metadata("design:returntype", Promise)
 ], TokenController.prototype, "mintToken", null);
-__decorate([
-    (0, common_1.HttpCode)(200),
-    (0, common_1.Post)('token/transfer'),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [transfer_token_dto_1.TransferTokenDto]),
-    __metadata("design:returntype", Promise)
-], TokenController.prototype, "transferToken", null);
 TokenController = __decorate([
     (0, common_1.Controller)('template'),
     __metadata("design:paramtypes", [token_service_1.TokenService])

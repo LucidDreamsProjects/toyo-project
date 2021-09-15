@@ -9,7 +9,9 @@ import { Token } from './token/entities/token.entity';
 import { AuthModule } from './auth/auth.module';
 import { ContractModule } from './contract/contract.module';
 import { TokenModule } from './token/token.module';
+import { WalletModule } from './wallet/wallet.module';
 import { config } from 'dotenv';
+import { TransactionModule } from './transaction/transaction.module';
 
 config();
 
@@ -31,6 +33,8 @@ config();
     PlayerModule,
     ContractModule,
     TokenModule,
+    WalletModule,
+    TransactionModule,
   ],
   controllers: [AppController],
 })

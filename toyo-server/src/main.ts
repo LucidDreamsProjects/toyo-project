@@ -9,7 +9,7 @@ import * as compression from 'compression';
 config();
 
 async function bootstrap() {
-  const PORT = process.env.PORT || 8080;
+  const PORT = process.env.PORT || 8081;
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.use(helmet());
@@ -22,8 +22,7 @@ async function bootstrap() {
 
   await app.listen(`${PORT}`, () => {
     console.log(
-      // `⚡️ [server]: Server is running at http://162.240.6.22/:${PORT}`,
-      `⚡️ [server]: Server is running at ${process.env.BASE_URL_DEVELOPMENT}:${PORT}`,
+      `⚡️ [server]: Server is running at ${process.env.BASE_URL_STAGING}:${PORT}`,
     );
   });
 }

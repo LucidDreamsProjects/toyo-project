@@ -165,24 +165,6 @@ let TokenService = class TokenService {
             }
         }
     }
-    async transferToken(dto) {
-        const url = this.TRANSFER_NFT_URL;
-        const accessToken = await this.authService.getAccessToken();
-        console.log('service: ', dto);
-        return await axios_1.default
-            .post(url, dto, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        })
-            .then((response) => {
-            console.log(response.data);
-            return response.data;
-        })
-            .catch((error) => {
-            console.log(error);
-        });
-    }
 };
 TokenService = __decorate([
     (0, common_1.Injectable)(),

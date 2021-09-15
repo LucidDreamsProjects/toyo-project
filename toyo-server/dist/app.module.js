@@ -18,7 +18,9 @@ const token_entity_1 = require("./token/entities/token.entity");
 const auth_module_1 = require("./auth/auth.module");
 const contract_module_1 = require("./contract/contract.module");
 const token_module_1 = require("./token/token.module");
+const wallet_module_1 = require("./wallet/wallet.module");
 const dotenv_1 = require("dotenv");
+const transaction_module_1 = require("./transaction/transaction.module");
 (0, dotenv_1.config)();
 let AppModule = class AppModule {
 };
@@ -41,6 +43,8 @@ AppModule = __decorate([
             player_module_1.PlayerModule,
             contract_module_1.ContractModule,
             token_module_1.TokenModule,
+            wallet_module_1.WalletModule,
+            transaction_module_1.TransactionModule,
         ],
         controllers: [app_controller_1.AppController],
     })

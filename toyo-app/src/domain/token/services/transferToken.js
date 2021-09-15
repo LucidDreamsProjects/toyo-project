@@ -1,9 +1,9 @@
 export async function transferToken(arkaneConnect, dto) {
-  console.log(dto);
+  console.log("transferToken: ", dto);
 
-  await arkaneConnect
+  return await arkaneConnect
     .createSigner()
-    .executeNftTransfer(dto)
+    .executeTransfer(dto)
     .then((result) => {
       console.log(result);
     })

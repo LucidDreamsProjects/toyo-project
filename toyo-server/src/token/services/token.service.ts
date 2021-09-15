@@ -1,5 +1,4 @@
 import { CreateTemplateDto } from '../dto/create-template.dto';
-import { TransferTokenDto } from '../dto/transfer-token.dto';
 import { Injectable } from '@nestjs/common';
 import { MintTokenDto } from '../dto/mint-token.dto';
 import { AuthService } from '../../auth/services/auth.service';
@@ -9,7 +8,6 @@ import { TemplateRepository } from '../repositories/template.repository';
 import { TokenRepository } from '../repositories/token.repository';
 import axios from 'axios';
 import { config } from 'dotenv';
-import { SignerResult } from '@arkane-network/arkane-connect';
 
 config();
 
@@ -187,27 +185,5 @@ export class TokenService {
         return nftArray;
       }
     }
-  }
-
-  public async transferToken(
-    dto: TransferTokenDto,
-  ): Promise<SignerResult | void> {
-    const url = this.TRANSFER_NFT_URL;
-    const accessToken = await this.authService.getAccessToken();
-    console.log('service: ', dto);
-
-    return await axios
-      .post(url, dto, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        return response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }
 }

@@ -1,11 +1,9 @@
 import { CreateTemplateDto } from '../dto/create-template.dto';
-import { TransferTokenDto } from '../dto/transfer-token.dto';
 import { MintTokenDto } from '../dto/mint-token.dto';
 import { AuthService } from '../../auth/services/auth.service';
 import { NFT } from '@arkane-network/arkane-connect/dist/src/models/wallet/NFT';
 import { TemplateRepository } from '../repositories/template.repository';
 import { TokenRepository } from '../repositories/token.repository';
-import { SignerResult } from '@arkane-network/arkane-connect';
 export declare class TokenService {
     private templateRepository;
     private tokenRepository;
@@ -25,5 +23,4 @@ export declare class TokenService {
     getTemplateById(typeId: number): Promise<NFT | void>;
     private updateTemplate;
     mintToken(dto: MintTokenDto): Promise<Array<Record<string, string | number>> | void>;
-    transferToken(dto: TransferTokenDto): Promise<SignerResult | void>;
 }

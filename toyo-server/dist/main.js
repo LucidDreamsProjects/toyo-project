@@ -8,7 +8,7 @@ const helmet = require("helmet");
 const compression = require("compression");
 (0, dotenv_1.config)();
 async function bootstrap() {
-    const PORT = process.env.PORT || 8080;
+    const PORT = process.env.PORT || 8081;
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.use(helmet());
     app.use(compression());
@@ -16,7 +16,7 @@ async function bootstrap() {
     app.enableCors();
     app.init();
     await app.listen(`${PORT}`, () => {
-        console.log(`⚡️ [server]: Server is running at ${process.env.BASE_URL_DEVELOPMENT}:${PORT}`);
+        console.log(`⚡️ [server]: Server is running at ${process.env.BASE_URL_STAGING}:${PORT}`);
     });
 }
 bootstrap();
