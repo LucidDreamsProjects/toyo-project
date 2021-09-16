@@ -14,6 +14,10 @@ const class_validator_1 = require("class-validator");
 class MintTokenDto {
 }
 __decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], MintTokenDto.prototype, "wallet", void 0);
+__decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], MintTokenDto.prototype, "typeId", void 0);

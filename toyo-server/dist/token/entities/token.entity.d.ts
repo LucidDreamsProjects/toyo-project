@@ -5,4 +5,6 @@ export declare class Token extends BaseEntity {
     contractId?: number;
     name?: string;
     fungible?: boolean;
+    owner?: string;
+    transactionHash?: string;
 }

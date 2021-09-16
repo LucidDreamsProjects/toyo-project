@@ -15,4 +15,10 @@ export class SaveTokenDto {
 
   @IsNumber()
   fungible!: boolean;
+
+  @IsString()
+  owner!: string;
+
+  @IsString()
+  transactionHash!: string;
 }

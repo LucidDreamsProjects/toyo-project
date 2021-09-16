@@ -12,13 +12,15 @@ const token_entity_1 = require("../entities/token.entity");
 const common_1 = require("@nestjs/common");
 let TokenRepository = class TokenRepository extends typeorm_1.Repository {
     async saveToken(dto) {
-        const { tokenId, templateId, contractId, name, fungible } = dto;
+        const { tokenId, templateId, contractId, name, fungible, owner, transactionHash, } = dto;
         const token = new token_entity_1.Token();
         token.tokenId = tokenId;
         token.templateId = templateId;
         token.contractId = contractId;
         token.name = name;
         token.fungible = fungible;
+        token.owner = owner;
+        token.transactionHash = transactionHash;
         await this.save(token);
         return token;
     }

@@ -1,8 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import box1 from "../../assets/images/box1.png";
-import box2 from "../../assets/images/box2.png";
-
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import ReCAPTCHA from "react-google-recaptcha";
 

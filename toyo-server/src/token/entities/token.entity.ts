@@ -16,4 +16,10 @@ export class Token extends BaseEntity {
 
   @Column({ type: 'tinyint' })
   fungible?: boolean;
+
+  @Column({ type: 'varchar', length: 128 })
+  owner?: string;
+
+  @Column({ type: 'varchar', length: 128 })
+  transactionHash?: string;
 }

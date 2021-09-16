@@ -53,7 +53,7 @@ const Section = styled.section`
     height: 100%;
   }
 
-  #wit {
+  #wat {
     width: 100%;
     height: 100%;
   }
@@ -174,7 +174,7 @@ const HomeCanvas = styled.section`
   overflow: visible;
   z-index: 300;
 
-  #wit-wrapper {
+  #wat-wrapper {
     position: relative;
     justify-content: center;
     align-items: center;
@@ -290,7 +290,7 @@ const Column = styled.div`
   width: ${({ width }) => (width ? width : "100%")};
   height: ${({ height }) => (height ? height : "100%")};
 
-  #wit-title {
+  #wat-title {
     display: block;
     position: relative;
     margin: 0 auto;
@@ -307,7 +307,7 @@ const Column = styled.div`
     }
   }
 
-  #wit-text {
+  #wat-text {
     display: block;
     position: relative;
     margin-top: 2rem;

@@ -1,8 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import box1 from "../../assets/images/box1.png";
-import box2 from "../../assets/images/box2.png";
-
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -36,25 +33,31 @@ import { getTxStatus } from "../../domain/transaction/services/getTxStatus";
 import { getWalletById } from "../../domain/wallet/services/getWalletById";
 
 export function AlternativePanel(props) {
+  const initialState = {
+    playerId: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    wallet: {},
+  };
+
   let [width, height] = useWindowSize();
-  let [player, setPlayer] = useState({});
+  let [player, setPlayer] = useState(initialState);
   let [auth, isAuth] = useState(false);
   let [loading, isLoading] = useState(false);
 
   const handleTransfer = async (arkaneConnect, typeId, quantity, value) => {
     isLoading(true);
 
-    if (!player.wallets) {
+    if (!player.wallet) {
+      console.group("👷 Please register a wallet before mint");
       isLoading(false);
       return;
     }
 
-    const fees = await getFees("MATIC");
-    console.log(fees);
-
-    const walletId = player.wallets[0].id;
+    const walletId = player.wallet.id;
     const adminAddress = "0xaC17244Cd4F718A7a9a2c4dfF2f9C7775934824D";
-    const tokenAddress = "0xbeB2d63b25002b8959945B0a01aF0D64bf1ddED1";
+    // const tokenAddress = "0xbeB2d63b25002b8959945B0a01aF0D64bf1ddED1";
     const secretType = "MATIC";
 
     const transactionRequest = {
@@ -62,47 +65,43 @@ export function AlternativePanel(props) {
       to: adminAddress,
       value,
       secretType,
-      value: 0.1,
     };
 
-    const signerResult = await transferToken(arkaneConnect, transactionRequest);
-    console.log(signerResult);
+    const mintRequest = {
+      address: player.wallet.address,
+      typeId,
+      quantity,
+    };
 
-    // const transactionStatus = await getTxStatus("MATIC", signerResult.status);
-    // console.log(transactionStatus);
+    const signerResult = await transferToken(
+      arkaneConnect,
+      transactionRequest,
+      mintRequest
+    );
 
     isLoading(false);
   };
 
   const handlePlayerWallet = async (arkaneConnect) => {
-    isLoading(true);
+    let wallets = await getWallets(props.arkaneConnect);
 
-    if (player.wallets) {
-      const wallet = await getWalletById(player.wallets);
-      // await setPlayer({ ...player, wallets: wallet });
-      // return;
-    }
-
-    await manageWallets(props.arkaneConnect);
-
-    const wallet = await getWallets(props.arkaneConnect);
-
-    if (wallet.length !== 1) {
-      console.log(`👷 Select a single wallet. Please, repeat the process`);
-      isLoading(false);
-      return;
+    console.log("wallets: ", wallets);
+    if (wallets.length !== 0) {
+      console.log("👷 Setting up your wallet...");
+      await setPlayer((prevState) => ({ ...prevState, wallet: wallets[0] }));
     } else {
-      console.log(`👷 your wallet: `, wallet);
+      console.log("👷 Preparing a new wallet for you...");
+      await manageWallets(props.arkaneConnect);
+      wallets = await getWallets(props.arkaneConnect);
+      await setPlayer((prevState) => ({ ...prevState, wallet: wallets[0] }));
     }
 
-    await setPlayer({ ...player, wallets: wallet });
-
-    const updatePlayerWalletDto = {
-      wallets: wallet[0].id,
+    /* const updatePlayerWalletDto = {
+      wallets: wallets[0].address,
     };
 
-    await updatePlayer(player.playerId, updatePlayerWalletDto);
-    isLoading(false);
+    console.log(player.playerId, updatePlayerWalletDto);
+    await updatePlayer(player.playerId, updatePlayerWalletDto); */
   };
 
   const handleAuthPlayer = async (arkaneConnect) => {
@@ -118,18 +117,14 @@ export function AlternativePanel(props) {
       const existingPlayer = await findPlayerById(playerId);
 
       if (existingPlayer) {
-        const _player = {
+        await setPlayer({
           playerId: existingPlayer.playerId,
           firstName: existingPlayer.firstName,
           lastName: existingPlayer.lastName,
           email: existingPlayer.email,
-          wallets: existingPlayer.wallets,
-        };
-        await setPlayer(_player);
-        console.log(`👷 your info: `, _player);
+        });
       } else {
         console.log("👷 Don't worry, we'll set you up on the action 😉!");
-
         const newPlayer = {
           playerId: playerId,
           firstName: firstName,
@@ -138,11 +133,19 @@ export function AlternativePanel(props) {
           wallets: null,
         };
 
-        await setPlayer(newPlayer);
+        await setPlayer({
+          playerId: playerId,
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+        });
+
         await savePlayer(newPlayer);
-        console.log(`👷 your info: `, newPlayer);
       }
     }
+
+    await handlePlayerWallet(props.arkaneConnect);
+
     isLoading(false);
   };
 
@@ -151,7 +154,6 @@ export function AlternativePanel(props) {
       .authenticate({ windowMode: "POPUP" })
       .then((result) => {
         result.authenticated((auth) => {
-          console.log(auth);
           console.log(`👷 User authenticated: ${auth.authenticated}`);
           handleAuthPlayer();
           isAuth(true);
@@ -176,6 +178,10 @@ export function AlternativePanel(props) {
   };
 
   useEffect(() => {
+    console.log(player);
+  }, [player]);
+
+  useEffect(() => {
     handleInit();
   }, []);
 
@@ -191,7 +197,7 @@ export function AlternativePanel(props) {
           >
             CONNECT WITH VENLY
           </button>
-          {auth === true ? (
+          {/* {auth === true ? (
             <button
               type="action"
               onClick={() => handlePlayerWallet(props.arkaneConnect)}
@@ -201,7 +207,7 @@ export function AlternativePanel(props) {
             </button>
           ) : (
             <span />
-          )}
+          )} */}
         </div>
       </div>
       <div id="canvas">

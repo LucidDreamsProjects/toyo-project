@@ -33,6 +33,14 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'tinyint' }),
     __metadata("design:type", Boolean)
 ], Token.prototype, "fungible", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'varchar', length: 128 }),
+    __metadata("design:type", String)
+], Token.prototype, "owner", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'varchar', length: 128 }),
+    __metadata("design:type", String)
+], Token.prototype, "transactionHash", void 0);
 Token = __decorate([
     (0, typeorm_1.Entity)({ name: 'template_Token' })
 ], Token);

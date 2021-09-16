@@ -12,55 +12,58 @@ import {
   Menu,
 } from "./styles";
 
-import toyo1 from "../../assets/images/toyo1.png";
-import toyo2 from "../../assets/images/toyo2.png";
-// import menu from "../../assets/images/menu.png";
+import menu from "../../assets/images/menu/menu.png";
+import bg_top from "../../assets/images/top/bg_top.png";
+import toyo1 from "../../assets/images/top/toyo1.png";
+import logo_base from "../../assets/images/top/logo-base.png";
+import logo from "../../assets/images/top/logo.png";
+import btn_watch from "../../assets/images/top/btn-watch.png";
+import toyo2 from "../../assets/images/top/toyo2.png";
+import hulk from "../../assets/images/what/hulk.png";
+import title_what from "../../assets/images/what/title_what.png";
+import btn_discord from "../../assets/images/what/btn-discord.png";
+import warrior from "../../assets/images/what/warrior.png";
+import bg_p2e from "../../assets/images/play2earn/bg_p2e.png";
+import separator from "../../assets/images/play2earn/separator.png";
+import title_p2e from "../../assets/images/play2earn/title_p2e.png";
+import tokens from "../../assets/images/play2earn/tokens.png";
+import toyo from "../../assets/images/play2earn/toyo.png";
+import parts from "../../assets/images/play2earn/parts.png";
+import bg_pvp from "../../assets/images/pvp/bg_pvp.png";
+import blur from "../../assets/images/pvp/blur.png";
+import title_pvp from "../../assets/images/pvp/title_pvp.png";
+import video from "../../assets/images/pvp/video.png";
+import title_collect from "../../assets/images/collect/title_collect.png";
+import genies from "../../assets/images/collect/genies.png";
+import title_customize from "../../assets/images/customize/title_customize.png";
+import customs from "../../assets/images/customize/customs.png";
+import equal from "../../assets/images/customize/equal.png";
+import toyo_result from "../../assets/images/customize/toyo_result.png";
 
 export function Home(props) {
-  let [width, height] = useWindowSize();
-  let [player, setPlayer] = useState({});
-  let [logged, isLogged] = useState(false);
-
-  async function handleInit() {
-    console.log(`👷 Welcome to Toyo's official webpage!`);
-
-    if (props.arkaneConnect !== undefined) {
-      console.log(`👷 Device online and ready to go!`);
-    }
-
-    console.log(`👷 isLogged: `, logged);
-    console.log(`👷 actual player: `, player);
-  }
-
-  useEffect(() => {
-    handleInit();
-  }, []);
-
   return (
     <Body>
-      <Menu>{/* <img src={menu} alt="Toyo menu button" /> */}</Menu>
+      <Menu>
+        <img src={menu} alt="Toyo menu button" />
+      </Menu>
       <Section id="section-1">
         <GraffitiBackground>
-          GRAFFITI BACKGROUND
-          <img src="" alt="" />
+          <img src={bg_top} alt="Toyo's header colorful background" />
         </GraffitiBackground>
-        <GraffitiLogo>
-          GRAFFITI LOGO
-          <img src="" alt="" />
-        </GraffitiLogo>
         <HomeCanvas id="toyo">
           <Row id="top-row">
             <div id="toyo-1">
               <img src={toyo1} alt="" />
             </div>
             <Column width="26%">
+              <div id="logo-base">
+                <img src={logo_base} alt="" />
+              </div>
               <div id="logo">
-                LOGO
-                <img src="" alt="" />
+                <img src={logo} alt="" />
               </div>
               <div id="btn-video">
-                WATCH ME
-                <img src="" alt="" />
+                <img src={btn_watch} alt="" />
               </div>
             </Column>
             <div id="toyo-2">
@@ -70,17 +73,16 @@ export function Home(props) {
         </HomeCanvas>
       </Section>
       <Section id="section-2">
-        <HomeCanvas id="wit">
+        <HomeCanvas id="wat">
           <Row>
             <div id="toyo-3">
-              <img src={toyo1} alt="" />
+              <img src={hulk} alt="" />
             </div>
-            <Column id="wit-wrapper">
-              <div id="wit-title">
-                WHAT IS TOYO
-                <img src="" alt="" />
+            <Column id="wat-wrapper">
+              <div id="wat-title">
+                <img src={title_what} alt="" />
               </div>
-              <div id="wit-text">
+              <div id="wat-text">
                 <p>
                   Toyo is an NFT Game with Play2Earn mechanics, inspired by the
                   action
@@ -116,32 +118,26 @@ export function Home(props) {
                 </p>
               </div>
               <div id="btn-discord">
-                BTN DISCORD
-                <img src="" alt="" />
+                <img src={btn_discord} alt="" />
               </div>
             </Column>
             <div id="toyo-4">
-              <img src={toyo2} alt="" />
+              <img src={warrior} alt="" />
             </div>
           </Row>
         </HomeCanvas>
       </Section>
       <Section id="section-3">
         <div id="p2e-bg">
-          <img src="" alt="" />
+          <img src={bg_p2e} alt="" />
         </div>
         <HomeCanvas id="p2e">
           <Column>
             <div id="p2e-top">
               <div id="title-p2e-bg">
-                BACKGROUND
-                <img src="" alt="" />
-                <div id="toyo-5">
-                  <img src={toyo1} alt="" />
-                </div>
+                <img src={separator} alt="" />
                 <div id="title-p2e">
-                  PLAY 2 EARN
-                  <img src="" alt="" />
+                  <img src={title_p2e} alt="" />
                 </div>
               </div>
             </div>
@@ -184,14 +180,8 @@ export function Home(props) {
             </Row>
             <Row id="p2e-neon-cards">
               <div className="neon-card">
-                <div className="neon-card-border">
-                  <img src="" alt="" />
-                  <div className="neon-card-bg">
-                    <img src="" alt="" />
-                  </div>
-                  <div className="neon-card-items">
-                    <img src="" alt="" />
-                  </div>
+                <div className="neon-card-object">
+                  <img src={tokens} alt="" />
                 </div>
                 <div className="neon-card-info">
                   <h2 className="neon-card-title">EARN TOKENS</h2>
@@ -201,14 +191,8 @@ export function Home(props) {
                 </div>
               </div>
               <div className="neon-card">
-                <div className="neon-card-border">
-                  <img src="" alt="" />
-                  <div className="neon-card-bg">
-                    <img src="" alt="" />
-                  </div>
-                  <div className="neon-card-items">
-                    <img src="" alt="" />
-                  </div>
+                <div className="neon-card-object">
+                  <img src={toyo} alt="" />
                 </div>
                 <div className="neon-card-info">
                   <h2 className="neon-card-title">EARN TOYOS</h2>
@@ -218,14 +202,8 @@ export function Home(props) {
                 </div>
               </div>
               <div className="neon-card">
-                <div className="neon-card-border">
-                  <img src="" alt="" />
-                  <div className="neon-card-bg">
-                    <img src="" alt="" />
-                  </div>
-                  <div className="neon-card-items">
-                    <img src="" alt="" />
-                  </div>
+                <div className="neon-card-object">
+                  <img src={parts} alt="" />
                 </div>
                 <div className="neon-card-info">
                   <h2 className="neon-card-title">EARN PARTS</h2>
@@ -240,12 +218,17 @@ export function Home(props) {
       </Section>
       <Section id="section-4">
         <div id="pvp-bg">
-          <img src="" alt="" />
+          <img src={bg_pvp} alt="" />
         </div>
         <HomeCanvas id="pvp">
           <Row id="pvp-wrapper">
             <Column>
-              <div id="pvp-title">PVP MODULE</div>
+              <div id="pvp-title">
+                <img src={title_pvp} alt="" />
+              </div>
+              <div id="pvp-blur">
+                <img src={blur} alt="" />
+              </div>
               <div id="pvp-text">
                 Test your strategy combined with your "Toyos" abilities and
                 <br />
@@ -253,7 +236,7 @@ export function Home(props) {
               </div>
             </Column>
             <div id="pvp-video">
-              VIDEO
+              <img src={video} alt="" />
               {/* <video width="100%" height="100%" autoPlay>
                   <source src="" type="video/mp4"></source>
                 </video> */}
@@ -263,7 +246,9 @@ export function Home(props) {
       </Section>
       <Section id="section-5">
         <HomeCanvas id="collect">
-          <div id="collect-title">COLLECT</div>
+          <div id="collect-title">
+            <img src={title_collect} alt="" />
+          </div>
           <Row id="collect-wrapper">
             <div id="collect-text">
               <p>
@@ -298,8 +283,7 @@ export function Home(props) {
               </p>
             </div>
             <div id="collect-img">
-              IMAGE COLECIONÁVEIS (Toyos)
-              <img src="" alt="" />
+              <img src={genies} alt="" />
             </div>
           </Row>
         </HomeCanvas>
@@ -307,13 +291,17 @@ export function Home(props) {
       <Section id="section-6">
         <HomeCanvas id="customize">
           <div id="customize-title">
-            CUSTOMIZE TITLE
-            <img src="" alt="" />
+            <img src={title_customize} alt="" />
           </div>
           <Row id="customize-wrapper">
-            <div id="customize-img">
-              CUSTOMIZE IMG
-              <img src="" alt="" />
+            <div>
+              <img src={customs} alt="" />
+            </div>
+            <div>
+              <img src={equal} alt="" />
+            </div>
+            <div>
+              <img src={toyo_result} alt="" />
             </div>
             <div id="customize-text">
               <p>

@@ -7,7 +7,15 @@ import { SaveTokenDto } from '../dto/save-token.dto';
 @EntityRepository(Token)
 export class TokenRepository extends Repository<Token> {
   public async saveToken(dto: SaveTokenDto): Promise<Token> {
-    const { tokenId, templateId, contractId, name, fungible } = dto;
+    const {
+      tokenId,
+      templateId,
+      contractId,
+      name,
+      fungible,
+      owner,
+      transactionHash,
+    } = dto;
 
     const token = new Token();
     token.tokenId = tokenId;
@@ -15,6 +23,8 @@ export class TokenRepository extends Repository<Token> {
     token.contractId = contractId;
     token.name = name;
     token.fungible = fungible;
+    token.owner = owner;
+    token.transactionHash = transactionHash;
 
     // console.log(token);
     await this.save(token);

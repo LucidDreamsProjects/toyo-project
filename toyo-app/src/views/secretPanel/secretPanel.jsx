@@ -1,8 +1,5 @@
-import React from "react";
+/* import React from "react";
 import { useEffect, useState } from "react";
-
-import box1 from "../../assets/images/box1.png";
-import box2 from "../../assets/images/box2.png";
 
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -566,7 +563,7 @@ export function SecretPanel(props) {
             console.log(dto);
 
             try {
-              await transferToken(props.arkaneConnect, dto);
+              // await transferToken(props.arkaneConnect, dto);
             } catch (err) {
               console.log(err);
             }
@@ -725,3 +722,4 @@ export function SecretPanel(props) {
     </Body>
   );
 }
+ */

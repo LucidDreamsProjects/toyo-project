@@ -144,7 +144,7 @@ export class TokenService {
     const nftArray = [];
     const contractId = this.CONTRACT_ID;
     const url = this.MINT_NFT_URL;
-    const wallet = this.ADMIN_ADDRESS;
+    const wallet = dto.wallet;
     const typeId = dto.typeId;
     const quantity = dto.quantity;
     const accessToken = await this.authService.getAccessToken();
@@ -152,6 +152,8 @@ export class TokenService {
       typeId: typeId,
       destinations: [wallet],
     };
+
+    console.log(_dto);
 
     for (i; i < quantity; ++i) {
       console.log('👷 Preparing the NFT Template to be minted');
@@ -176,7 +178,11 @@ export class TokenService {
           contractId: contractId,
           name: nft.metadata.name,
           fungible: nft.metadata.fungible,
+          owner: nft.destinations[0],
+          transactionHash: nft.transactionHash,
         };
+
+        console.log(_nft);
 
         nftArray.push(_nft);
 
