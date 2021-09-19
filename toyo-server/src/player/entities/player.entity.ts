@@ -15,10 +15,10 @@ export class Player extends BaseEntity {
   @Column({ type: 'varchar', length: 128 })
   email?: string;
 
-  @Column({ type: 'varchar', length: 64 })
+  @Column({ type: 'varchar', length: 64, nullable: true })
   firstName?: string;
 
-  @Column({ type: 'varchar', length: 128 })
+  @Column({ type: 'varchar', length: 128, nullable: true })
   lastName?: string;
 
   @Column({ type: 'text', unique: true })

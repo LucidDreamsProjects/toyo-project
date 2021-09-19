@@ -30,11 +30,11 @@ __decorate([
     __metadata("design:type", String)
 ], Player.prototype, "email", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 64 }),
+    (0, typeorm_1.Column)({ type: 'varchar', length: 64, nullable: true }),
     __metadata("design:type", String)
 ], Player.prototype, "firstName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 128 }),
+    (0, typeorm_1.Column)({ type: 'varchar', length: 128, nullable: true }),
     __metadata("design:type", String)
 ], Player.prototype, "lastName", void 0);
 __decorate([

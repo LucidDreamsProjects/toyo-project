@@ -17,16 +17,16 @@ const App = () => {
     windowMode: "POPUP",
   };
 
-  const arkaneConnect = new ArkaneConnect("Toyo", options);
+  const arkaneConnect = new ArkaneConnect(clientId, options);
 
   return (
     <Switch>
       <Route exact path="/">
         <Home />
       </Route>
-      <Route path="/admin-panel">
+      {/* <Route path="/admin-panel">
         <AdminPanel arkaneConnect={arkaneConnect} />
-      </Route>
+      </Route> */}
       <Route path="/alternative-panel">
         <AlternativePanel arkaneConnect={arkaneConnect} />
       </Route>

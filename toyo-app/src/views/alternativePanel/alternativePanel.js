@@ -1,6 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
-
-import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
+import React, { useEffect, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 
 import {
@@ -12,25 +10,15 @@ import {
   Container,
   Row,
   Column,
-  UserDisplay,
-  Tile,
-  ConstrainedTile,
-  ImageTile,
-  NeonButton,
 } from "./styles";
 import { useWindowSize } from "../../domain/global/hooks/useWindowSize";
 import { getProfile } from "../../domain/player/services/getProfile";
 import { findPlayerById } from "../../domain/player/services/findPlayerById";
 import { savePlayer } from "../../domain/player/services/savePlayer";
-import { updatePlayer } from "../../domain/player/services/updatePlayer";
 import { getWallets } from "../../domain/wallet/services/getWallets";
 import { manageWallets } from "../../domain/wallet/services/manageWallets";
-import { transferNftToken } from "../../domain/token/services/transferNftToken";
 import { transferToken } from "../../domain/token/services/transferToken";
-import { mintToken } from "../../domain/token/services/mintToken";
-import { getFees } from "../../domain/transaction/services/getFees";
-import { getTxStatus } from "../../domain/transaction/services/getTxStatus";
-import { getWalletById } from "../../domain/wallet/services/getWalletById";
+import { getNfts } from "../../domain/token/services/getNftByAddress";
 
 export function AlternativePanel(props) {
   const initialState = {
@@ -59,11 +47,12 @@ export function AlternativePanel(props) {
     const adminAddress = "0xaC17244Cd4F718A7a9a2c4dfF2f9C7775934824D";
     // const tokenAddress = "0xbeB2d63b25002b8959945B0a01aF0D64bf1ddED1";
     const secretType = "MATIC";
+    const totalValue = value * quantity;
 
     const transactionRequest = {
       walletId,
       to: adminAddress,
-      value,
+      value: totalValue,
       secretType,
     };
 
@@ -125,6 +114,7 @@ export function AlternativePanel(props) {
         });
       } else {
         console.log("👷 Don't worry, we'll set you up on the action 😉!");
+
         const newPlayer = {
           playerId: playerId,
           firstName: firstName,
@@ -218,6 +208,13 @@ export function AlternativePanel(props) {
             disabled={loading}
           >
             BUY KYTUNT LEGACY CHEST
+          </button>
+          <button
+            type="action"
+            onClick={() => getNfts(props.arkaneConnect, player.wallet.address)}
+            disabled={loading}
+          >
+            GET NFTS
           </button>
         </div>
       </div>

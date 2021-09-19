@@ -1,16 +1,7 @@
 import { useState, useEffect } from "react";
 import { useWindowSize } from "../../domain/global/hooks/useWindowSize";
 
-import {
-  Body,
-  HomeCanvas,
-  GraffitiBackground,
-  GraffitiLogo,
-  Section,
-  Column,
-  Row,
-  Menu,
-} from "./styles";
+import { Body, HomeCanvas, Section, Column, Row, Menu } from "./styles";
 
 import menu from "../../assets/images/menu/menu.png";
 import bg_top from "../../assets/images/top/bg_top.png";
@@ -46,21 +37,23 @@ export function Home(props) {
       <Menu>
         <img src={menu} alt="Toyo menu button" />
       </Menu>
-      <Section id="section-1">
-        <GraffitiBackground>
+      <Section id="top">
+        <div id="bg_top">
           <img src={bg_top} alt="Toyo's header colorful background" />
-        </GraffitiBackground>
-        <HomeCanvas id="toyo">
-          <Row id="top-row">
+        </div>
+        <HomeCanvas id="canvas-top">
+          <Row id="top-wrapper">
             <div id="toyo-1">
               <img src={toyo1} alt="" />
             </div>
             <Column width="26%">
-              <div id="logo-base">
-                <img src={logo_base} alt="" />
-              </div>
               <div id="logo">
-                <img src={logo} alt="" />
+                <div id="logo-base">
+                  <img src={logo_base} alt="" />
+                </div>
+                <div id="logo-title">
+                  <img src={logo} alt="" />
+                </div>
               </div>
               <div id="btn-video">
                 <img src={btn_watch} alt="" />
@@ -72,10 +65,10 @@ export function Home(props) {
           </Row>
         </HomeCanvas>
       </Section>
-      <Section id="section-2">
-        <HomeCanvas id="wat">
+      <Section id="wat">
+        <HomeCanvas id="wat-canvas">
           <Row>
-            <div id="toyo-3">
+            <div id="hulk">
               <img src={hulk} alt="" />
             </div>
             <Column id="wat-wrapper">
@@ -85,57 +78,47 @@ export function Home(props) {
               <div id="wat-text">
                 <p>
                   Toyo is an NFT Game with Play2Earn mechanics, inspired by the
-                  action
-                  <br />
-                  figures of our childhood.
+                  action figures of our childhood.
                   <br />
                   <br />
                   Many generation grew up playing with those toys, putting them
-                  to face
+                  to face each other in insane battles (well, at least in our
+                  heads, right?).
                   <br />
-                  each other in insane battles (well, at least in our heads,
-                  right?).
                   <br />
                   From the excitement of building heroes to the happiness when
-                  enemies
-                  <br />
-                  were destroyed, we were the writers of our own stories.
+                  enemies were destroyed, we were the writers of our own
+                  stories.
                   <br />
                   <br />
                   Who else misses our child's imagination? Toyo intends to bring
-                  that
-                  <br />
-                  nostalgia back.
+                  that nostalgia back.
                   <br />
                   <br />
                   We are really excited to build what would be the Toyo
-                  Metaverse. A vast
-                  <br />
-                  world where you and your Toyos could, together, write your own
-                  path for
-                  <br />
-                  glory.
+                  Metaverse. A vast world where you and your Toyos could,
+                  together, write your own path for glory.
                 </p>
               </div>
               <div id="btn-discord">
                 <img src={btn_discord} alt="" />
               </div>
             </Column>
-            <div id="toyo-4">
+            <div id="warrior">
               <img src={warrior} alt="" />
             </div>
           </Row>
         </HomeCanvas>
       </Section>
-      <Section id="section-3">
+      <Section id="p2e">
         <div id="p2e-bg">
           <img src={bg_p2e} alt="" />
         </div>
-        <HomeCanvas id="p2e">
+        <HomeCanvas id="p2e-canvas">
           <Column>
             <div id="p2e-top">
               <div id="title-p2e-bg">
-                <img src={separator} alt="" />
+                <img src={separator} id="separator" alt="" />
                 <div id="title-p2e">
                   <img src={title_p2e} alt="" />
                 </div>
@@ -144,37 +127,22 @@ export function Home(props) {
             <Row id="p2e-text-blocks">
               <div id="text-block-1">
                 <p>
-                  We strongly believe that any
-                  <br />
-                  person should be awarded for the
-                  <br />
+                  We strongly believe that any person should be awarded for the
                   entire effort they put into games.
                   <br />
-                  As we also believe this is the
                   <br />
-                  future of gaming.
+                  As we also believe this is the future of gaming.
                 </p>
               </div>
               <div id="text-block-2">
                 <p>
-                  While playing Toyo, you will have
-                  <br />
-                  the ability to earn fungible
-                  <br />
-                  tokens that can also be used to
-                  <br />
-                  buy in-game assets, as well as
-                  <br />
-                  non-fungible tokens (NFTs) which
-                  <br />
-                  can be characters, replaceable
-                  <br />
-                  parts, skills, and more.
+                  While playing Toyo, you will have the ability to earn fungible
+                  tokens that can also be used to buy in-game assets, as well as
+                  non-fungible tokens (NFTs) which can be characters,
+                  replaceable parts, skills, and more.
                   <br />
                   <br />
-                  All this in the transparency of
-                  <br />
-                  blockchain technology.
+                  All this in the transparency of blockchain technology.
                 </p>
               </div>
             </Row>
@@ -216,11 +184,11 @@ export function Home(props) {
           </Column>
         </HomeCanvas>
       </Section>
-      <Section id="section-4">
+      <Section id="pvp">
         <div id="pvp-bg">
           <img src={bg_pvp} alt="" />
         </div>
-        <HomeCanvas id="pvp">
+        <HomeCanvas id="pvp-canvas">
           <Row id="pvp-wrapper">
             <Column>
               <div id="pvp-title">
@@ -231,55 +199,37 @@ export function Home(props) {
               </div>
               <div id="pvp-text">
                 Test your strategy combined with your "Toyos" abilities and
-                <br />
                 strength against others players.
               </div>
             </Column>
             <div id="pvp-video">
               <img src={video} alt="" />
-              {/* <video width="100%" height="100%" autoPlay>
-                  <source src="" type="video/mp4"></source>
-                </video> */}
+              <video width="100%" height="100%" autoPlay>
+                <source src="" type="video/mp4"></source>
+              </video>
             </div>
           </Row>
         </HomeCanvas>
       </Section>
-      <Section id="section-5">
-        <HomeCanvas id="collect">
+      <Section id="collect">
+        <HomeCanvas id="canvas-collect">
           <div id="collect-title">
             <img src={title_collect} alt="" />
           </div>
           <Row id="collect-wrapper">
             <div id="collect-text">
               <p>
-                Expect to have various range of unique
-                <br />
-                styles of Toyos, from warriors to punks,
-                <br />
-                high-techs, athletes, gangstas, badasses,
-                <br />
-                fashionistas, and many more. The ranges
-                <br />
-                will also depend on wich region they come
-                <br />
-                from. Toyos will also be defined by
-                <br />
-                different tiers of Rarity based on their
-                <br />
-                parts.
+                Expect to have various range of unique styles of Toyos, from
+                warriors to punks, high-techs, athletes, gangstas, badasses,
+                fashionistas, and many more. The ranges will also depend on wich
+                region they come from. Toyos will also be defined by different
+                tiers of Rarity based on their parts.
                 <br />
                 <br />
-                Expect to have various range of unique
-                <br />
-                styles of Toyos, from warriors to punks,
-                <br />
-                high-techs, athletes, gangstas, badasses,
-                <br />
-                fashionistas, and many more. The ranges
-                <br />
-                will also depend on wich region they come
-                <br />
-                from. Toyos will also be defined by.
+                Expect to have various range of unique styles of Toyos, from
+                warriors to punks, high-techs, athletes, gangstas, badasses,
+                fashionistas, and many more. The ranges will also depend on wich
+                region they come from. Toyos will also be defined by.
               </p>
             </div>
             <div id="collect-img">
@@ -288,42 +238,32 @@ export function Home(props) {
           </Row>
         </HomeCanvas>
       </Section>
-      <Section id="section-6">
-        <HomeCanvas id="customize">
+      <Section id="customize">
+        <HomeCanvas id="canvas-customize">
           <div id="customize-title">
             <img src={title_customize} alt="" />
           </div>
           <Row id="customize-wrapper">
-            <div>
+            <div id="customs">
               <img src={customs} alt="" />
             </div>
-            <div>
+            <div id="equal">
               <img src={equal} alt="" />
             </div>
-            <div>
+            <div id="toyo-result">
               <img src={toyo_result} alt="" />
             </div>
             <div id="customize-text">
               <p>
-                Any toyo can be highly customized, with
-                <br />
-                different NFT arms set, NFT hands, NFT leg
-                <br />
-                sets, NFT heads, NFT accessories, and even
-                <br />
-                NFT skills. Our team will work hard to
-                <br />
-                create hundreds of extra parts that can be
-                <br />
-                attached to your Toyo, making it one of a<br />
+                Any toyo can be highly customized, with different NFT arms set,
+                NFT hands, NFT leg sets, NFT heads, NFT accessories, and even
+                NFT skills. Our team will work hard to create hundreds of extra
+                parts that can be attached to your Toyo, making it one of a
                 kind.
                 <br />
                 <br />
-                When customizing your Toyo, pay attention
-                <br />
-                to what stats and skills the different
-                <br />
-                parts add to your Toyo.
+                When customizing your Toyo, pay attention to what stats and
+                skills the different parts add to your Toyo.
               </p>
             </div>
           </Row>
