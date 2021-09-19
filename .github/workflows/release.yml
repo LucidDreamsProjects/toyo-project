@@ -13,6 +13,13 @@ jobs:
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
+
+      run: |
+              touch .env
+              echo APP_DEBUG=false >> .env
+              echo DB_USERNAME=test_username >> .env
+              echo DB_PASSWORD=${{ secrets.DEV_PASSWORD }} >> .env
+              echo "!.env" > .git-ftp-include # Add git untracked file
         with:
           server: ${{ secrets.ftp_host }}
           username: ${{ secrets.ftp_user }}
