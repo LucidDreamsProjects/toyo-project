@@ -11,6 +11,7 @@ import {
   Row,
   Column,
 } from "./styles";
+import { getAccessToken } from "../../domain/auth/services/getAccessToken";
 import { useWindowSize } from "../../domain/global/hooks/useWindowSize";
 import { getProfile } from "../../domain/player/services/getProfile";
 import { findPlayerById } from "../../domain/player/services/findPlayerById";
@@ -22,11 +23,11 @@ import { getNfts } from "../../domain/token/services/getNftByAddress";
 
 export function AlternativePanel(props) {
   const initialState = {
-    playerId: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    wallet: {},
+    playerId: undefined,
+    firstName: undefined,
+    lastName: undefined,
+    email: undefined,
+    wallet: undefined,
   };
 
   let [width, height] = useWindowSize();
@@ -34,12 +35,35 @@ export function AlternativePanel(props) {
   let [auth, isAuth] = useState(false);
   let [loading, isLoading] = useState(false);
 
+  const handleNfts = async (arkaneConnect, address) => {
+    isLoading(true);
+
+    if (player.wallet === undefined) {
+      console.group("👷 Please register a wallet before mint");
+      isLoading(false);
+      return;
+    }
+
+    await getNfts(arkaneConnect, address);
+
+    isLoading(false);
+  };
+
   const handleTransfer = async (arkaneConnect, typeId, quantity, value) => {
     isLoading(true);
 
-    if (!player.wallet) {
+    console.log(player.wallet);
+
+    if (player.wallet === undefined) {
       console.group("👷 Please register a wallet before mint");
       isLoading(false);
+      return;
+    }
+
+    const serverResponding = await getAccessToken();
+
+    if (!serverResponding) {
+      isLoading(true);
       return;
     }
 
@@ -71,6 +95,7 @@ export function AlternativePanel(props) {
     isLoading(false);
   };
 
+  //TODO: Ajustar método de atualizar player
   const handlePlayerWallet = async (arkaneConnect) => {
     let wallets = await getWallets(props.arkaneConnect);
 
@@ -187,31 +212,22 @@ export function AlternativePanel(props) {
           >
             CONNECT WITH VENLY
           </button>
-          {/* {auth === true ? (
-            <button
-              type="action"
-              onClick={() => handlePlayerWallet(props.arkaneConnect)}
-              disabled={loading}
-            >
-              CONNECT WALLET
-            </button>
-          ) : (
-            <span />
-          )} */}
         </div>
       </div>
       <div id="canvas">
         <div id="buy-token">
           <button
             type="action"
-            onClick={() => handleTransfer(props.arkaneConnect, 1, 1, 0.1)}
+            onClick={() => handleTransfer(props.arkaneConnect, 1, 1, 0.001)}
             disabled={loading}
           >
             BUY KYTUNT LEGACY CHEST
           </button>
           <button
             type="action"
-            onClick={() => getNfts(props.arkaneConnect, player.wallet.address)}
+            onClick={() =>
+              handleNfts(props.arkaneConnect, player.wallet.address)
+            }
             disabled={loading}
           >
             GET NFTS

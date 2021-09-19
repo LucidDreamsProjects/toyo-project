@@ -72,12 +72,26 @@ const Body = styled.div`
     }
   }
 
-  #wat {
-    position: relative;
-    margin-bottom: 4rem;
-    height: 86vh;
-    overflow: visible;
-    /* background: yellow; */
+  @media screen and (min-width: 1441px) {
+    #wat {
+      position: relative;
+      margin-top: -12rem;
+      margin-bottom: 4rem;
+      height: 86vh;
+      overflow: visible;
+      background: yellow;
+    }
+  }
+
+  @media screen and (min-width: 1366px) {
+    #wat {
+      position: relative;
+      margin-top: -8rem;
+      margin-bottom: 4rem;
+      height: 86vh;
+      overflow: visible;
+      /* background: yellow; */
+    }
   }
 
   @media screen and (orientation: portrait) and (max-width: 520px) {
@@ -86,12 +100,24 @@ const Body = styled.div`
     }
   }
 
-  #wat-canvas {
-    display: flex;
-    position: relative;
-    align-self: center;
-    left: -2rem;
-    /* background: yellow; */
+  @media screen and (min-width: 1441px) {
+    #wat-canvas {
+      display: flex;
+      position: relative;
+      align-self: center;
+      left: -2rem;
+      /* background: yellow; */
+    }
+  }
+
+  @media screen and (max-width: 1366px) {
+    #wat-canvas {
+      display: flex;
+      position: relative;
+      align-self: center;
+      left: -2rem;
+      /* background: yellow; */
+    }
   }
 
   @media screen and (max-width: 520px) {
@@ -128,7 +154,7 @@ const Body = styled.div`
 
   #pvp {
     position: relative;
-    margin-top: -5rem;
+    margin-top: -12rem;
     width: 100%;
     height: 130vh;
     overflow: visible;
@@ -144,9 +170,9 @@ const Body = styled.div`
   #collect {
     position: relative;
     flex-direction: column;
-    margin-top: 8rem;
+    margin-top: 4rem;
     width: 100%;
-    height: 125vh;
+    height: auto;
     overflow: visible;
     /* background: yellow; */
   }
@@ -503,7 +529,7 @@ const HomeCanvas = styled.section`
       display: block;
       position: relative;
       top: -3.5rem;
-      left: -0.25rem;
+      left: 0.5rem;
 
       img {
         width: 125%;
@@ -514,11 +540,11 @@ const HomeCanvas = styled.section`
     #equal {
       display: block;
       position: relative;
-      top: -10rem;
-      left: 3rem;
+      top: -9rem;
+      left: 3.5rem;
       margin-top: auto;
       margin-bottom: 0;
-      width: 8rem;
+      width: 10rem;
       height: auto;
 
       img {
@@ -530,11 +556,14 @@ const HomeCanvas = styled.section`
     #toyo-result {
       display: flex;
       position: relative;
-      top: -5.5rem;
-      left: -2rem;
+      width: 75rem;
+      height: auto;
+      top: -4.5rem;
+      left: 0.5rem;
+      /* background: yellow; */
 
       img {
-        width: 125%;
+        width: 150%;
         height: auto;
       }
     }
@@ -542,12 +571,12 @@ const HomeCanvas = styled.section`
     #customize-text {
       display: flex;
       position: relative;
-      top: -6rem;
+      top: -4rem;
       margin-top: auto;
       margin-right: 0;
       margin-left: auto;
       margin-bottom: 0;
-      width: 40rem;
+      width: 56rem;
       text-align: justify;
       font-size: 0.8rem;
       line-height: 1.25rem;
@@ -622,6 +651,25 @@ const Column = styled.div`
     }
   }
 
+  // aiming at 1920 x 1080
+  @media screen and (min-width: 1441px) {
+    #logo {
+      display: block;
+      flex-direction: column;
+      position: relative;
+      top: -2rem;
+      left: -5rem;
+      width: 21rem;
+      height: auto;
+      z-index: 1000;
+
+      img {
+        width: 135%;
+        height: auto;
+      }
+    }
+  }
+
   @media screen and (max-width: 1366px) {
     #logo {
       display: flex;
@@ -645,32 +693,13 @@ const Column = styled.div`
     }
   }
 
-  // aiming at 1920 x 1080
-  @media screen and (min-width: 1367px) {
-    #logo {
-      display: block;
-      flex-direction: column;
-      position: relative;
-      top: -2rem;
-      left: -5rem;
-      width: 21rem;
-      height: auto;
-      z-index: 1000;
-
-      img {
-        width: 135%;
-        height: auto;
-      }
-    }
-  }
-
   @media screen and (max-width: 1366px) {
     #logo-base {
       display: block;
       flex-direction: column;
       position: relative;
       margin-top: 0rem;
-      margin-right: 8rem;
+      margin-right: 9rem;
       width: 19rem;
       height: auto;
 
@@ -681,7 +710,7 @@ const Column = styled.div`
     }
   }
 
-  @media screen and (min-width: 1367px) {
+  @media screen and (min-width: 1441px) {
     #logo-title {
       display: flex;
       position: relative;
@@ -720,12 +749,13 @@ const Column = styled.div`
     }
   }
 
-  @media screen and (min-width: 1367px) {
+  @media screen and (min-width: 1441px) {
     #btn-video {
       display: block;
       position: relative;
       margin-top: 0;
       margin-right: 4rem;
+      width: 12rem;
       min-width: 10rem;
       max-width: 14rem;
       height: auto;
@@ -742,11 +772,16 @@ const Column = styled.div`
     #btn-video {
       display: block;
       position: relative;
+      left: -2.5rem;
       margin-top: 7rem;
+      margin-left: 4rem;
       margin-right: 4rem;
-      width: 8rem;
+      width: 6.5rem;
+      min-width: 6.5rem;
+      max-width: 10rem;
       height: auto;
       z-index: 500;
+      /* background: yellow; */
 
       img {
         width: 100%;
@@ -768,7 +803,7 @@ const Column = styled.div`
     position: relative;
     margin: 0 auto;
     padding: 1rem;
-    width: 60%;
+    width: 80%;
     height: 8rem;
     max-height: 8rem;
 
@@ -1148,7 +1183,7 @@ const Row = styled.div`
     position: relative;
     align-self: flex-end;
     margin-top: -2rem;
-    margin-right: 2rem;
+    margin-right: 6rem;
     width: 25%;
     height: auto;
     max-width: 30%;
@@ -1187,16 +1222,16 @@ const Row = styled.div`
     display: flex;
     position: relative;
     align-self: flex-start;
-    margin-top: 4rem;
+    margin-top: 12rem;
+    margin-left: 6rem;
     width: 25%;
     max-width: 30%;
     height: auto;
-
     /* background-color: hsla(309, 100%, 25%, 0.5); */
 
     img {
       position: relative;
-      width: 110%;
+      width: 125%;
       height: auto;
     }
     z-index: 400;

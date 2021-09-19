@@ -5,12 +5,23 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import * as helmet from 'helmet';
 import * as compression from 'compression';
+import * as fs from 'fs';
 
 config();
 
 async function bootstrap() {
   const PORT = process.env.PORT || 8081;
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  /* const httpsOptions = {
+    key: fs.readFileSync('./secrets/private-key.pem'),
+    cert: fs.readFileSync('./secrets/public-certificate.pem'),
+  }; */
+
+  const app = await NestFactory.create<NestExpressApplication>(
+    AppModule /* , {
+    httpsOptions,
+  } */,
+  );
 
   app.use(helmet());
   app.use(compression());

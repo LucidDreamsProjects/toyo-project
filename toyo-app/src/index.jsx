@@ -17,7 +17,7 @@ const App = () => {
     windowMode: "POPUP",
   };
 
-  const arkaneConnect = new ArkaneConnect(clientId, options);
+  const arkaneConnect = new ArkaneConnect("Toyo", options);
 
   return (
     <Switch>
