@@ -410,3 +410,4 @@ package-lock.json
 dump.rdb
 ./dist
 ./node_modules
+.env
