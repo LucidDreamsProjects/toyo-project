@@ -404,7 +404,6 @@ Temporary Items
 
 =======
 # Local
-.env
 ./config
 ./config/*
 package-lock.json
