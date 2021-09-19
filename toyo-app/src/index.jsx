@@ -19,6 +19,8 @@ const App = () => {
 
   const arkaneConnect = new ArkaneConnect("Toyo", options);
 
+  console.log(arkaneConnect);
+
   return (
     <Switch>
       <Route exact path="/">

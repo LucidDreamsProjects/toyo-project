@@ -2,7 +2,7 @@ import axios from "axios";
 
 export async function createWallet() {
   const pincode = 7548;
-  const url = "http://localhost:8080/wallet/create";
+  const url = "http://162.240.6.22:8080/wallet/create";
 
   const wallet = await axios({
     method: "post",

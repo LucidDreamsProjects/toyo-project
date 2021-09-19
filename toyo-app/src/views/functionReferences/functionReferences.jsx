@@ -125,7 +125,7 @@ export function FunctionReferences() {
   }; */
 
   const mintNft = async (typeId, [wallet]) => {
-    const url = "http://localhost:8080/nft/mint";
+    const url = "http://162.240.6.22:8080/nft/mint";
 
     axios
       .post(url, {

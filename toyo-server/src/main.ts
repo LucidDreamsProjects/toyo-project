@@ -33,7 +33,7 @@ async function bootstrap() {
 
   await app.listen(`${PORT}`, () => {
     console.log(
-      `⚡️ [server]: Server is running at ${process.env.BASE_URL_STAGING}:${PORT}`,
+      `⚡️ [server]: Server is running at ${process.env.BASE_URL_PRODUCTION}:${PORT}`,
     );
   });
 }
