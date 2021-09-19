@@ -12,16 +12,14 @@ config();
 async function bootstrap() {
   const PORT = process.env.PORT || 8081;
 
-  /* const httpsOptions = {
+  const httpsOptions = {
     key: fs.readFileSync('./secrets/private-key.pem'),
     cert: fs.readFileSync('./secrets/public-certificate.pem'),
-  }; */
+  };
 
-  const app = await NestFactory.create<NestExpressApplication>(
-    AppModule /* , {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     httpsOptions,
-  } */,
-  );
+  });
 
   app.use(helmet());
   app.use(compression());
