@@ -19,7 +19,7 @@ const App = () => {
 
   const arkaneConnect = new ArkaneConnect("Toyo", options);
 
-  console.log(arkaneConnect);
+  // console.log(arkaneConnect);
 
   return (
     <Switch>
