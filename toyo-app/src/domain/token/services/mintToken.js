@@ -2,7 +2,8 @@ import { transferToken } from "../services/transferToken";
 import axios from "axios";
 
 export async function mintToken(address, typeId, quantity) {
-  const url = `http://localhost:8080/template/token `;
+  const baseUrl = process.env.REACT_APP_BASE_STAGING_URL;
+  const url = `${baseUrl}/template/token`;
 
   return await axios
     .post(url, {

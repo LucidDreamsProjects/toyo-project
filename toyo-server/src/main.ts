@@ -13,8 +13,8 @@ async function bootstrap() {
   const PORT = process.env.PORT || 8081;
 
   /* const httpsOptions = {
-    key: fs.readFileSync('./secrets/private-key.pem'),
-    cert: fs.readFileSync('./secrets/public-certificate.pem'),
+    key: fs.readFileSync('./ssl/private-key.pem'),
+    cert: fs.readFileSync('./ssl/public-certificate.pem'),
   }; */
 
   const app = await NestFactory.create<NestExpressApplication>(
@@ -33,7 +33,7 @@ async function bootstrap() {
 
   await app.listen(`${PORT}`, () => {
     console.log(
-      `⚡️ [server]: Server is running at ${process.env.BASE_URL_STAGING}:${PORT}`,
+      `⚡️ [server]: Server is running at ${process.env.BASE_STAGING_URL}:${PORT}`,
     );
   });
 }

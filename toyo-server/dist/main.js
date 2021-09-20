@@ -16,7 +16,7 @@ async function bootstrap() {
     app.enableCors();
     app.init();
     await app.listen(`${PORT}`, () => {
-        console.log(`⚡️ [server]: Server is running at ${process.env.BASE_URL_STAGING}:${PORT}`);
+        console.log(`⚡️ [server]: Server is running at ${process.env.BASE_STAGING_URL}:${PORT}`);
     });
 }
 bootstrap();
