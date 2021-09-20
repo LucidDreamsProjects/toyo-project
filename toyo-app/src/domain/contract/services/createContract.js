@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export async function createContract(contract) {
-  const url = "http://162.240.6.22:8080/contract";
+  const baseUrl = process.env.REACT_APP_BASE_PRODUCTION_URL;
+  const url = `${baseUrl}/contract`;
 
   return await axios.post(url, contract);
 }

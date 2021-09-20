@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export async function mintToken(address, typeId, quantity) {
-  const url = `http://162.240.6.22:8080/template/token `;
+  const baseUrl = process.env.REACT_APP_BASE_PRODUCTIN_URL;
+  const url = `${baseUrl}/template/token `;
 
   return await axios
     .post(url, {
