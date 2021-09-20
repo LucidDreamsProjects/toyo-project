@@ -5,7 +5,7 @@ import { ArkaneConnect } from "@arkane-network/arkane-connect";
 import { Home } from "./views/home/home";
 import { FunctionReferences } from "./views/functionReferences/functionReferences";
 import { NoMatch } from "./views/noMatch/noMatch";
-import { SecretPanel } from "./views/secretPanel/secretPanel";
+import { StressPanel } from "./views/stressPanel/stressPanel";
 import { AlternativePanel } from "./views/alternativePanel/alternativePanel";
 
 import "./index.css";
