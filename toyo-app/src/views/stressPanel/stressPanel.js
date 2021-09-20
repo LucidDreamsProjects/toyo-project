@@ -8,10 +8,6 @@ export function StressPanel(props) {
 
     if (profile) {
       const playerId = profile.userId;
-      const firstName = profile.firstName;
-      const lastName = profile.lastName;
-      const email = profile.email;
-
       const existingPlayer = await findPlayerById(playerId);
 
       if (existingPlayer) {
