@@ -26,11 +26,11 @@ const App = () => {
       <Route exact path="/">
         <Home />
       </Route>
-      {/* <Route path="/admin-panel">
-        <AdminPanel arkaneConnect={arkaneConnect} />
-      </Route> */}
       <Route path="/alternative-panel">
         <AlternativePanel arkaneConnect={arkaneConnect} />
+      </Route>
+      <Route path="/stress-panel">
+        <StressPanel arkaneConnect={arkaneConnect} />
       </Route>
       <Route path="/references">
         <FunctionReferences />
