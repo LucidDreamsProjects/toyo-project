@@ -715,7 +715,7 @@ const Column = styled.div`
       display: flex;
       position: relative;
       top: -19rem;
-      left: 5.5rem;
+      left: 7.5rem;
       width: auto;
       min-width: 8rem;
       max-width: 12rem;
@@ -753,8 +753,8 @@ const Column = styled.div`
     #btn-video {
       display: block;
       position: relative;
-      margin-top: 0;
-      margin-right: 4rem;
+      margin-top: -6rem;
+      margin-left: 1rem;
       width: 12rem;
       min-width: 10rem;
       max-width: 14rem;
