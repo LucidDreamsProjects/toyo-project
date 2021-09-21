@@ -23,9 +23,13 @@ const App = () => {
 
   return (
     <Switch>
-      <Route exact path="/">
-        <Redirect to="https://toyofight.io" />
-      </Route>
+      <Route
+        path="/"
+        component={() => {
+          window.location.href = "https://toyofight.io";
+          return null;
+        }}
+      />
       <Route path="/ui-staging">
         <Home />
       </Route>
