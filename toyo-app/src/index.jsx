@@ -24,6 +24,7 @@ const App = () => {
   return (
     <Switch>
       <Route
+        exact
         path="/"
         component={() => {
           window.location.href = "https://toyofight.io";
