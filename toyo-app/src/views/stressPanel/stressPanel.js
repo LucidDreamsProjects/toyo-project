@@ -4,7 +4,7 @@ import { findPlayerById } from "../../domain/player/services/findPlayerById";
 
 export function StressPanel(props) {
   const handleAuthPlayer = async (arkaneConnect) => {
-    const profile = await getProfile(props.arkaneConnect);
+    const profile = await getProfile(arkaneConnect);
 
     if (profile) {
       const playerId = profile.userId;
@@ -31,7 +31,7 @@ export function StressPanel(props) {
       .then((result) => {
         result.authenticated((auth) => {
           console.log(`👷 User authenticated: ${auth.authenticated}`);
-          handleAuthPlayer();
+          handleAuthPlayer(arkaneConnect);
         });
 
         result.notAuthenticated((auth) => {
@@ -41,7 +41,7 @@ export function StressPanel(props) {
   };
 
   useEffect(() => {
-    authPlayer();
+    authPlayer(props.arkaneConnect);
   }, []);
 
   return <></>;
