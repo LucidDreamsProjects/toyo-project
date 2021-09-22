@@ -249,10 +249,8 @@ export function AlternativePanel(props) {
         await savePlayer(newPlayer);
       }
     }
-
-    await handlePlayerWallet(props.arkaneConnect);
-
     isLoading(false);
+    await handlePlayerWallet(props.arkaneConnect);
   };
 
   const authPlayer = async (arkaneConnect) => {
