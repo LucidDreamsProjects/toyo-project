@@ -2,7 +2,8 @@ import axios from "axios";
 
 export async function createWallet() {
   const pincode = 7548;
-  const url = "http://localhost:8080/wallet/create";
+  const baseUrl = process.env.REACT_APP_BASE_PRODUCTION_URL;
+  const url = `${baseUrl}/wallet/create`;
 
   const wallet = await axios({
     method: "post",

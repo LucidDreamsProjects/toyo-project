@@ -3,18 +3,8 @@ import { getProfile } from "../../domain/player/services/getProfile";
 import { findPlayerById } from "../../domain/player/services/findPlayerById";
 
 export function StressPanel(props) {
-  console.log(props);
-
-  const sleep = (milliseconds) => {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds));
-  };
-
   const handleAuthPlayer = async (arkaneConnect) => {
-    await sleep(10000);
-
-    console.log("handleAuthPlayer: ", arkaneConnect);
-
-    const profile = await getProfile(props.arkaneConnect);
+    const profile = await getProfile(arkaneConnect);
 
     if (profile) {
       const playerId = profile.userId;
@@ -36,14 +26,12 @@ export function StressPanel(props) {
   };
 
   const authPlayer = async (arkaneConnect) => {
-    console.log("AUTHPLAYER: ", arkaneConnect);
-
-    await arkaneConnect.flows
+    return await arkaneConnect.flows
       .authenticate({ windowMode: "POPUP" })
       .then((result) => {
         result.authenticated((auth) => {
           console.log(`👷 User authenticated: ${auth.authenticated}`);
-          handleAuthPlayer();
+          handleAuthPlayer(arkaneConnect);
         });
 
         result.notAuthenticated((auth) => {

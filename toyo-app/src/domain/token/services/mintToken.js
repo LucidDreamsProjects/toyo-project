@@ -1,9 +1,8 @@
-import { transferToken } from "../services/transferToken";
 import axios from "axios";
 
 export async function mintToken(address, typeId, quantity) {
-  const baseUrl = process.env.REACT_APP_BASE_STAGING_URL;
-  const url = `${baseUrl}/template/token`;
+  const baseUrl = process.env.REACT_APP_BASE_PRODUCTION_URL;
+  const url = `${baseUrl}/template/token `;
 
   return await axios
     .post(url, {
