@@ -153,10 +153,11 @@ export class TokenService {
       destinations: [wallet],
     };
 
-    console.log(_dto);
+    console.log('👷 Preparing the NFT Template to be minted');
+    // console.log(_dto);
 
     for (i; i < quantity; ++i) {
-      console.log('👷 Preparing the NFT Template to be minted');
+      console.log(`👷 Minting #${i} of #${quantity} NFTs... Please wait...`);
       const nft = await axios
         .post(url, _dto, {
           headers: {
@@ -165,7 +166,7 @@ export class TokenService {
         })
         .then((response) => {
           console.log('👷 You minted a new NFT!');
-          console.log(response.data[0]);
+          // console.log(response.data[0]);
           return response.data[0];
         })
         .catch((error) => console.log(error));
@@ -182,14 +183,15 @@ export class TokenService {
           transactionHash: nft.transactionHash,
         };
 
-        console.log(_nft);
+        // console.log(_nft);
 
         nftArray.push(_nft);
 
         await this.tokenRepository.saveToken(_nft);
-
-        return nftArray;
       }
     }
+
+    console.log('NFT ARRAY: ', nftArray);
+    return nftArray;
   }
 }

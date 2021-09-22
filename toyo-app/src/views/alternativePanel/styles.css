@@ -1,0 +1,52 @@
+#body {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: auto;
+  min-height: 100vh;
+  /* background: yellow; */
+}
+
+#body > section {
+  width: 100%;
+  height: auto;
+  /* background: yellow; */
+}
+
+#top,
+#middle {
+  display: flex;
+  flex-direction: column;
+}
+
+#middle {
+  margin: 1rem 0;
+}
+
+#transaction {
+  margin: 1rem 0;
+}
+
+#transaction > div {
+  display: flex;
+  flex-direction: row;
+}
+
+#transaction-buy-token {
+  display: flex;
+  flex-direction: row;
+  height: 1rem;
+}
+
+#transaction-buy-token-counter {
+  margin: 1rem 0;
+}
+
+#transaction-buy-token-counter > button {
+  width: 2rem;
+}
+
+#transaction-buy-token-counter > div {
+  margin: 8px;
+  font-weight: 800;
+}

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { ArkaneConnect } from "@arkane-network/arkane-connect";
 import { Home } from "./views/home/home";
 import { FunctionReferences } from "./views/functionReferences/functionReferences";
@@ -9,6 +9,8 @@ import { StressPanel } from "./views/stressPanel/stressPanel";
 import { AlternativePanel } from "./views/alternativePanel/alternativePanel";
 
 import "./index.css";
+
+const RECAPTCHA_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
 
 const App = () => {
   const clientId = process.env.REACT_APP_VENLY_ID;
@@ -22,6 +24,7 @@ const App = () => {
   return (
     <Switch>
       <Route
+        exact
         path="/"
         component={() => {
           window.location.href = "https://toyofight.io";

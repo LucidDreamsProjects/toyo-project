@@ -1,4 +1,4 @@
-import { Post } from '@nestjs/common';
+import { Post, Param } from '@nestjs/common';
 import { Controller, HttpCode } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 
@@ -10,5 +10,14 @@ export class AuthController {
   @Post()
   public async getBearerToken(): Promise<string | void> {
     return await this.authService.getAccessToken();
+  }
+
+  @HttpCode(200)
+  @Post('recaptcha/:token')
+  public async validateHuman(
+    @Param('token') token: string,
+  ): Promise<boolean | void> {
+    // console.log('CONTROLLER: ', token);
+    return await this.authService.validateHuman(token);
   }
 }

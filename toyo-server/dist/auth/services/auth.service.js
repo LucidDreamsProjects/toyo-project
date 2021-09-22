@@ -13,6 +13,8 @@ const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
 let AuthService = class AuthService {
     constructor() {
+        this.SECRET_KEY = `${process.env.SECRET_KEY}`;
+        this.GOOGLE_URL = `https://www.google.com/recaptcha/api/siteverify?secret=${this.SECRET_KEY}&response=`;
         this.DATA_URL = `${process.env.AUTHENTICATION_ENDPOINT}/auth/realms/Arkane/protocol/openid-connect/token`;
         this.GRANT_TYPE = `${process.env.GRANT_TYPE}`;
         this.CLIENT_ID = `${process.env.VENLY_ID}`;
@@ -40,6 +42,18 @@ let AuthService = class AuthService {
             const accessToken = credentials.access_token;
             return accessToken;
         }
+    }
+    async validateHuman(token) {
+        const url = this.GOOGLE_URL + token;
+        return await axios_1.default
+            .post(url)
+            .then((response) => {
+            console.log(response.data);
+            return response.data;
+        })
+            .catch((error) => {
+            console.log(error);
+        });
     }
 };
 AuthService = __decorate([

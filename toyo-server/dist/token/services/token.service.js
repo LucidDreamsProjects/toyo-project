@@ -136,9 +136,9 @@ let TokenService = class TokenService {
             typeId: typeId,
             destinations: [wallet],
         };
-        console.log(_dto);
+        console.log('👷 Preparing the NFT Template to be minted');
         for (i; i < quantity; ++i) {
-            console.log('👷 Preparing the NFT Template to be minted');
+            console.log(`👷 Minting #${i} of #${quantity} NFTs... Please wait...`);
             const nft = await axios_1.default
                 .post(url, _dto, {
                 headers: {
@@ -147,7 +147,6 @@ let TokenService = class TokenService {
             })
                 .then((response) => {
                 console.log('👷 You minted a new NFT!');
-                console.log(response.data[0]);
                 return response.data[0];
             })
                 .catch((error) => console.log(error));
@@ -162,12 +161,12 @@ let TokenService = class TokenService {
                     owner: nft.destinations[0],
                     transactionHash: nft.transactionHash,
                 };
-                console.log(_nft);
                 nftArray.push(_nft);
                 await this.tokenRepository.saveToken(_nft);
-                return nftArray;
             }
         }
+        console.log('NFT ARRAY: ', nftArray);
+        return nftArray;
     }
 };
 TokenService = __decorate([

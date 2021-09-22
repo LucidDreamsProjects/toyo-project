@@ -12,12 +12,14 @@ export async function transferToken(
   const typeId = mintRequest.typeId;
   const quantity = mintRequest.quantity;
 
+  // console.log("quantity: ", quantity);
+
   return await arkaneConnect
     .createSigner()
     .executeTransfer(transactionRequest)
     .then(async (result) => {
       const mintedToken = await mintToken(address, typeId, quantity);
-      console.log(mintedToken);
+      console.log("👷 Here is your(s) newmade NFT(s): ", mintedToken);
       return result;
     })
     .catch((error) => {

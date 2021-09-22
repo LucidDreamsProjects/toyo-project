@@ -3,4 +3,5 @@ export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
     getBearerToken(): Promise<string | void>;
+    validateHuman(token: string): Promise<boolean | void>;
 }

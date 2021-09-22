@@ -6,6 +6,8 @@ config();
 
 @Injectable()
 export class AuthService {
+  private readonly SECRET_KEY = `${process.env.SECRET_KEY}`;
+  private readonly GOOGLE_URL = `https://www.google.com/recaptcha/api/siteverify?secret=${this.SECRET_KEY}&response=`;
   private readonly DATA_URL = `${process.env.AUTHENTICATION_ENDPOINT}/auth/realms/Arkane/protocol/openid-connect/token`;
   private readonly GRANT_TYPE = `${process.env.GRANT_TYPE}`;
   private readonly CLIENT_ID = `${process.env.VENLY_ID}`;
@@ -39,5 +41,19 @@ export class AuthService {
       // console.log(`👷 Setting up your credentials`);
       return accessToken;
     }
+  }
+
+  public async validateHuman(token: string): Promise<boolean | void> {
+    const url = this.GOOGLE_URL + token;
+    // console.log('VALIDATE HUMAN: ', url);
+    return await axios
+      .post(url)
+      .then((response) => {
+        console.log(response.data);
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 }

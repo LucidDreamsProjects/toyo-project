@@ -4,7 +4,7 @@ export async function getAccessToken() {
   const baseUrl = process.env.REACT_APP_BASE_STAGING_URL;
   const url = `${baseUrl}/auth`;
 
-  console.log(url);
+  // console.log(url);
 
   return await axios
     .post(url)
