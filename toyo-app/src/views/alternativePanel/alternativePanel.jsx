@@ -110,21 +110,33 @@ export function AlternativePanel(props) {
   const handleTransfer = async (arkaneConnect, typeId, quantity, value) => {
     if (quantity === 0) {
       notify("warn");
-      console.group("👷 Sorry, we do magic but miracle is another thing...");
+      console.group("👷 Sorry, you should ask for at least 1");
       return;
     }
 
     if (disable) {
-      notify("error");
+      notify("warn");
       console.group("👷 Please do the CAPTCHA before mint");
       return;
     }
 
     if (player.wallet === undefined) {
-      notify("error");
+      notify("warn");
       console.log("👷 Your wallet is empty...", player.wallet);
       console.group("👷 Please register a wallet before mint");
-      isLoading(false);
+      return;
+    }
+
+    // console.log(player.wallet.balance.balance);
+    if (player.wallet.balance.balance < value) {
+      notify("warn");
+      console.group("👷 Sorry, you don't have balance");
+      return;
+    }
+
+    if (quantity > 5) {
+      notify("warn");
+      console.group("👷 Please, limit your purchase to 5 max.");
       return;
     }
 
@@ -297,7 +309,7 @@ export function AlternativePanel(props) {
 
   return (
     <div id="body">
-      <ToastContainer />
+      <ToastContainer autoClose={2500} />
       <section>
         <div id="top" className="canvas">
           <div>PRESS F12 AND GO FOR "CONSOLE" FOR BETTER UX</div>
@@ -317,7 +329,7 @@ export function AlternativePanel(props) {
               <button
                 type="action"
                 onClick={() =>
-                  handleTransfer(props.arkaneConnect, 1, count, 0.001)
+                  handleTransfer(props.arkaneConnect, 1, count, 0.01)
                 }
                 disabled={loading}
               >

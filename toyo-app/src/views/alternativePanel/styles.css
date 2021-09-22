@@ -1,6 +1,7 @@
 #body {
   display: flex;
   flex-direction: column;
+  padding: 2rem;
   width: 100vw;
   height: auto;
   min-height: 100vh;
