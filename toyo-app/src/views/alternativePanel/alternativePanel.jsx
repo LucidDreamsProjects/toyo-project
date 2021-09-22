@@ -71,7 +71,7 @@ export function AlternativePanel(props) {
 
   const onChange = async (token) => {
     const url =
-      `${process.env.REACT_APP_BASE_STAGING_URL}/auth/recaptcha/` + token;
+      `${process.env.REACT_APP_BASE_PRODUCTION_URL}/auth/recaptcha/` + token;
     // console.log("Captcha token:", token);
     // console.log(url);
     await axios
