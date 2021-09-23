@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import { ArkaneConnect } from "@arkane-network/arkane-connect";
 import { Home } from "./views/home/home";
 import { FunctionReferences } from "./views/functionReferences/functionReferences";
@@ -13,6 +13,8 @@ import "./index.css";
 const RECAPTCHA_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
 
 const App = () => {
+  const [auth, isAuth] = useState(false);
+  const [player, setPlayer] = useState({});
   const clientId = process.env.REACT_APP_VENLY_ID;
   const options = {
     environment: "staging",
@@ -24,31 +26,33 @@ const App = () => {
   // console.log(arkaneConnect);
 
   return (
-    <Switch>
-      <Route
-        exact
-        path="/"
-        component={() => {
-          window.location.href = "https://toyofight.io";
-          return null;
-        }}
-      />
-      <Route path="/ui-staging">
-        <Home />
-      </Route>
-      <Route path="/alternative-panel">
-        <AlternativePanel arkaneConnect={arkaneConnect} />
-      </Route>
-      <Route path="/stress-panel">
-        <StressPanel arkaneConnect={arkaneConnect} />
-      </Route>
-      <Route path="/references">
-        <FunctionReferences />
-      </Route>
-      <Route>
-        <NoMatch />
-      </Route>
-    </Switch>
+    <>
+      <Switch>
+        <Route
+          exact
+          path="/"
+          component={() => {
+            window.location.href = "https://toyofight.io";
+            return null;
+          }}
+        />
+        <Route path="/ui-staging">
+          <Home />
+        </Route>
+        <Route path="/alternative-panel">
+          <AlternativePanel arkaneConnect={arkaneConnect} />
+        </Route>
+        <Route path="/stress-panel">
+          <StressPanel arkaneConnect={arkaneConnect} />
+        </Route>
+        <Route path="/references">
+          <FunctionReferences />
+        </Route>
+        <Route>
+          <NoMatch />
+        </Route>
+      </Switch>
+    </>
   );
 };
 

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useWindowSize } from "../../domain/global/hooks/useWindowSize";
 
 import { Body, HomeCanvas, Section, Column, Row, Menu } from "./styles";
 
@@ -31,9 +30,164 @@ import customs from "../../assets/images/customize/customs.png";
 import equal from "../../assets/images/customize/equal.png";
 import toyo_result from "../../assets/images/customize/toyo_result.png";
 
+import { useWindowSize } from "../../domain/global/hooks/useWindowSize";
+import { getWallets } from "../../domain/wallet/services/getWallets";
+import { manageWallets } from "../../domain/wallet/services/manageWallets";
+import { getProfile } from "../../domain/player/services/getProfile";
+import { findPlayerById } from "../../domain/player/services/findPlayerById";
+import { savePlayer } from "../../domain/player/services/savePlayer";
+import { ToastContainer, toast } from "react-toastify";
+
 export function Home(props) {
+  let [loading, isLoading] = useState(false);
+
+  const notify = (type) => {
+    switch (type) {
+      case "welcome":
+        toast("🦄 Welcome WH9 human", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        break;
+      case "sucess":
+        toast.success("🦄 Plim! And it's done ✨");
+        break;
+      case "error":
+        toast.error("🦄 Sorry, something went wrong...");
+        break;
+      case "info":
+        toast.info("🦄 You got new console logs ");
+        break;
+      case "warn":
+        toast.warn("🦄 Hey! That's not how it's done!");
+        break;
+      default:
+        toast("🦄 Welcome WH9 human", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        break;
+    }
+  };
+
+  const handlePlayerWallet = async (arkaneConnect) => {
+    // console.log("player na wallet: ", player);
+
+    let wallets = await getWallets(props.arkaneConnect);
+    console.log(`👷 your wallets: `, wallets);
+    notify("info");
+
+    if (wallets.length !== 0) {
+      // console.log("👷 Setting up your wallet...");
+      props.setPlayer((prevState) => ({ ...prevState, wallet: wallets[0] }));
+      notify("info");
+    } else {
+      console.log(
+        "👷 So you don't own one... No worries, I'm already preparing a new wallet for you"
+      );
+      await manageWallets(props.arkaneConnect);
+
+      wallets = await getWallets(props.arkaneConnect);
+      props.setPlayer((prevState) => ({ ...prevState, wallet: wallets[0] }));
+      notify("info");
+    }
+
+    /* const updatePlayerWalletDto = {
+      wallets: wallets[0].address,
+    }; */
+
+    // console.log(player);
+    // console.log(player.playerId, updatePlayerWalletDto);
+    // await updatePlayer(player, updatePlayerWalletDto);
+  };
+
+  const handleAuthPlayer = async (arkaneConnect) => {
+    isLoading(true);
+    // console.log("HOME | HANDLE AUTH PLAYER: ", arkaneConnect);
+    const profile = await getProfile(arkaneConnect);
+
+    if (profile) {
+      const playerId = profile.userId;
+      const firstName = profile.firstName;
+      const lastName = profile.lastName;
+      const email = profile.email;
+
+      const existingPlayer = await findPlayerById(playerId);
+
+      if (existingPlayer) {
+        await props.setPlayer({
+          playerId: existingPlayer.playerId,
+          firstName: existingPlayer.firstName,
+          lastName: existingPlayer.lastName,
+          email: existingPlayer.email,
+          role: existingPlayer.role,
+        });
+        notify("info");
+        // await sleep(1000);
+        // console.log("player: ", player);
+      } else {
+        console.log("👷 Don't worry, we'll set you up on the action 😉!");
+
+        const newPlayer = {
+          playerId: playerId,
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          wallets: null,
+        };
+
+        props.setPlayer({
+          playerId: playerId,
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+        });
+        notify("info");
+
+        // console.log("player: ", player);
+
+        await savePlayer(newPlayer);
+      }
+    }
+    isLoading(false);
+    await handlePlayerWallet(props.arkaneConnect);
+  };
+
+  const authPlayer = async (arkaneConnect) => {
+    return await arkaneConnect.flows
+      .authenticate({ windowMode: "POPUP" })
+      .then((result) => {
+        result.authenticated((auth) => {
+          console.log(`👷 User authenticated: ${auth.authenticated}`);
+          notify("sucess");
+          handleAuthPlayer(arkaneConnect);
+          props.isAuth(true);
+        });
+
+        result.notAuthenticated((auth) => {
+          console.log("👷 User couldn't be authenticated");
+        });
+      });
+  };
+
+  useEffect(() => {
+    console.log(props.arkaneConnect);
+    authPlayer(props.arkaneConnect);
+  }, []);
+
   return (
     <Body>
+      <ToastContainer autoClose={2500} />
       <Menu>
         <img src={menu} alt="Toyo menu button" />
       </Menu>
