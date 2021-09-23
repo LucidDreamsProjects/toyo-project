@@ -157,7 +157,7 @@ export class TokenService {
     // console.log(_dto);
 
     for (i; i < quantity; ++i) {
-      console.log(`👷 Minting #${i} of #${quantity} NFTs... Please wait...`);
+      console.log(`👷 Minting #${i+1} of #${quantity} NFTs... Please wait...`);
       const nft = await axios
         .post(url, _dto, {
           headers: {

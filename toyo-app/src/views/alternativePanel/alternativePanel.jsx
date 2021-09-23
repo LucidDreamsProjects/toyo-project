@@ -13,7 +13,7 @@ import { updatePlayer } from "../../domain/player/services/updatePlayer";
 import { sleep } from "../../domain/global/hooks/sleep";
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
-import { ToastContainer, toast, Zoom, Bounce } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./styles.css";
@@ -29,6 +29,7 @@ export function AlternativePanel(props) {
   let [verified, isVerified] = useState(false);
   let [disable, isDisabled] = useState(true);
   let [count, setCount] = useState(0);
+  let [open, isOpen] = useState(false);
 
   const notify = (type) => {
     switch (type) {
@@ -84,6 +85,9 @@ export function AlternativePanel(props) {
       .catch((error) => {
         console.log(error);
       });
+
+    await sleep(5000);
+    isOpen(false);
   };
 
   const handleNfts = async (arkaneConnect, address) => {
@@ -108,23 +112,41 @@ export function AlternativePanel(props) {
   };
 
   const handleTransfer = async (arkaneConnect, typeId, quantity, value) => {
-    if (quantity === 0) {
+    if (quantity <= 0) {
       notify("warn");
-      console.group("👷 Sorry, we do magic but miracle is another thing...");
+      console.group("👷 Sorry, you should ask for at least 1");
       return;
     }
 
     if (disable) {
-      notify("error");
+      console.group("👷 Please do the CAPTCHA before mint");
+      isOpen(true);
+      return;
+    }
+
+    if (disable && open) {
+      notify("warn");
       console.group("👷 Please do the CAPTCHA before mint");
       return;
     }
 
     if (player.wallet === undefined) {
-      notify("error");
+      notify("warn");
       console.log("👷 Your wallet is empty...", player.wallet);
       console.group("👷 Please register a wallet before mint");
-      isLoading(false);
+      return;
+    }
+
+    // console.log(player.wallet.balance.balance);
+    if (player.wallet.balance.balance < value) {
+      notify("warn");
+      console.group("👷 Sorry, you don't have balance");
+      return;
+    }
+
+    if (quantity > 5) {
+      notify("warn");
+      console.group("👷 Please, limit your purchase to 5 max.");
       return;
     }
 
@@ -297,7 +319,7 @@ export function AlternativePanel(props) {
 
   return (
     <div id="body">
-      <ToastContainer />
+      <ToastContainer autoClose={2500} />
       <section>
         <div id="top" className="canvas">
           <div>PRESS F12 AND GO FOR "CONSOLE" FOR BETTER UX</div>
@@ -314,26 +336,36 @@ export function AlternativePanel(props) {
         <div id="middle" className="canvas">
           <div id="transaction">
             <div id="transaction-buy-token" className="btn">
-              <button
-                type="action"
-                onClick={() =>
-                  handleTransfer(props.arkaneConnect, 1, count, 0.001)
-                }
-                disabled={loading}
-              >
-                BUY KYTUNT CHEST
-              </button>
+              <div className="column">
+                <div id="transaction-buy-token-btn">
+                  <button
+                    type="action"
+                    onClick={() =>
+                      handleTransfer(props.arkaneConnect, 1, count, 0.01)
+                    }
+                    disabled={loading}
+                  >
+                    BUY KYTUNT CHEST
+                  </button>
+                </div>
+                <div id="transaction-buy-token-counter" className="counter">
+                  <button onClick={() => setCount(count - 1)}>-</button>
+                  <div>{count}</div>
+                  <button onClick={() => setCount(count + 1)}>+</button>
+                </div>
+              </div>
+              <div id="transaction-buy-token-recaptcha">
+                {open ? (
+                  <ReCAPTCHA
+                    sitekey={RECAPTCHA_KEY}
+                    ref={reRef}
+                    onChange={onChange}
+                  />
+                ) : (
+                  <div>RECAPTCHA ISN'T OPEN YET...</div>
+                )}
+              </div>
             </div>
-            <div id="transaction-buy-token-counter" className="counter">
-              <button onClick={() => setCount(count - 1)}>-</button>
-              <div>{count}</div>
-              <button onClick={() => setCount(count + 1)}>+</button>
-            </div>
-            <ReCAPTCHA
-              sitekey={RECAPTCHA_KEY}
-              ref={reRef}
-              onChange={onChange}
-            />
           </div>
           <div id="user-nft">
             <button
