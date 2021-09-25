@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { NftController } from './nft.controller';
-import { NftService } from '../services/nft.service';
+import { TokenController } from './token.controller';
+import { TokenService } from '../services/token.service';
 import { EthereumAddress } from 'wallet.ts';
 import { config } from 'dotenv';
 
@@ -11,11 +11,11 @@ const testKey = Buffer.from(
   'hex',
 );
 
-describe('NtfController', () => {
-  let nftController: NftController;
+describe('TokenController', () => {
+  let tokenController: TokenController;
 
-  const mockNftService = {
-    createNft: jest.fn(async (dto) => {
+  const mockTokenService = {
+    mintToken: jest.fn(async (dto) => {
       return await {
         id: 51,
         confirmed: true,
@@ -57,64 +57,33 @@ describe('NtfController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [NftController],
-      providers: [NftService],
+      controllers: [TokenController],
+      providers: [TokenService],
     })
-      .overrideProvider(NftService)
-      .useValue(mockNftService)
+      .overrideProvider(TokenService)
+      .useValue(mockTokenService)
       .compile();
 
-    nftController = module.get<NftController>(NftController);
+    tokenController = module.get<TokenController>(TokenController);
   });
 
   it('should be defined', () => {
-    expect(nftController).toBeDefined();
+    expect(tokenController).toBeDefined();
   });
 
-  it('should create a nft', async () => {
-    const name = 'Toyo';
-    const description = 'Toyo is a awesome fighting blockchain empowered 😎';
-    const image =
-      'https://static.wikia.nocookie.net/parody/images/4/42/74915084_10162764640400387_6139958579186106368_o.jpg';
-    const externalUrl = 'https://en.wikipedia.org/wiki/Space_Chickens_in_Space';
-    const backgroundColor = '#FFFFFF';
-    const fungible = false;
-    const maxSupply = '25';
-    const burnable = true;
-    const animationUrls = [
-      {
-        type: 'video',
-        value: 'http://img.arkane.network/chuck_trailer.mp4',
-      },
-      {
-        type: 'audio',
-        value: 'http://img.arkane.network/chuck_soundtrack.mp3',
-      },
-    ];
-    const attributes = [
-      {
-        type: 'property',
-        name: 'Talent',
-        value: 'Leadership',
-      },
-    ];
+  it('should create a nft template and return that', async () => {
+    const typeId = 1;
+    const quantity = 1;
+    const address = 'd5c001b1-eead-475e-baac-43219c14156e';
 
     const dto = {
-      name: name,
-      description: description,
-      image: image,
-      externalUrl: externalUrl,
-      backgroundColor: backgroundColor,
-      fungible: fungible,
-      maxSupply: maxSupply,
-      burnable: burnable,
-      animationUrls: animationUrls,
-      attributes: attributes,
+      typeId: typeId,
+      wallet: address,
+      quantity: quantity,
     };
 
-    expect.assertions(1);
-    return await nftController.createNft(dto).then((data) => {
-      expect(data).toEqual({
+    return await tokenController.mintToken(dto).then((response) => {
+      expect(response).toEqual({
         id: expect.any(Number),
         confirmed: expect.any(Boolean),
         name: expect.any(String),
@@ -143,5 +112,5 @@ describe('NtfController', () => {
         transactionHash: expect.any(String),
       });
     });
-  });
+  }, 15000);
 });

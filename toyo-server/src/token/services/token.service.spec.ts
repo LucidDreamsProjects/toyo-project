@@ -1,95 +1,60 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { AuthService } from '../../auth/services/auth.service';
-import { NftService } from './nft.service';
+import { Token } from '../entities/token.entity';
+import { TokenRepository } from '../repositories/token.repository';
+import { TokenService } from './token.service';
 
-describe('NftService', () => {
-  let nftService: NftService;
-  let authService: AuthService;
+describe('TokenService', () => {
+  let tokenService: TokenService;
+  // let authService: AuthService;
+
+  const mockTokenRepository = {
+    save: jest.fn().mockImplementation(async (token: Token) => {
+      return await {
+        tokenId: 1,
+        templateId: 1,
+        contractId: 1,
+        name: 'Generic Non Fungible Token',
+        fungible: false,
+        owner: 'd5c001b1-eead-475e-baac-43219c14156e',
+        transactionHash:
+          '0xa853fcedd409ce5584ae153bafce88223f1afe650a77b1a3e5b75814d2171b87',
+      };
+    }),
+  };
 
   beforeEach(async () => {
     jest.setTimeout(15000);
     const module: TestingModule = await Test.createTestingModule({
-      providers: [NftService, AuthService],
+      providers: [
+        AuthService,
+        TokenService,
+        TokenRepository,
+        {
+          provide: getRepositoryToken(Token),
+          useValue: mockTokenRepository,
+        },
+      ],
     }).compile();
 
-    nftService = await module.get<NftService>(NftService);
-    authService = await module.get<AuthService>(AuthService);
+    tokenService = await module.get<TokenService>(TokenService);
+    // authService = await module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {
-    expect(nftService).toBeDefined();
+    expect(tokenService).toBeDefined();
   });
 
-  it('should create a nft and return that', async () => {
-    const name = 'Toyo';
-    const description = 'Toyo is a awesome fighting blockchain empowered 😎';
-    const image =
-      'https://static.wikia.nocookie.net/parody/images/4/42/74915084_10162764640400387_6139958579186106368_o.jpg';
-    const externalUrl = 'https://en.wikipedia.org/wiki/Space_Chickens_in_Space';
-    const backgroundColor = '#FFFFFF';
-    const fungible = false;
-    const maxSupply = '25';
-    const burnable = true;
-    const animationUrls = [
-      {
-        type: 'video',
-        value: 'http://img.arkane.network/chuck_trailer.mp4',
-      },
-      {
-        type: 'audio',
-        value: 'http://img.arkane.network/chuck_soundtrack.mp3',
-      },
-    ];
-    const attributes = [
-      {
-        type: 'property',
-        name: 'Talent',
-        value: 'Leadership',
-      },
-    ];
-
+  /* it('should mint a nft and return that', async () => {
     const dto = {
-      name: name,
-      description: description,
-      image: image,
-      externalUrl: externalUrl,
-      backgroundColor: backgroundColor,
-      fungible: fungible,
-      maxSupply: maxSupply,
-      burnable: burnable,
-      animationUrls: animationUrls,
-      attributes: attributes,
+      wallet: '0xaC17244Cd4F718A7a9a2c4dfF2f9C7775934824D',
+      typeId: 1,
+      quantity: 1,
     };
 
-    return await nftService.createNft(dto).then((response) => {
-      expect(response).toEqual({
-        id: expect.any(Number),
-        confirmed: expect.any(Boolean),
-        name: expect.any(String),
-        description: expect.any(String),
-        fungible: expect.any(Boolean),
-        burnable: expect.any(Boolean),
-        externalUrl: expect.any(String),
-        backgroundColor: expect.any(String),
-        image: expect.any(String),
-        imageThumbnail: expect.any(String),
-        imagePreview: expect.any(String),
-        maxSupply: expect.any(Number),
-        currentSupply: expect.any(Number),
-        animationUrls: expect.arrayContaining([
-          expect.objectContaining({
-            type: expect.any(String),
-            value: expect.any(String),
-          }),
-        ]),
-        attributes: expect.arrayContaining([
-          expect.objectContaining({
-            type: expect.any(String),
-            value: expect.any(String),
-          }),
-        ]),
-        transactionHash: expect.any(String),
-      });
+    return await tokenService.mintToken(dto).then((response) => {
+      expect(response).toEqual({});
     });
-  }, 15000);
+  }, 15000); */
 });

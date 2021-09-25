@@ -31,7 +31,7 @@ export class ContractService {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        console.log("> VENLY'S SERVER | Contract", response.data);
         return response.data;
       })
       .catch((error) => console.log(error));
@@ -45,6 +45,8 @@ export class ContractService {
         symbol: contract.symbol,
         externalUrl: contract.externalUrl,
       };
+
+      console.log('> DATABASE | Contract: ');
 
       await this.contractRepository.saveContract(_contract);
     }

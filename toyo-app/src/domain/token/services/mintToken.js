@@ -1,4 +1,6 @@
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export async function mintToken(address, typeId, quantity) {
   const baseUrl = process.env.REACT_APP_BASE_STAGING_URL;
@@ -11,9 +13,11 @@ export async function mintToken(address, typeId, quantity) {
       quantity: quantity,
     })
     .then((response) => {
+      toast.success("🦄 Plim! And it's done ✨");
       return response.data[0];
     })
     .catch(async (props, error) => {
+      toast.error("🦄 Sorry, something went wrong...");
       console.log(error);
     });
 }
