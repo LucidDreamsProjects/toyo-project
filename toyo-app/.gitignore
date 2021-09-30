@@ -5,3 +5,4 @@ dist-ssr
 *.local
 .env
 _index.jsx
+public/BoxViewer/
