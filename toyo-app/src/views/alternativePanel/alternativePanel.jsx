@@ -10,7 +10,7 @@ import { manageWallets } from "../../domain/wallet/services/manageWallets";
 import { transferToken } from "../../domain/token/services/transferToken";
 import { getNfts } from "../../domain/token/services/getNftByAddress";
 import { updatePlayer } from "../../domain/player/services/updatePlayer";
-import { sleep } from "../../domain/global/hooks/sleep";
+import { sleep } from "../../domain/global/utils/sleep";
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
 import { ToastContainer, toast } from "react-toastify";

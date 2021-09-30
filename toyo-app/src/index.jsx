@@ -7,6 +7,7 @@ import { FunctionReferences } from "./views/functionReferences/functionReference
 import { NoMatch } from "./views/noMatch/noMatch";
 import { StressPanel } from "./views/stressPanel/stressPanel";
 import { AlternativePanel } from "./views/alternativePanel/alternativePanel";
+import { WebGLPanel } from "./views/webGLPanel/webGLPanel";
 
 import "./index.css";
 
@@ -28,16 +29,19 @@ const App = () => {
   return (
     <>
       <Switch>
-        <Route
+        {/* <Route
           exact
           path="/"
           component={() => {
             window.location.href = "https://toyofight.io";
             return null;
           }}
-        />
-        <Route path="/ui-staging">
+        /> */}
+        <Route exact path="/">
           <Home />
+        </Route>
+        <Route path="/webgl-staging">
+          <WebGLPanel />
         </Route>
         <Route path="/alternative-panel">
           <AlternativePanel arkaneConnect={arkaneConnect} />
