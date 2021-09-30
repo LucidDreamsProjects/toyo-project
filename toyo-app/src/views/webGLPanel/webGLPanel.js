@@ -2,20 +2,20 @@ import React, { useState, useEffect } from "react";
 import Unity, { UnityContext } from "react-unity-webgl";
 import prand from "pure-rand";
 
+const unityContext = new UnityContext({
+  loaderUrl: "./BoxViewer/Build/BoxViewerTest1.loader.js",
+  dataUrl: "./BoxViewer/Build/BoxViewerTest1.data",
+  frameworkUrl: "./BoxViewer/Build/BoxViewerTest1.framework.js",
+  codeUrl: "./BoxViewer/Build/BoxViewerTest1.wasm",
+  /* webglContextAttributes: {
+    preserveDrawingBuffer: true,
+  }, */
+});
+
 export function WebGLPanel() {
   const [progression, setProgression] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [winner, setWinner] = useState(0);
-
-  const unityContext = new UnityContext({
-    loaderUrl: "../../unityBuild/BoxViewerTest1.loader.js",
-    dataUrl: "../../unityBuild/BoxViewerTest1.data",
-    frameworkUrl: "../../unityBuild/BoxViewerTest1.framework.js",
-    codeUrl: "../../unityBuild/BoxViewerTest1.wasm",
-    /* webglContextAttributes: {
-      preserveDrawingBuffer: true,
-    }, */
-  });
 
   console.log(unityContext);
 
@@ -48,7 +48,7 @@ export function WebGLPanel() {
 
   function spawnBall() {
     console.group("BUTTON CLICKED");
-    unityContext.send("inputControl", "bolaDoLucas", true);
+    unityContext.send("InputControl", "trocaLucas");
   }
 
   useEffect(() => {
@@ -69,7 +69,15 @@ export function WebGLPanel() {
       <p>Loading {progression * 100} percent...</p>
       {isGameOver === true && <p>{`Game Over! ${winner} is the winner!`}</p>}
       <button onClick={spawnBall}>Spawn a ball!</button>
-      <Unity unityContext={unityContext} />
+      <Unity
+        unityContext={unityContext}
+        style={{
+          position: "relative",
+          marginLeft: "2rem",
+          width: "262px",
+          height: "375px",
+        }}
+      />
     </div>
   );
 }
