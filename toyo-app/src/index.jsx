@@ -7,6 +7,7 @@ import { FunctionReferences } from "./views/functionReferences/functionReference
 import { NoMatch } from "./views/noMatch/noMatch";
 import { StressPanel } from "./views/stressPanel/stressPanel";
 import { AlternativePanel } from "./views/alternativePanel/alternativePanel";
+import { WebGLPanel } from "./views/webGLPanel/webGLPanel";
 
 import "./index.css";
 
@@ -38,6 +39,9 @@ const App = () => {
         />
         <Route path="/ui-staging">
           <Home />
+        </Route>
+        <Route path="/webgl-staging">
+          <WebGLPanel />
         </Route>
         <Route path="/alternative-panel">
           <AlternativePanel arkaneConnect={arkaneConnect} />

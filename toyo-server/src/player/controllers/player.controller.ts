@@ -21,7 +21,7 @@ export class PlayerController {
   @HttpCode(200)
   @Get()
   public async findAll(): Promise<Player[] | void> {
-    return await this.playerService.findAll();
+    return await this.playerService.findAllPlayers();
   }
 
   @HttpCode(200)
@@ -31,7 +31,7 @@ export class PlayerController {
     playerId: string,
   ): Promise<Player | undefined> {
     // console.log(playerId);
-    return await this.playerService.findOne(playerId);
+    return await this.playerService.findOnePlayer(playerId);
   }
 
   @HttpCode(200)
@@ -44,24 +44,24 @@ export class PlayerController {
 
   @HttpCode(200)
   @Patch(':playerId')
-  public async update(
+  public async updatePlayer(
     @Param('playerId') playerId: string,
     @Body() updatePlayerDto: UpdatePlayerDto,
   ): Promise<Player | undefined> {
-    return await this.playerService.update(playerId, updatePlayerDto);
+    return await this.playerService.updatePlayer(playerId, updatePlayerDto);
   }
 
   @HttpCode(200)
   @Delete(':playerId')
-  public async deleteByPlayerId(
+  public async deletePlayerByPlayerId(
     @Param('playerId') playerId: string,
   ): Promise<void> {
-    const player = await this.playerService.findOne(playerId);
+    const player = await this.playerService.findOnePlayer(playerId);
 
     if (!player) {
       throw new NotFoundException(`Player not found`);
     }
 
-    return await this.playerService.remove(playerId);
+    return await this.playerService.removePlayer(playerId);
   }
 }

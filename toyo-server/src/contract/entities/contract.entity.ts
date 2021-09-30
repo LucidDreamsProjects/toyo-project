@@ -11,12 +11,12 @@ export class Contract extends BaseEntity {
   @Column({ type: 'varchar', length: 256 })
   description?: string;
 
-  @Column({ type: 'varchar', length: 32 })
+  @Column({ type: 'varchar', length: 36 })
   chain?: string;
 
   @Column({ type: 'varchar', length: 8 })
   symbol?: string;
 
-  @Column({ type: 'varchar', length: 64 })
+  @Column({ type: 'varchar', length: 256 })
   externalUrl?: string;
 }

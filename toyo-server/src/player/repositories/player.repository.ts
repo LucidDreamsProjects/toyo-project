@@ -7,11 +7,13 @@ import { UpdatePlayerDto } from '../dto/update-player.dto';
 @Injectable()
 @EntityRepository(Player)
 export class PlayerRepository extends Repository<Player> {
-  public async findAll(): Promise<Player[]> {
+  public async findAllPlayers(): Promise<Player[]> {
     return await this.find();
   }
 
-  public async findById(playerId: string): Promise<Player | undefined> {
+  public async findPlayerByPlayerId(
+    playerId: string,
+  ): Promise<Player | undefined> {
     const player = await this.findOne(playerId);
 
     if (player) {
@@ -55,7 +57,7 @@ export class PlayerRepository extends Repository<Player> {
     }
   }
 
-  public async destroy(playerId: string): Promise<void> {
+  public async removePlayer(playerId: string): Promise<void> {
     const player = await this.findOne(playerId);
 
     if (player) {

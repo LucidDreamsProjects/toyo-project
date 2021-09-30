@@ -14,19 +14,19 @@ describe('PlayerController', () => {
   let playerController: PlayerController;
 
   const mockPlayerService = {
-    save: jest.fn(async (dto) => {
+    savePlayer: jest.fn(async (dto) => {
       return await {
         index: Date.now(),
         ...dto,
       };
     }),
-    findOne: jest.fn().mockImplementation(async (playerId, dto) => {
+    findOnePlayer: jest.fn().mockImplementation(async (playerId, dto) => {
       return await {
         playerId,
         ...dto,
       };
     }),
-    update: jest.fn().mockImplementation(async (playerId, dto) => {
+    updatePlayer: jest.fn().mockImplementation(async (playerId, dto) => {
       return await {
         playerId,
         ...dto,
@@ -56,8 +56,7 @@ describe('PlayerController', () => {
     const firstName = 'firstName';
     const lastName = 'lastName';
     const email = haiku(2);
-    const walletId = uuidv4();
-    const balance = 10;
+    const wallets = uuidv4();
 
     const player = {
       playerId: playerId,
@@ -65,12 +64,11 @@ describe('PlayerController', () => {
       firstName: firstName,
       lastName: lastName,
       email: email,
-      walletId: walletId,
-      balance: balance,
+      wallets: wallets,
     };
 
     expect.assertions(1);
-    return playerController.createController(player).then((data) => {
+    return playerController.savePlayer(player).then((data) => {
       expect(data).toEqual({
         playerId: player.playerId,
         index: expect.any(Number),
@@ -78,7 +76,7 @@ describe('PlayerController', () => {
         firstName: player.firstName,
         lastName: player.lastName,
         email: player.email,
-        walletId: player.walletId,
+        wallets: player.wallets,
       });
     });
   });
@@ -92,13 +90,15 @@ describe('PlayerController', () => {
     };
 
     expect.assertions(1);
-    return await playerController.update(playerId, player).then((data) => {
-      expect(data).toEqual({
-        playerId: playerId,
-        firstName: player.firstName,
-        lastName: player.lastName,
-        address: player.address,
+    return await playerController
+      .updatePlayer(playerId, player)
+      .then((data) => {
+        expect(data).toEqual({
+          playerId: playerId,
+          firstName: player.firstName,
+          lastName: player.lastName,
+          address: player.address,
+        });
       });
-    });
   });
 });

@@ -10,7 +10,7 @@ import { manageWallets } from "../../domain/wallet/services/manageWallets";
 import { transferToken } from "../../domain/token/services/transferToken";
 import { getNfts } from "../../domain/token/services/getNftByAddress";
 import { updatePlayer } from "../../domain/player/services/updatePlayer";
-import { sleep } from "../../domain/global/hooks/sleep";
+import { sleep } from "../../domain/global/utils/sleep";
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
 import { ToastContainer, toast } from "react-toastify";
@@ -31,6 +31,26 @@ export function AlternativePanel(props) {
   let [count, setCount] = useState(0);
   let [open, isOpen] = useState(false);
 
+  const handleCounter = (type) => {
+    if (type === "increase") {
+      if (count <= 4) {
+        setCount((count += 1));
+        return;
+      } else {
+        toast.error("👷 Sorry, but you can only mint five NFT per transaction");
+      }
+    }
+
+    if (type === "decrease") {
+      if (count === 0) {
+        toast.error("👷 You need to select at least 1");
+        return;
+      }
+
+      setCount((count -= 1));
+    }
+  };
+
   const notify = (type) => {
     switch (type) {
       case "welcome":
@@ -45,19 +65,19 @@ export function AlternativePanel(props) {
         });
         break;
       case "sucess":
-        toast.success("🦄 Plim! And it's done ✨");
+        toast.success("🦄 Plim! Success! it's done ✨");
         break;
       case "error":
-        toast.error("🦄 Sorry, something went wrong...");
+        toast.error("🦄 Oh oh, something went wrong. Try again.");
         break;
       case "info":
-        toast.info("🦄 You got new console logs ");
+        toast.info("🦄 You got new console logs ", { autoClose: 2500 });
         break;
       case "warn":
         toast.warn("🦄 Hey! That's not how it's done!");
         break;
       default:
-        toast("🦄 Welcome WH9 human", {
+        toast("🦄 Welcome WH9 human!", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -185,11 +205,11 @@ export function AlternativePanel(props) {
       mintRequest
     );
 
-    if (signerResult) {
+    /* if (signerResult) {
       notify("sucess");
     } else {
       notify("error");
-    }
+    } */
 
     isLoading(false);
   };
@@ -244,6 +264,9 @@ export function AlternativePanel(props) {
           lastName: existingPlayer.lastName,
           email: existingPlayer.email,
         });
+        toast.success("👷 Downloading player data...", {
+          autoClose: 2500,
+        });
         notify("info");
         // await sleep(1000);
         // console.log("player: ", player);
@@ -264,6 +287,7 @@ export function AlternativePanel(props) {
           lastName: lastName,
           email: email,
         });
+        toast.warn("👷 Setting up a new account");
         notify("info");
 
         // console.log("player: ", player);
@@ -281,7 +305,7 @@ export function AlternativePanel(props) {
       .then((result) => {
         result.authenticated((auth) => {
           console.log(`👷 User authenticated: ${auth.authenticated}`);
-          notify("sucess");
+          toast.success("👷 Connection established");
           handleAuthPlayer();
           isAuth(true);
         });
@@ -349,9 +373,9 @@ export function AlternativePanel(props) {
                   </button>
                 </div>
                 <div id="transaction-buy-token-counter" className="counter">
-                  <button onClick={() => setCount(count - 1)}>-</button>
+                  <button onClick={() => handleCounter("decrease")}>-</button>
                   <div>{count}</div>
-                  <button onClick={() => setCount(count + 1)}>+</button>
+                  <button onClick={() => handleCounter("increase")}>+</button>
                 </div>
               </div>
               <div id="transaction-buy-token-recaptcha">

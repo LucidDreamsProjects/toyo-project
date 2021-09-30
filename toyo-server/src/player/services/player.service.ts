@@ -17,12 +17,12 @@ export class PlayerService {
     return await this.playerRepository.savePlayer(savePlayerDto);
   }
 
-  public async findAll(): Promise<Player[]> {
-    return await this.playerRepository.findAll();
+  public async findAllPlayers(): Promise<Player[]> {
+    return await this.playerRepository.findAllPlayers();
   }
 
-  public async findOne(playerId: string): Promise<Player> {
-    const player = await this.playerRepository.findOne(playerId);
+  public async findOnePlayer(playerId: string): Promise<Player> {
+    const player = await this.playerRepository.findPlayerByPlayerId(playerId);
 
     if (!player) {
       throw new NotFoundException(`Player not found`);
@@ -31,7 +31,7 @@ export class PlayerService {
     return player;
   }
 
-  public async update(
+  public async updatePlayer(
     playerId: string,
     updatePlayerDto: UpdatePlayerDto,
   ): Promise<Player | undefined> {
@@ -48,7 +48,7 @@ export class PlayerService {
     return updatedPlayer;
   }
 
-  public async remove(playerId: string): Promise<void> {
+  public async removePlayer(playerId: string): Promise<void> {
     await this.playerRepository.delete(playerId);
   }
 }

@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PlayerRepository } from './player.repository';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { Player } from '../entities/player.entity';
-import { CreatePlayerDto } from '../dto/create-player.dto';
+import { SavePlayerDto } from '../dto/save-player.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { EthereumAddress } from 'wallet.ts';
 import { haiku } from '../../utils/haiku';
@@ -25,11 +25,11 @@ describe('PlayerRepository', () => {
           type: 'mysql' as any,
           host: '162.240.6.22',
           port: 3306,
-          username: `wwtoyo_admin`,
-          password: `dd^8A!DPq#ZpjewF2`,
-          database: `wwtoyo_universe`,
+          username: `root`,
+          password: ``,
+          database: `local`,
           entities: [Player],
-          logging: true,
+          logging: false,
           synchronize: false,
           keepConnectionAlive: true,
         }),
@@ -56,17 +56,15 @@ describe('PlayerRepository', () => {
     const firstName = 'firstName';
     const lastName = 'lastName';
     const email = haiku(2);
-    const walletId = uuidv4();
-    const balance = 10;
+    const wallets = uuidv4();
 
-    const playerDto: CreatePlayerDto = {
+    const playerDto: SavePlayerDto = {
       playerId: playerId,
       username: username,
       firstName: firstName,
       lastName: lastName,
       email: email,
-      walletId: walletId,
-      balance: balance,
+      wallets: wallets,
     };
 
     const savedPlayer = await playerRepository.save(playerDto);

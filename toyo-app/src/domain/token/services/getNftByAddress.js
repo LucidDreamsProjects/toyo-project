@@ -4,7 +4,7 @@ export async function getNfts(arkaneConnect, walletAddress) {
   const nfts = await arkaneConnect.api
     .getNonfungiblesByAddress(secretType, walletAddress)
     .then((nfts) => {
-      console.log(`👷 Your NFTs: ${JSON.stringify(nfts)}`);
+      console.log(`👷 Your NFTs: `, nfts);
       return nfts;
     })
     .catch((error) => {

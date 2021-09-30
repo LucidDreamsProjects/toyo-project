@@ -3,11 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlayerModule } from './player/player.module';
 import { AppController } from './app.controller';
 import { Contract } from './contract/entities/contract.entity';
-import { Template } from './token/entities/template.entity';
+import { Template } from './template/entities/template.entity';
 import { Player } from './player/entities/player.entity';
 import { Token } from './token/entities/token.entity';
 import { AuthModule } from './auth/auth.module';
 import { ContractModule } from './contract/contract.module';
+import { TemplateModule } from './template/template.module';
 import { TokenModule } from './token/token.module';
 import { WalletModule } from './wallet/wallet.module';
 import { config } from 'dotenv';
@@ -32,6 +33,7 @@ config();
     AuthModule,
     PlayerModule,
     ContractModule,
+    TemplateModule,
     TokenModule,
     WalletModule,
     TransactionModule,
