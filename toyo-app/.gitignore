@@ -6,3 +6,6 @@ dist-ssr
 .env
 _index.jsx
 public/BoxViewer/
+public/BoxViewer1/
+public/BoxViewer2/
+yarn.lock
