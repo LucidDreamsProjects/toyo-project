@@ -422,7 +422,7 @@ const Body = styled.div`
       #top--col {
         #top--logo {
           img {
-            top: 2rem;
+            top: 6rem;
             left: -12rem;
             width: 150%;
             height: auto;
@@ -450,18 +450,54 @@ const Body = styled.div`
       }
     }
 
-    @media screen and (min-width: 1440px) {
+    @media screen and (min-width: 1366px) {
       #top--lucido {
         img {
           top: 12rem;
+          width: 650%;
         }
       }
 
       #top--col {
+        left: -4.5rem;
+
+        #top--logo {
+          img {
+            left: -6rem;
+            width: 125%;
+          }
+        }
+
+        #top--btn {
+          width: 50%;
+          left: 0rem;
+        }
+      }
+
+      #top--ninja {
+        img {
+          top: 0rem;
+          left: -2rem;
+          width: 650%;
+        }
+      }
+    }
+
+    @media screen and (min-width: 1440px) {
+      #top--lucido {
+        img {
+          top: 10rem;
+          left: -12rem;
+        }
+      }
+
+      #top--col {
+        top: -1.5rem;
+        left: 0rem;
         #top--logo {
           img {
             top: 2rem;
-            left: -8rem;
+            left: -10rem;
             width: 115%;
           }
         }
@@ -480,7 +516,7 @@ const Body = styled.div`
 
       #top--ninja {
         img {
-          left: -16rem;
+          left: -14rem;
         }
       }
     }
@@ -950,8 +986,8 @@ const Body = styled.div`
 
     @media screen and (min-width: 1280px) {
       min-height: 100vh;
-      height: 125vh;
-      max-height: 150vh;
+      height: 165vh;
+      max-height: 175vh;
       /* background: yellow; */
 
       #drop--bg {
@@ -965,8 +1001,8 @@ const Body = styled.div`
       }
 
       #drop--paragraph {
-        top: 80rem;
-        left: 5rem;
+        top: 94rem;
+        left: 3rem;
         width: 26%;
         height: auto;
         font-size: 1.2rem;
@@ -980,8 +1016,8 @@ const Body = styled.div`
         top: 10rem;
 
         #drop--samurai {
-          width: 175%;
-          left: -38%;
+          width: 250%;
+          left: -97%;
 
           img {
             width: 100%;
@@ -990,26 +1026,62 @@ const Body = styled.div`
         }
 
         #drop--toyo--title {
-          height: 10rem;
-          top: 35rem;
+          top: 50.5rem;
+          left: -11rem;
+          width: 125%;
+          height: 12rem;
         }
-      }
 
-      #drop--counter {
-        top: 46rem;
-        left: -0.5rem;
-        width: 100%;
-        font-size: 5.26rem;
-        color: #fff;
+        #drop--counter {
+          top: 65.5rem;
+          left: -7.5rem;
+          width: 100%;
+          font-size: 6.84rem;
+          color: #fff;
+        }
       }
 
       #drop--samurai--bg {
         /* transform: rotate(18deg); */
 
         img {
-          top: 44rem;
+          top: 50rem;
           left: 6rem;
-          width: 65%;
+          width: 60%;
+        }
+      }
+    }
+
+    @media screen and (min-width: 1366px) {
+      height: 215vh;
+      max-height: 225vh;
+
+      #drop--bg {
+        img {
+          min-height: 100%;
+        }
+      }
+
+      #drop--paragraph {
+        top: 84rem;
+        left: 4rem;
+      }
+
+      #drop--image {
+        #drop--samurai {
+          top: 0rem;
+          left: -27rem;
+          width: 225%;
+        }
+
+        #drop--toyo--title {
+          top: 48.5rem;
+          left: -10rem;
+        }
+
+        #drop--counter {
+          top: 64rem;
+          left: -6rem;
         }
       }
     }
@@ -1029,49 +1101,52 @@ const Body = styled.div`
       }
 
       #drop--paragraph {
-        top: 94rem;
-        left: 6rem;
+        top: 102rem;
+        left: 4rem;
       }
 
       #drop--image {
+        left: 4.5rem;
         height: 50%;
 
         #drop--toyo--title {
-          top: 39.5rem;
+          top: 51rem;
+          height: 14rem;
         }
 
         #drop--counter {
-          top: 54rem;
+          top: 68rem;
+          font-size: 7.64rem;
         }
       }
 
       #drop--samurai--bg {
         img {
-          top: 50rem;
+          top: 66rem;
         }
       }
     }
 
     @media screen and (min-width: 1920px) {
       /* margin-top: 50vh; */
-      height: 125vh;
-      max-height: 150vh;
+      height: 145vh;
+      max-height: 155vh;
 
       #drop--bg {
         height: 73%;
       }
 
       #drop--paragraph {
-        top: 122rem;
-        left: 8rem;
+        top: 138rem;
+        left: 4rem;
         font-size: 1.86rem;
         line-height: 2rem;
       }
 
       #drop--image {
         #drop--samurai {
-          width: 200%;
-          left: -46%;
+          width: 250%;
+          left: -42rem;
 
           img {
             width: 100%;
@@ -1080,14 +1155,14 @@ const Body = styled.div`
         }
 
         #drop--toyo--title {
-          top: 61rem;
-          height: 14rem;
+          top: 76rem;
+          height: 20rem;
         }
 
         #drop--counter {
-          top: 80rem;
+          top: 100rem;
           letter-spacing: 1.4rem;
-          font-size: 7.64rem;
+          font-size: 8.24rem;
         }
       }
 
@@ -1460,7 +1535,7 @@ const Body = styled.div`
     }
 
     @media screen and (min-width: 1280px) {
-      top: 90vh;
+      top: 80vh;
       height: 300vh;
       max-height: 320vh;
       /* background: yellow; */
@@ -1476,11 +1551,11 @@ const Body = styled.div`
       }
 
       #wat--player {
-        top: -13rem;
-        left: 25rem;
+        top: 8rem;
+        left: 10rem;
 
         img {
-          width: 50%;
+          width: 60%;
         }
       }
 
@@ -1489,20 +1564,21 @@ const Body = styled.div`
         left: 4rem;
 
         img {
-          width: 160%;
+          width: 175%;
         }
       }
 
       #wat--wrapper {
         #wat--desc {
-          top: -18rem;
+          top: -22rem;
+          left: 0rem;
           width: 32%;
           font-size: 3rem;
-          line-height: 3.2rem;
+          line-height: 3.8rem;
         }
 
         #wat--paragraph {
-          top: -14rem;
+          top: -18rem;
           width: 30%;
           text-align: justify;
           font-size: 1.18rem;
@@ -1510,27 +1586,81 @@ const Body = styled.div`
         }
 
         #wat--discord--btn {
-          top: -18rem;
+          top: -22rem;
+          left: -2rem;
           width: 32%;
           height: 8rem;
         }
       }
 
       #wat--bg {
-        top: 20rem;
-        left: 30rem;
+        top: -34rem;
+        left: 28rem;
 
         img {
-          left: 0rem;
-          width: 400%;
+          left: 6rem;
+          width: 350%;
         }
       }
     }
 
+    @media screen and (min-width: 1366px) {
+      top: 100vh;
+      height: 365vh;
+      max-height: 375vh;
+
+      #wat--title {
+        top: 2.5rem;
+      }
+
+      #wat--player {
+        left: 12rem;
+      }
+
+      #wat--toyo {
+        top: 42rem;
+        left: 8rem;
+      }
+
+      #wat--wrapper {
+        #wat--desc {
+          top: -24rem;
+        }
+
+        #wat--paragraph {
+          top: -20rem;
+        }
+
+        #wat--discord--btn {
+          top: -24rem;
+        }
+      }
+
+      #wat--bg {
+        top: -30rem;
+        left: 31rem;
+      }
+    }
+
     @media screen and (min-width: 1440px) {
+      top: 130vh;
+      height: 355vh;
+      max-height: 365vh;
+
+      #wat--player {
+        top: -4rem;
+        left: 19rem;
+      }
+
       #wat--toyo {
         top: 44rem;
         left: 6rem;
+      }
+
+      #wat--wrapper {
+        #wat--discord--btn {
+          top: -16rem;
+        }
       }
 
       #wat--bg {
