@@ -29,20 +29,20 @@ const App = () => {
   return (
     <>
       <Switch>
-        {/* <Route
+        <Route
           exact
           path="/"
           component={() => {
             window.location.href = "https://toyofight.io";
             return null;
           }}
-        /> */}
-        <Route exact path="/">
-          <Home />
-        </Route>
-        {/* <Route path="/ui-staging">
+        />
+        {/* <Route exact path="/">
           <Home />
         </Route> */}
+        <Route path="/ui-staging">
+          <Home />
+        </Route>
         <Route path="/webgl-staging">
           <WebGLPanel />
         </Route>
