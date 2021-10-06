@@ -10,6 +10,6 @@ export function useWindowSize() {
     updateSize();
     return () => window.removeEventListener("resize", updateSize);
   }, []);
-  console.log(`👷 UI size: ${window.innerWidth}x${window.innerHeight}`);
+  // console.log(`👷 UI size: ${window.innerWidth}x${window.innerHeight}`);
   return size;
 }
