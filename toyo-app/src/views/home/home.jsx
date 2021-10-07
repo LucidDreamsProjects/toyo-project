@@ -1,21 +1,21 @@
 import React from "react";
 
-import menu from "../../assets/images/top/menu.png";
-import top_bg from "../../assets/images/top/background.png";
-import top_logo from "../../assets/images/top/logo.png";
-import top_btn from "../../assets/images/top/btn.png";
-import top_lucido from "../../assets/images/top/lucido.png";
-import top_ninja from "../../assets/images/top/ninja.png";
-import drop_title from "../../assets/images/drop/drop-title.png";
-import drop_samurai from "../../assets/images/drop/samurai.png";
-import drop_samurai_bg from "../../assets/images/drop/samurai-bg.png";
-import drop_bg from "../../assets/images/drop/drop-bg.png";
-import wat_bg from "../../assets/images/what/wat-bg.png";
-import wat_toyo from "../../assets/images/what/toyo.png";
-import discord_btn from "../../assets/images/what/discord-btn.png";
-import wat_title from "../../assets/images/what/wat-title.png";
-import wat_video from "../../assets/images/what/wat-video.png";
-import wat_player from "../../assets/images/what/wat-player.png";
+import menu from "../../assets/images/home/top/menu.png";
+import top_bg from "../../assets/images/home/top/background.png";
+import top_logo from "../../assets/images/home/top/logo.png";
+import top_btn from "../../assets/images/home/top/btn.png";
+import top_lucido from "../../assets/images/home/top/lucido.png";
+import top_ninja from "../../assets/images/home/top/ninja.png";
+import drop_title from "../../assets/images/home/drop/drop-title.png";
+import drop_samurai from "../../assets/images/home/drop/samurai.png";
+import drop_samurai_bg from "../../assets/images/home/drop/samurai-bg.png";
+import drop_bg from "../../assets/images/home/drop/drop-bg.png";
+import wat_bg from "../../assets/images/home/what/wat-bg.png";
+import wat_toyo from "../../assets/images/home/what/toyo.png";
+import discord_btn from "../../assets/images/home/what/discord-btn.png";
+import wat_title from "../../assets/images/home/what/wat-title.png";
+import wat_video from "../../assets/images/home/what/wat-video.png";
+import wat_player from "../../assets/images/home/what/wat-player.png";
 
 import { Body } from "./style";
 
